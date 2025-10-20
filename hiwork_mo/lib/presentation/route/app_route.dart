@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:hiwork_mo/presentation/pages/login/login_page.dart';
+import 'package:hiwork_mo/presentation/pages/splash/splash_page.dart';
+
+class AppRoute {
+  static const String splash = '/';
+  static const String login = '/login';
+
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case splash:
+        return MaterialPageRoute(builder: (_) => const SplashPage());
+      case login:
+        return MaterialPageRoute(builder: (_) => const LoginPage());
+      default:
+        return MaterialPageRoute(
+          builder: (context) => Scaffold(
+            body: Center(
+              child: Text("404 - Page Not Found"),
+            ),
+          ),
+        );
+    }
+  }
+}
