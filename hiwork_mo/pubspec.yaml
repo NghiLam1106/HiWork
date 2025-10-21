@@ -10,9 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
   cupertino_icons: ^1.0.8
   flutter_launcher_icons: ^0.14.4
+  flutter_bloc: ^9.1.1
 
 dev_dependencies:
   flutter_test:
@@ -23,10 +27,12 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - lib/l10n/
 
 flutter_launcher_icons:
   android: true
