@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hiwork_mo/presentation/pages/login/login_page.dart';
 import 'package:hiwork_mo/presentation/pages/splash/splash_page.dart';
+import 'package:hiwork_mo/presentation/pages/welcome/welcome_page.dart';
 
 class AppRoute {
   static const String splash = '/';
+  static const String welcome = '/welcome';
   static const String login = '/login';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashPage());
+      case welcome:
+        return MaterialPageRoute(builder: (_) => const WelcomePage());
       case login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
       default:

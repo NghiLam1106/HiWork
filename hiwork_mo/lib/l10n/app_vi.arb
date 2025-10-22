@@ -2,5 +2,7 @@
   "@@locale": "vi",
   "appTitle": "HiWork",
   "languageLabel": "Ngôn ngữ",
-  "welcomeMessage": "Chào mừng đến với HiWork! - Ứng dụng quản lý nguồn nhân lực hiệu quả"
+  "welcomeMessage": "Chào mừng đến với HiWork! - Ứng dụng quản lý nguồn nhân lực hiệu quả",
+  "loginBtn": "ĐĂNG NHẬP",
+  "registerBtn": "ĐĂNG KÍ"
 }

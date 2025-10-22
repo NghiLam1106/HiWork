@@ -2,5 +2,7 @@
   "@@locale": "en",
   "appTitle": "HiWork",
   "languageLabel": "Language",
-  "welcomeMessage": "Welcome to HiWork! - Effective human resource management application"
+  "welcomeMessage": "Welcome to HiWork! - Effective human resource management application",
+  "loginBtn": "LOGIN",
+  "registerBtn": "REGISTER"
 }
