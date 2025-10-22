@@ -4,5 +4,11 @@
   "languageLabel": "Ngôn ngữ",
   "welcomeMessage": "Chào mừng đến với HiWork! - Ứng dụng quản lý nguồn nhân lực hiệu quả",
   "loginBtn": "ĐĂNG NHẬP",
-  "registerBtn": "ĐĂNG KÍ"
+  "registerBtn": "ĐĂNG KÝ",
+  "titleLogin": "Đăng nhập vào",
+  "hintTextUsername": "Tên đăng nhập hoặc Email",
+  "hintTextPassword": "Mật khẩu",
+  "forgotPasword": "Quên mật khẩu",
+  "dontHavePassword": "Bạn chưa có tài khoản? ",
+  "registerNow": "Đăng ký ngay"
 }

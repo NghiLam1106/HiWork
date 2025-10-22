@@ -4,5 +4,11 @@
   "languageLabel": "Language",
   "welcomeMessage": "Welcome to HiWork! - Effective human resource management application",
   "loginBtn": "LOGIN",
-  "registerBtn": "REGISTER"
+  "registerBtn": "REGISTER",
+  "titleLogin": "Login to",
+  "hintTextUsername": "Username or Email",
+  "hintTextPassword": "Password",
+  "forgotPasword": "Forgot password",
+  "dontHavePassword": "You do not have an account? ",
+  "registerNow": "Register now"
 }
