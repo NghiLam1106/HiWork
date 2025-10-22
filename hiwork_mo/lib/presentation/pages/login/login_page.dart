@@ -13,7 +13,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      // appBar: AppBar(backgroundColor: AppColors.backgroundColor),
       body: Center(
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
@@ -43,131 +42,46 @@ class LoginPage extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: l10n.titleLogin,
-                      style: TextStyle(
-                        color: AppColors.textBlack,
-                      ),
+                      style: TextStyle(color: AppColors.textBlack),
                     ),
                     const TextSpan(
                       text: ' HiWork!',
-                      style: TextStyle(
-                        color: AppColors.textBlue,
-                      ),
+                      style: TextStyle(color: AppColors.textBlue),
                     ),
                   ],
                 ),
               ),
               AppPadding.h40,
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 0.5,
-                      blurRadius: 3,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: l10n.hintTextUsername,
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.person_outline,
-                      color: Colors.grey,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 20,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: const BorderSide(
-                        color: Color(0xFFBFD7ED),
-                      ), // viền xanh nhạt
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF007BFF),
-                        width: 1.5,
-                      ), // viền xanh khi focus
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                ),
+
+              // Tên đăng nhập hoặc Email
+              _buildInputField(
+                hintText: l10n.hintTextUsername,
+                icon: Icons.person_outline,
+                obscureText: false,
               ),
               AppPadding.h20,
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 0.5,
-                      blurRadius: 3,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  obscureText: true, // 👈 Ẩn ký tự khi nhập mật khẩu
-                  decoration: InputDecoration(
-                    hintText: l10n.hintTextPassword,
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.lock_outline, // 👈 Icon ổ khóa
-                      color: Colors.grey,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 20,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: const BorderSide(
-                        color: Color(0xFFBFD7ED), // viền xanh nhạt
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF007BFF), // viền xanh khi focus
-                        width: 1.5,
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                ),
+
+              // Mật khẩu
+              _buildInputField(
+                hintText: l10n.hintTextPassword,
+                icon: Icons.lock_outline,
+                obscureText: true,
               ),
+
               AppPadding.h50,
-              AppPadding.h20,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: SizedBox(
-                  width: double.infinity, // chiếm toàn chiều ngang
+                  width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: xử lý sự kiện đăng nhập ở đây
+                      // TODO: xử lý đăng nhập
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.textBlue, // màu xanh đậm
+                      backgroundColor: AppColors.textBlue,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          20,
-                        ), // 👈 bo tròn đều 4 góc
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     child: Text(
@@ -176,22 +90,17 @@ class LoginPage extends StatelessWidget {
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2, // giãn nhẹ chữ như hình
+                        letterSpacing: 1.2,
                       ),
                     ),
                   ),
                 ),
               ),
-
               AppPadding.h50,
-              AppPadding.h40,
-
               TextButton(
-                onPressed: () {
-                  // TODO: xử lý khi bấmy
-                },
+                onPressed: () {},
                 style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero, // bỏ khoảng trống mặc định
+                  padding: EdgeInsets.zero,
                   minimumSize: const Size(0, 0),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   overlayColor: Colors.transparent,
@@ -207,6 +116,7 @@ class LoginPage extends StatelessWidget {
               ),
 
               AppPadding.h20,
+
               RichText(
                 text: TextSpan(
                   style: const TextStyle(
@@ -224,8 +134,7 @@ class LoginPage extends StatelessWidget {
                       recognizer:
                           TapGestureRecognizer()
                             ..onTap = () {
-                              // ví dụ:
-                              // Navigator.pushNamed(context, '/register');
+                              Navigator.pushNamed(context, '/register');
                             },
                     ),
                   ],
@@ -233,6 +142,52 @@ class LoginPage extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputField({
+    required IconData icon,
+    required String hintText,
+    bool obscureText = false,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 30),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 0.5,
+            blurRadius: 3,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: TextField(
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: const TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.w500,
+          ),
+          prefixIcon: Icon(icon, color: Colors.grey),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 20,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: const BorderSide(color: Color(0xFFBFD7ED)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: const BorderSide(color: Color(0xFF007BFF), width: 1.5),
+          ),
+          filled: true,
+          fillColor: Colors.white,
         ),
       ),
     );

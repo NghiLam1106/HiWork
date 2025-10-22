@@ -101,7 +101,6 @@ class RegisterPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      elevation: 3,
                     ),
                     child: Text(
                       l10n.registerBtn,
