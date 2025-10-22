@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hiwork_mo/core/constants/app_assets.dart';
+import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/core/constants/app_padding.dart';
 
@@ -35,7 +36,7 @@ class WelcomePage extends StatelessWidget {
                       Navigator.pushNamed(context, '/login');
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF007BFF),
+                      backgroundColor: AppColors.textBlue,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -45,7 +46,7 @@ class WelcomePage extends StatelessWidget {
                       l10n.loginBtn,
                       style: TextStyle(
                         fontSize: AppFontSize.content_16,
-                        color: Colors.white,
+                        color: AppColors.textWhite,
                       ),
                     ),
                   ),
@@ -62,7 +63,7 @@ class WelcomePage extends StatelessWidget {
                     },
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(
-                        color: Color(0xFF007BFF),
+                        color: AppColors.textBlue,
                         width: 2,
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -74,7 +75,7 @@ class WelcomePage extends StatelessWidget {
                       l10n.registerBtn,
                       style: TextStyle(
                         fontSize: AppFontSize.content_16,
-                        color: Color(0xFF007BFF),
+                        color: AppColors.textBlue,
                       ),
                     ),
                   ),
@@ -90,7 +91,7 @@ class WelcomePage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF007BFF),
+                      color: AppColors.textBlue,
                     ),
                   ),
                 ],

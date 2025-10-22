@@ -28,7 +28,7 @@ class LoginPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: AppFontSize.title_36,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF007BFF),
+                      color: AppColors.textBlue,
                     ),
                   ),
                 ],
@@ -44,13 +44,13 @@ class LoginPage extends StatelessWidget {
                     TextSpan(
                       text: l10n.titleLogin,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: AppColors.textBlack,
                       ),
                     ),
                     const TextSpan(
                       text: ' HiWork!',
                       style: TextStyle(
-                        color: Color(0xFF007BFF),
+                        color: AppColors.textBlue,
                       ),
                     ),
                   ],
@@ -162,7 +162,7 @@ class LoginPage extends StatelessWidget {
                       // TODO: xử lý sự kiện đăng nhập ở đây
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF007BFF), // màu xanh đậm
+                      backgroundColor: AppColors.textBlue, // màu xanh đậm
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
@@ -199,7 +199,7 @@ class LoginPage extends StatelessWidget {
                   l10n.forgotPasword,
                   style: TextStyle(
                     fontSize: AppFontSize.content_16,
-                    color: Color(0xFF007BFF),
+                    color: AppColors.textBlue,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -217,7 +217,7 @@ class LoginPage extends StatelessWidget {
                     TextSpan(
                       text: l10n.registerNow,
                       style: const TextStyle(
-                        color: Color(0xFF007BFF),
+                        color: AppColors.textBlue,
                         fontWeight: FontWeight.bold,
                       ),
                       recognizer:
