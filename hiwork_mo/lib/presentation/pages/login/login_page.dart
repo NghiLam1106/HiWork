@@ -185,6 +185,7 @@ class LoginPage extends StatelessWidget {
 
               AppPadding.h50,
               AppPadding.h40,
+
               TextButton(
                 onPressed: () {
                   // TODO: xử lý khi bấmy
@@ -213,7 +214,7 @@ class LoginPage extends StatelessWidget {
                     color: Colors.black,
                   ),
                   children: [
-                    TextSpan(text: l10n.dontHavePassword),
+                    TextSpan(text: l10n.dontHaveAccount),
                     TextSpan(
                       text: l10n.registerNow,
                       style: const TextStyle(

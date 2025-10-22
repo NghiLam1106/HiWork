@@ -9,6 +9,12 @@
   "hintTextUsername": "Username or Email",
   "hintTextPassword": "Password",
   "forgotPasword": "Forgot password",
-  "dontHavePassword": "You do not have an account? ",
-  "registerNow": "Register now"
+  "dontHaveAccount": "You do not have an account? ",
+  "registerNow": "Register now",
+  "titleRegister": "Register an account",
+  "hintTextFullname": "Full name",
+  "hintTextEmail": "Email",
+  "hintTextConfirmPassword": "Confirm password",
+  "loginNow": "Sign in now",
+  "haveAcconunt": "Bạn đã có tài khoản? "
 }

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class AppAssets {
   // --------------------- PATHS --------------------- //
   static const String imgPath = 'assets/images';
