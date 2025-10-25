@@ -5,6 +5,7 @@ import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/core/constants/app_padding.dart';
+import 'package:hiwork_mo/presentation/widgets/input_field.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -54,7 +55,7 @@ class LoginPage extends StatelessWidget {
               AppPadding.h40,
 
               // Tên đăng nhập hoặc Email
-              _buildInputField(
+              InputField(
                 hintText: l10n.hintTextUsername,
                 icon: Icons.person_outline,
                 obscureText: false,
@@ -62,7 +63,7 @@ class LoginPage extends StatelessWidget {
               AppPadding.h20,
 
               // Mật khẩu
-              _buildInputField(
+              InputField(
                 hintText: l10n.hintTextPassword,
                 icon: Icons.lock_outline,
                 obscureText: true,
@@ -142,52 +143,6 @@ class LoginPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInputField({
-    required IconData icon,
-    required String hintText,
-    bool obscureText = false,
-  }) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 0.5,
-            blurRadius: 3,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: TextField(
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: const TextStyle(
-            color: Colors.grey,
-            fontWeight: FontWeight.w500,
-          ),
-          prefixIcon: Icon(icon, color: Colors.grey),
-          contentPadding: const EdgeInsets.symmetric(
-            vertical: 16,
-            horizontal: 20,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Color(0xFFBFD7ED)),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Color(0xFF007BFF), width: 1.5),
-          ),
-          filled: true,
-          fillColor: Colors.white,
         ),
       ),
     );
