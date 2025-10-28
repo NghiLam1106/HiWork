@@ -76,7 +76,7 @@ class LoginPage extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // TODO: xử lý đăng nhập
+                      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.textBlue,

@@ -16,5 +16,11 @@
   "hintTextEmail": "Email",
   "hintTextConfirmPassword": "Confirm password",
   "loginNow": "Sign in now",
-  "haveAcconunt": "Bạn đã có tài khoản? "
+  "haveAcconunt": "You already have an account? ",
+  "titleScan": "Face scanning",
+  "titleScanHello": "Hi",
+  "titleCardJob": "Lịch làm việc",
+  "titleCardLeave": "Đăng ký nghỉ",
+  "titleCardMoney": "Kỳ lương",
+  "titleCardChat": "Tin nhắn"
 }

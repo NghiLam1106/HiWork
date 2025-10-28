@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hiwork_mo/presentation/pages/home/home_page.dart';
 import 'package:hiwork_mo/presentation/pages/login/login_page.dart';
 import 'package:hiwork_mo/presentation/pages/register/register_page.dart';
 import 'package:hiwork_mo/presentation/pages/splash/splash_page.dart';
@@ -9,6 +10,7 @@ class AppRoute {
   static const String welcome = '/welcome';
   static const String login = '/login';
   static const String register = '/register';
+  static const String home = '/home';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -20,6 +22,8 @@ class AppRoute {
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case register:
         return MaterialPageRoute(builder: (_) => const RegisterPage());
+      case home:
+        return MaterialPageRoute(builder: (_) => const HomePage());
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(
