@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hiwork_mo/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/presentation/bloc/language/language_bloc.dart';
