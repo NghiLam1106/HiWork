@@ -230,7 +230,6 @@ class _HomeContentState extends State<HomeContent> {
             ],
           ),
         ),
-        AppPadding.h10,
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 14),
           child: Row(
