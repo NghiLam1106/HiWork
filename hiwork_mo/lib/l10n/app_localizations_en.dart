@@ -66,14 +66,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get titleScanHello => 'Hi';
 
   @override
-  String get titleCardJob => 'Lịch làm việc';
+  String get titleCardJob => 'Work schedule';
 
   @override
-  String get titleCardLeave => 'Đăng ký nghỉ';
+  String get titleCardLeave => 'Sign up for leave';
 
   @override
-  String get titleCardMoney => 'Kỳ lương';
+  String get titleCardMoney => 'Salary';
 
   @override
-  String get titleCardChat => 'Tin nhắn';
+  String get titleCardChat => 'Message';
+
+  @override
+  String get navHome => 'Home';
+
+  @override
+  String get navTask => 'Task';
+
+  @override
+  String get navNotification => 'Notification';
+
+  @override
+  String get navAccount => 'Account';
 }

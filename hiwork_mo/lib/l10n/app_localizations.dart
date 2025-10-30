@@ -18,7 +18,7 @@ import 'app_localizations_vi.dart';
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'l10n/app_localizations.dart';
+/// import 'gen_l10n/app_localizations.dart';
 ///
 /// return MaterialApp(
 ///   localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -212,26 +212,50 @@ abstract class AppLocalizations {
   /// No description provided for @titleCardJob.
   ///
   /// In en, this message translates to:
-  /// **'Lịch làm việc'**
+  /// **'Work schedule'**
   String get titleCardJob;
 
   /// No description provided for @titleCardLeave.
   ///
   /// In en, this message translates to:
-  /// **'Đăng ký nghỉ'**
+  /// **'Sign up for leave'**
   String get titleCardLeave;
 
   /// No description provided for @titleCardMoney.
   ///
   /// In en, this message translates to:
-  /// **'Kỳ lương'**
+  /// **'Salary'**
   String get titleCardMoney;
 
   /// No description provided for @titleCardChat.
   ///
   /// In en, this message translates to:
-  /// **'Tin nhắn'**
+  /// **'Message'**
   String get titleCardChat;
+
+  /// No description provided for @navHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// No description provided for @navTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Task'**
+  String get navTask;
+
+  /// No description provided for @navNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get navNotification;
+
+  /// No description provided for @navAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get navAccount;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
