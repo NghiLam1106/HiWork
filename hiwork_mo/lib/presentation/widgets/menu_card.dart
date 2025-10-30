@@ -4,14 +4,12 @@ import 'package:hiwork_mo/core/constants/app_font_size.dart';
 class MenuCard extends StatelessWidget {
   final String? icon;
   final String? title;
-  // final String? subtitle;
   final VoidCallback onTap;
 
   const MenuCard({
     super.key,
     required this.icon,
     this.title,
-    // this.subtitle,
     required this.onTap,
   });
 
@@ -25,8 +23,15 @@ class MenuCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           height: 100,
           decoration: BoxDecoration(
-            color: const Color(0xFFE8ECF4), // Màu nền xám nhạt như hình
+            color: Colors.white,
             borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08), // màu bóng nhẹ
+                blurRadius: 10, // độ mờ
+                offset: const Offset(0, 0), // hướng đổ bóng xuống dưới
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,11 +49,6 @@ class MenuCard extends StatelessWidget {
                   ),
                 ),
               ],
-              // if (subtitle != null)
-              //   Text(
-              //     subtitle!,
-              //     style: const TextStyle(fontSize: 12, color: Colors.black54),
-              //   ),
             ],
           ),
         ),
