@@ -11,4 +11,12 @@ class AppAssets {
   static const String money = '$imgPath/money.png';
   static const String chat = '$imgPath/chat.png';
   static const String travel = '$imgPath/travel.png';
+  static const String home = '$imgPath/home.png';
+  static const String homeSelect = '$imgPath/home_select.png';
+  static const String task = '$imgPath/task.png';
+  static const String taskSelect = '$imgPath/task_select.png';
+  static const String notification = '$imgPath/notification.png';
+  static const String notificationSelect = '$imgPath/notification_select.png';
+  static const String account = '$imgPath/account.png';
+  static const String accountSelect = '$imgPath/account_select.png';
 }

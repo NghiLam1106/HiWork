@@ -19,8 +19,12 @@
   "haveAcconunt": "You already have an account? ",
   "titleScan": "Face scanning",
   "titleScanHello": "Hi",
-  "titleCardJob": "Lịch làm việc",
-  "titleCardLeave": "Đăng ký nghỉ",
-  "titleCardMoney": "Kỳ lương",
-  "titleCardChat": "Tin nhắn"
+  "titleCardJob": "Work schedule",
+  "titleCardLeave": "Sign up for leave",
+  "titleCardMoney": "Salary",
+  "titleCardChat": "Message",
+  "navHome": "Home",
+  "navTask": "Task",
+  "navNotification": "Notification",
+  "navAccount": "Account"
 }
