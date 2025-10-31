@@ -22,5 +22,9 @@
   "titleCardJob": "Lịch làm việc",
   "titleCardLeave": "Đăng ký nghỉ",
   "titleCardMoney": "Kỳ lương",
-  "titleCardChat": "Tin nhắn"
+  "titleCardChat": "Tin nhắn",
+  "navHome": "Trang chủ",
+  "navTask": "Tác vụ",
+  "navNotification": "Thông báo",
+  "navAccount": "Tài khoản"
 }

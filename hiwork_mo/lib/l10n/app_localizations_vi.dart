@@ -76,4 +76,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get titleCardChat => 'Tin nhắn';
+
+  @override
+  String get navHome => 'Trang chủ';
+
+  @override
+  String get navTask => 'Tác vụ';
+
+  @override
+  String get navNotification => 'Thông báo';
+
+  @override
+  String get navAccount => 'Tài khoản';
 }

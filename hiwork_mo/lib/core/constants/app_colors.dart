@@ -15,4 +15,8 @@ class AppColors {
   static const Color success = Color(0xFF4CAF50);
   static const Color warning = Color(0xFFFFA500);
   static const Color error = Color(0xFFE63946);
+
+
+  //------------------ NavBar ------------------//
+  static const Color navBarText = Color(0xFF1163AA);
 }
