@@ -105,10 +105,10 @@ class _HomePageState extends State<HomePage> {
             duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color:
-                  isActive
-                      ? Colors.blueAccent.withOpacity(0.1)
-                      : Colors.transparent,
+              // color:
+              //     isActive
+              //         ? Colors.blueAccent.withOpacity(0.1)
+              //         : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Image.asset(

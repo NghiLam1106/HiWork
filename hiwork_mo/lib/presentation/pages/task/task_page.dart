@@ -3,16 +3,18 @@ import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/core/constants/app_padding.dart';
+import 'package:hiwork_mo/l10n/app_localizations.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Tác vụ',
+        title: Text(
+          l10n.taskTitle,
           style: TextStyle(
             color: AppColors.textBlue,
             fontWeight: FontWeight.bold,
@@ -29,63 +31,63 @@ class TaskPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSection(
-              title: 'Lịch làm việc',
+              title: l10n.taskScheduleTitle,
               items: [
                 TaskItem(
                   imagePath: AppAssets.calendarr,
-                  label: 'Lịch làm việc chung',
+                  label: l10n.taskScheduleCommon,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.editCalendar,
-                  label: 'Đăng ký lịch làm việc',
+                  label: l10n.taskScheduleRegister,
                   onTap: () {},
                 ),
               ],
             ),
             AppPadding.h16,
             _buildSection(
-              title: 'Chấm công',
+              title: l10n.taskTimeKeepingTitle,
               items: [
                 TaskItem(
                   imagePath: AppAssets.addTask,
-                  label: 'Bổ sung/ sửa chấm công',
+                  label: l10n.taskAddAndEditAdtendance,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.device,
-                  label: 'Thiết bị chấm công',
+                  label: l10n.taskTimeKeepingEquipment,
                   onTap: () {},
                 ),
               ],
             ),
             AppPadding.h16,
             _buildSection(
-              title: 'Lương',
+              title: l10n.taskSalaryTitle,
               items: [
                 TaskItem(
                   imagePath: AppAssets.salaryAdvance,
-                  label: 'Phiếu tạm ứng lương',
+                  label: l10n.taskSalaryAdvanceSlip,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.wallet,
-                  label: 'Lương đang giữ',
+                  label: l10n.taskSalaryIsOnHold,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.trendingUp,
-                  label: 'Tiến trình tự động tăng lương',
+                  label: l10n.taskAutomaticSalary,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.history,
-                  label: 'Lịch sử tự động tăng lương',
+                  label: l10n.taskSalaryHistory,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.receipt,
-                  label: 'Phiếu lương',
+                  label: l10n.taskSalarySlip,
                   onTap: () {},
                 ),
               ],
