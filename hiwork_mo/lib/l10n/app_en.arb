@@ -26,5 +26,18 @@
   "navHome": "Home",
   "navTask": "Task",
   "navNotification": "Notification",
-  "navAccount": "Account"
+  "navAccount": "Account",
+  "taskTitle": "Task",
+  "taskScheduleTitle": "Work Schedule",
+  "taskScheduleCommon": "Common Work Schedule",
+  "taskScheduleRegister": "Work Schedule Registration",
+  "taskTimeKeepingTitle": "Timekeeping",
+  "taskAddAndEditAdtendance": "Add/Edit Timekeeping",
+  "taskTimeKeepingEquipment": "Timekeeping Equipment",
+  "taskSalaryTitle": "Salary",
+  "taskSalaryAdvanceSlip": "Salary Advance Slip",
+  "taskSalaryIsOnHold": "Salary in Hold",
+  "taskAutomaticSalary": "Automatic Salary Increase Process",
+  "taskSalaryHistory": "Automatic Salary Increase History",
+  "taskSalarySlip": "Salary Slip"
 }

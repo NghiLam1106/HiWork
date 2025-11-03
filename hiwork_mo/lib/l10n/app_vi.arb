@@ -26,5 +26,18 @@
   "navHome": "Trang chủ",
   "navTask": "Tác vụ",
   "navNotification": "Thông báo",
-  "navAccount": "Tài khoản"
+  "navAccount": "Tài khoản",
+  "taskTitle": "Tác vụ",
+  "taskScheduleTitle": "Lịch làm việc",
+  "taskScheduleCommon": "Lịch làm việc chung",
+  "taskScheduleRegister": "Đăng ký lịch làm việc",
+  "taskTimeKeepingTitle": "Chấm công",
+  "taskAddAndEditAdtendance": "Bổ sung/ sửa chấm công",
+  "taskTimeKeepingEquipment": "Thiết bị chấm công",
+  "taskSalaryTitle": "Lương",
+  "taskSalaryAdvanceSlip": "Phiếu tạm ứng lương",
+  "taskSalaryIsOnHold": "Lương đang giữ",
+  "taskAutomaticSalary": "Tiến trình tự động tăng lương",
+  "taskSalaryHistory": "Lịch sử tự động tăng lương",
+  "taskSalarySlip": "Phiếu lương"
 }

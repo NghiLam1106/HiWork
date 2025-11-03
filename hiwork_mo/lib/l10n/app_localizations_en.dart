@@ -88,4 +88,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navAccount => 'Account';
+
+  @override
+  String get taskTitle => 'Task';
+
+  @override
+  String get taskScheduleTitle => 'Work Schedule';
+
+  @override
+  String get taskScheduleCommon => 'Common Work Schedule';
+
+  @override
+  String get taskScheduleRegister => 'Work Schedule Registration';
+
+  @override
+  String get taskTimeKeepingTitle => 'Timekeeping';
+
+  @override
+  String get taskAddAndEditAdtendance => 'Add/Edit Timekeeping';
+
+  @override
+  String get taskTimeKeepingEquipment => 'Timekeeping Equipment';
+
+  @override
+  String get taskSalaryTitle => 'Salary';
+
+  @override
+  String get taskSalaryAdvanceSlip => 'Salary Advance Slip';
+
+  @override
+  String get taskSalaryIsOnHold => 'Salary in Hold';
+
+  @override
+  String get taskAutomaticSalary => 'Automatic Salary Increase Process';
+
+  @override
+  String get taskSalaryHistory => 'Automatic Salary Increase History';
+
+  @override
+  String get taskSalarySlip => 'Salary Slip';
 }

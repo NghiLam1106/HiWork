@@ -88,4 +88,43 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get navAccount => 'Tài khoản';
+
+  @override
+  String get taskTitle => 'Tác vụ';
+
+  @override
+  String get taskScheduleTitle => 'Lịch làm việc';
+
+  @override
+  String get taskScheduleCommon => 'Lịch làm việc chung';
+
+  @override
+  String get taskScheduleRegister => 'Đăng ký lịch làm việc';
+
+  @override
+  String get taskTimeKeepingTitle => 'Chấm công';
+
+  @override
+  String get taskAddAndEditAdtendance => 'Bổ sung/ sửa chấm công';
+
+  @override
+  String get taskTimeKeepingEquipment => 'Thiết bị chấm công';
+
+  @override
+  String get taskSalaryTitle => 'Lương';
+
+  @override
+  String get taskSalaryAdvanceSlip => 'Phiếu tạm ứng lương';
+
+  @override
+  String get taskSalaryIsOnHold => 'Lương đang giữ';
+
+  @override
+  String get taskAutomaticSalary => 'Tiến trình tự động tăng lương';
+
+  @override
+  String get taskSalaryHistory => 'Lịch sử tự động tăng lương';
+
+  @override
+  String get taskSalarySlip => 'Phiếu lương';
 }
