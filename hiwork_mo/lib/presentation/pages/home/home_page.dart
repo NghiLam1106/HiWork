@@ -4,6 +4,7 @@ import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/core/constants/app_padding.dart';
 import 'package:hiwork_mo/l10n/app_localizations.dart';
+import 'package:hiwork_mo/presentation/pages/task/task_page.dart';
 import 'package:hiwork_mo/presentation/widgets/menu_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     const HomeContent(),
-    const Center(child: Text('❤️ Yêu thích', style: TextStyle(fontSize: 22))),
+    const TaskPage(),
     const Center(child: Text('🔔 Thông báo', style: TextStyle(fontSize: 22))),
     const Center(child: Text('👤 Tài khoản', style: TextStyle(fontSize: 22))),
   ];

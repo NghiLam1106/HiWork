@@ -19,4 +19,14 @@ class AppAssets {
   static const String notificationSelect = '$imgPath/notification_select.png';
   static const String account = '$imgPath/account.png';
   static const String accountSelect = '$imgPath/account_select.png';
+  static const String calendarr = '$imgPath/calendarr.png';
+  static const String editCalendar = '$imgPath/editCalendar.png';
+  static const String addTask = '$imgPath/addTask.png';    
+  static const String device = '$imgPath/device.png';
+  static const String salaryAdvance = '$imgPath/salaryAdvance.png';
+  static const String wallet = '$imgPath/wallet.png';
+  static const String trendingUp = '$imgPath/trending.png';
+  static const String history = '$imgPath/history.png';
+  static const String receipt = '$imgPath/receipt.png';
+
 }
