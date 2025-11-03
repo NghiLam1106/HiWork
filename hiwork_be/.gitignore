@@ -1,0 +1,34 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+
+# Testing
+coverage/
+
+# IDE / Editor settings
+.vscode/
+.idea/
+
+# Dependency locks (nếu không muốn commit)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Temporary files
+*.tmp
+*.log
