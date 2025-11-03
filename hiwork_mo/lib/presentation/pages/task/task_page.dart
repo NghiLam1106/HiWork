@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
+import 'package:hiwork_mo/core/constants/app_padding.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
@@ -18,6 +19,7 @@ class TaskPage extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         elevation: 0,
       ),
       backgroundColor: const Color(0xFFF4F6FA),
@@ -41,7 +43,7 @@ class TaskPage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            AppPadding.h16,
             _buildSection(
               title: 'Chấm công',
               items: [
@@ -57,7 +59,7 @@ class TaskPage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            AppPadding.h16,
             _buildSection(
               title: 'Lương',
               items: [
@@ -112,9 +114,10 @@ class TaskPage extends StatelessWidget {
                 fontSize: AppFontSize.title_18,
               ),
             ),
-            const SizedBox(height: 12),
+            AppPadding.h12,
             GridView.count(
               crossAxisCount: 3,
+              childAspectRatio: 0.9,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               mainAxisSpacing: 12,
@@ -151,21 +154,14 @@ class TaskItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              imagePath,
-              height: 60,
-              width: 60,
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(height: 8),
+            Image.asset(imagePath, height: 45, fit: BoxFit.contain),
             Text(
               label,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: AppFontSize.content_14,
-                fontWeight: FontWeight.w500,
+                fontSize: AppFontSize.content_12,
               ),
             ),
           ],
