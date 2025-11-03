@@ -18,12 +18,16 @@ class WelcomePage extends StatelessWidget {
             children: [
               AppPadding.h50,
               Image.asset(AppAssets.peopleWorking),
-              Text(
-                l10n.welcomeMessage,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: AppFontSize.title_20,
-                  fontWeight: FontWeight.bold,
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 35),
+                child: Text(
+                  l10n.welcomeMessage,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: AppFontSize.title_20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textBlack,
+                  ),
                 ),
               ),
               AppPadding.h30,
