@@ -39,5 +39,9 @@
   "taskSalaryIsOnHold": "Salary in Hold",
   "taskAutomaticSalary": "Automatic Salary Increase Process",
   "taskSalaryHistory": "Automatic Salary Increase History",
-  "taskSalarySlip": "Salary Slip"
+  "taskSalarySlip": "Salary Slip",
+  "accountTitle": "Account",
+  "companyInformation": "Company Information",
+  "language": "Language",
+  "logout": "Logout"
 }

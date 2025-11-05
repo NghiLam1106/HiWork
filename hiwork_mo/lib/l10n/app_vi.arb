@@ -39,5 +39,9 @@
   "taskSalaryIsOnHold": "Lương đang giữ",
   "taskAutomaticSalary": "Tiến trình tự động tăng lương",
   "taskSalaryHistory": "Lịch sử tự động tăng lương",
-  "taskSalarySlip": "Phiếu lương"
+  "taskSalarySlip": "Phiếu lương",
+  "accountTitle": "Tài khoản",
+  "companyInformation": "Thông tin công ty",
+  "language": "Ngôn ngữ",
+  "logout": "Đăng xuất"
 }

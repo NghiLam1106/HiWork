@@ -30,4 +30,8 @@ class AppAssets {
   static const String receipt = '$imgPath/receipt.png';
   static const String noti = '$imgPath/notificationn.png';
   static const String notiCheck = '$imgPath/newNotification.png';
+  static const String companyInfo = '$imgPath/info_firm.png';
+  static const String language = '$imgPath/language.png'; 
+  static const String logout = '$imgPath/logout.png';
+  
 }

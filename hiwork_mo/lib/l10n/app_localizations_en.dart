@@ -127,4 +127,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskSalarySlip => 'Salary Slip';
+
+  @override
+  String get accountTitle => 'Account';
+
+  @override
+  String get companyInformation => 'Company Information';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get logout => 'Logout';
 }

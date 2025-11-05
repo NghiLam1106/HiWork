@@ -45,14 +45,14 @@ class NotificationPage extends StatelessWidget {
         title: const Text(
           'Thông báo',
           style: TextStyle(
-            color: AppColors.textBlue,
+            color: Color.fromRGBO(22, 98, 179, 1.0),
             fontWeight: FontWeight.bold,
             fontSize: AppFontSize.title_24,
           ),
         ),
         centerTitle: false,
         backgroundColor: Colors.white,
-        elevation: 1,
+        // elevation: 1,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: ListView.separated(
@@ -67,20 +67,20 @@ class NotificationPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: const Color.fromARGB(255, 51, 51, 42).withOpacity(0.2),
                   blurRadius: 5,
-                  offset: const Offset(0, 3),
+                  offset: const Offset(0, 1),
                 ),
               ],
             ),
             child: Padding(
               padding: const EdgeInsets.all(14),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF2F6FF),
+                      color: const Color(0xFFCDE8FF),
                       borderRadius: BorderRadius.circular(50),
                     ),
                     padding: const EdgeInsets.all(10),
@@ -92,6 +92,7 @@ class NotificationPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 14),
+                  
 
                   // Nội dung thông báo
                   Expanded(
