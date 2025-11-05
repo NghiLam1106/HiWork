@@ -2,22 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
+import 'package:hiwork_mo/core/constants/app_padding.dart';
+import 'package:hiwork_mo/l10n/app_localizations.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Tác vụ',
+        title: Text(
+          l10n.taskTitle,
           style: TextStyle(
             color: Color.fromRGBO(22, 98, 179, 1.0),
             fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         elevation: 0,
       ),
       backgroundColor: const Color(0xFFF4F6FA),
@@ -27,63 +31,63 @@ class TaskPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSection(
-              title: 'Lịch làm việc',
+              title: l10n.taskScheduleTitle,
               items: [
                 TaskItem(
                   imagePath: AppAssets.calendarr,
-                  label: 'Lịch làm việc chung',
+                  label: l10n.taskScheduleCommon,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.editCalendar,
-                  label: 'Đăng ký lịch làm việc',
+                  label: l10n.taskScheduleRegister,
                   onTap: () {},
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            AppPadding.h16,
             _buildSection(
-              title: 'Chấm công',
+              title: l10n.taskTimeKeepingTitle,
               items: [
                 TaskItem(
                   imagePath: AppAssets.addTask,
-                  label: 'Bổ sung/ sửa chấm công',
+                  label: l10n.taskAddAndEditAdtendance,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.device,
-                  label: 'Thiết bị chấm công',
+                  label: l10n.taskTimeKeepingEquipment,
                   onTap: () {},
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            AppPadding.h16,
             _buildSection(
-              title: 'Lương',
+              title: l10n.taskSalaryTitle,
               items: [
                 TaskItem(
                   imagePath: AppAssets.salaryAdvance,
-                  label: 'Phiếu tạm ứng lương',
+                  label: l10n.taskSalaryAdvanceSlip,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.wallet,
-                  label: 'Lương đang giữ',
+                  label: l10n.taskSalaryIsOnHold,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.trendingUp,
-                  label: 'Tiến trình tự động tăng lương',
+                  label: l10n.taskAutomaticSalary,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.history,
-                  label: 'Lịch sử tự động tăng lương',
+                  label: l10n.taskSalaryHistory,
                   onTap: () {},
                 ),
                 TaskItem(
                   imagePath: AppAssets.receipt,
-                  label: 'Phiếu lương',
+                  label: l10n.taskSalarySlip,
                   onTap: () {},
                 ),
               ],
@@ -112,9 +116,10 @@ class TaskPage extends StatelessWidget {
                 fontSize: AppFontSize.title_18,
               ),
             ),
-            const SizedBox(height: 12),
+            AppPadding.h12,
             GridView.count(
               crossAxisCount: 3,
+              childAspectRatio: 0.9,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               mainAxisSpacing: 12,
@@ -151,21 +156,14 @@ class TaskItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              imagePath,
-              height: 60,
-              width: 60,
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(height: 8),
+            Image.asset(imagePath, height: 45, fit: BoxFit.contain),
             Text(
               label,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: AppFontSize.content_14,
-                fontWeight: FontWeight.w500,
+                fontSize: AppFontSize.content_12,
               ),
             ),
           ],

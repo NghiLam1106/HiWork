@@ -256,6 +256,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account'**
   String get navAccount;
+
+  /// No description provided for @taskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Task'**
+  String get taskTitle;
+
+  /// No description provided for @taskScheduleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Work Schedule'**
+  String get taskScheduleTitle;
+
+  /// No description provided for @taskScheduleCommon.
+  ///
+  /// In en, this message translates to:
+  /// **'Common Work Schedule'**
+  String get taskScheduleCommon;
+
+  /// No description provided for @taskScheduleRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Work Schedule Registration'**
+  String get taskScheduleRegister;
+
+  /// No description provided for @taskTimeKeepingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timekeeping'**
+  String get taskTimeKeepingTitle;
+
+  /// No description provided for @taskAddAndEditAdtendance.
+  ///
+  /// In en, this message translates to:
+  /// **'Add/Edit Timekeeping'**
+  String get taskAddAndEditAdtendance;
+
+  /// No description provided for @taskTimeKeepingEquipment.
+  ///
+  /// In en, this message translates to:
+  /// **'Timekeeping Equipment'**
+  String get taskTimeKeepingEquipment;
+
+  /// No description provided for @taskSalaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
+  String get taskSalaryTitle;
+
+  /// No description provided for @taskSalaryAdvanceSlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary Advance Slip'**
+  String get taskSalaryAdvanceSlip;
+
+  /// No description provided for @taskSalaryIsOnHold.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary in Hold'**
+  String get taskSalaryIsOnHold;
+
+  /// No description provided for @taskAutomaticSalary.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic Salary Increase Process'**
+  String get taskAutomaticSalary;
+
+  /// No description provided for @taskSalaryHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic Salary Increase History'**
+  String get taskSalaryHistory;
+
+  /// No description provided for @taskSalarySlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary Slip'**
+  String get taskSalarySlip;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

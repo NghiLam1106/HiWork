@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
-import 'package:hiwork_mo/core/constants/app_padding.dart';
 import 'package:hiwork_mo/l10n/app_localizations.dart';
 import 'package:hiwork_mo/presentation/pages/notification/notification_page.dart';
 import 'package:hiwork_mo/presentation/pages/task/task_page.dart';
@@ -106,10 +105,10 @@ class _HomePageState extends State<HomePage> {
             duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color:
-                  isActive
-                      ? Colors.blueAccent.withOpacity(0.1)
-                      : Colors.transparent,
+              // color:
+              //     isActive
+              //         ? Colors.blueAccent.withOpacity(0.1)
+              //         : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Image.asset(
