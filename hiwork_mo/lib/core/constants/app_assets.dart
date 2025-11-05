@@ -28,5 +28,6 @@ class AppAssets {
   static const String trendingUp = '$imgPath/trending.png';
   static const String history = '$imgPath/history.png';
   static const String receipt = '$imgPath/receipt.png';
-
+  static const String noti = '$imgPath/notificationn.png';
+  static const String notiCheck = '$imgPath/newNotification.png';
 }

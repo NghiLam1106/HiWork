@@ -13,7 +13,7 @@ class TaskPage extends StatelessWidget {
         title: const Text(
           'Tác vụ',
           style: TextStyle(
-            color: AppColors.textBlue,
+            color: Color.fromRGBO(22, 98, 179, 1.0),
             fontWeight: FontWeight.bold,
           ),
         ),

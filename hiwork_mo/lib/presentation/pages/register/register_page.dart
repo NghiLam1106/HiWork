@@ -15,10 +15,14 @@ class RegisterPage extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 80,
+          ), 
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -67,7 +71,10 @@ class RegisterPage extends StatelessWidget {
               AppPadding.h20,
 
               // Email
-              InputField(icon: Icons.email_outlined, hintText: l10n.hintTextEmail),
+              InputField(
+                icon: Icons.email_outlined,
+                hintText: l10n.hintTextEmail,
+              ),
 
               AppPadding.h20,
 
@@ -98,7 +105,7 @@ class RegisterPage extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.textBlue,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 25),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -107,7 +114,7 @@ class RegisterPage extends StatelessWidget {
                       l10n.registerBtn,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,
                       ),
@@ -116,12 +123,12 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
 
-              AppPadding.h20,
+              AppPadding.h40,
 
               RichText(
                 text: TextSpan(
                   style: const TextStyle(
-                    fontSize: AppFontSize.content_16,
+                    fontSize: AppFontSize.content_20,
                     color: Colors.black,
                   ),
                   children: [

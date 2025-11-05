@@ -14,10 +14,14 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 80,
+          ), // chỉnh số này để logo lên cao hơn
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +41,7 @@ class LoginPage extends StatelessWidget {
               RichText(
                 text: TextSpan(
                   style: const TextStyle(
-                    fontSize: AppFontSize.title_22,
+                    fontSize: AppFontSize.title_28,
                     fontWeight: FontWeight.bold,
                   ),
                   children: [
@@ -52,7 +56,7 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              AppPadding.h40,
+              AppPadding.h80,
 
               // Tên đăng nhập hoặc Email
               InputField(
@@ -69,18 +73,22 @@ class LoginPage extends StatelessWidget {
                 obscureText: true,
               ),
 
-              AppPadding.h50,
+              AppPadding.h40,
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 35),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/home',
+                        (Route<dynamic> route) => false,
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.textBlue,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 25),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -89,7 +97,7 @@ class LoginPage extends StatelessWidget {
                       l10n.loginBtn,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,
                       ),
@@ -97,7 +105,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-              AppPadding.h50,
+              AppPadding.h70,
               TextButton(
                 onPressed: () {},
                 style: TextButton.styleFrom(
@@ -109,7 +117,7 @@ class LoginPage extends StatelessWidget {
                 child: Text(
                   l10n.forgotPasword,
                   style: TextStyle(
-                    fontSize: AppFontSize.content_16,
+                    fontSize: AppFontSize.content_20,
                     color: AppColors.textBlue,
                     fontWeight: FontWeight.bold,
                   ),
@@ -121,7 +129,7 @@ class LoginPage extends StatelessWidget {
               RichText(
                 text: TextSpan(
                   style: const TextStyle(
-                    fontSize: AppFontSize.content_16,
+                    fontSize: AppFontSize.content_20,
                     color: Colors.black,
                   ),
                   children: [

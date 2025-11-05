@@ -15,12 +15,12 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 35),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.black.withOpacity(0.6),
             spreadRadius: 0.5,
             blurRadius: 3,
             offset: const Offset(0, 2),
@@ -32,13 +32,14 @@ class InputField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: const TextStyle(
+            fontSize: 20,
             color: Colors.grey,
             fontWeight: FontWeight.w500,
           ),
           prefixIcon: Icon(icon, color: Colors.grey),
           contentPadding: const EdgeInsets.symmetric(
-            vertical: 16,
-            horizontal: 20,
+            vertical: 22,
+            horizontal: 16,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
