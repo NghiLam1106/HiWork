@@ -16,7 +16,7 @@ class TaskPage extends StatelessWidget {
         title: Text(
           l10n.taskTitle,
           style: TextStyle(
-            color: AppColors.textBlue,
+            color: Color.fromRGBO(22, 98, 179, 1.0),
             fontWeight: FontWeight.bold,
           ),
         ),
