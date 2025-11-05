@@ -96,7 +96,7 @@ class RegisterPage extends StatelessWidget {
               AppPadding.h40,
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

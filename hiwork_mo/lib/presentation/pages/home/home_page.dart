@@ -3,6 +3,7 @@ import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/l10n/app_localizations.dart';
+import 'package:hiwork_mo/presentation/pages/account/account_page.dart';
 import 'package:hiwork_mo/presentation/pages/notification/notification_page.dart';
 import 'package:hiwork_mo/presentation/pages/task/task_page.dart';
 import 'package:hiwork_mo/presentation/widgets/menu_card.dart';
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     const HomeContent(),
     const TaskPage(),
     const NotificationPage(),
-    const Center(child: Text('👤 Tài khoản', style: TextStyle(fontSize: 22))),
+    const AccountPage(),
   ];
 
   void _onTabSelected(int index) {
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                 AppAssets.taskSelect,
                 l10n.navTask,
                 1,
-                iconSize: 30,
+                // iconSize: 30,
               ),
               _buildNavItem(
                 AppAssets.notification,
