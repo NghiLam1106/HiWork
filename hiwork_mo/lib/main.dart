@@ -21,14 +21,6 @@ class AppInitializer extends StatelessWidget {
     return FutureBuilder(
       future: Firebase.initializeApp(),
       builder: (context, snapshot) {
-        // ✅ Hiện loading khi Firebase chưa khởi tạo xong
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const MaterialApp(
-            home: Scaffold(body: Center(child: CircularProgressIndicator())),
-          );
-        }
-
-        // ✅ Firebase đã load xong → chạy app chính
         return BlocProvider(
           create: (_) => LanguageBloc(),
           child: const MyApp(),
