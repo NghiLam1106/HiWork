@@ -18,19 +18,28 @@ class WelcomePage extends StatelessWidget {
             children: [
               AppPadding.h50,
               Image.asset(AppAssets.peopleWorking),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 35),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
                   l10n.welcomeMessage,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
+                  textAlign: TextAlign.center, // căn giữa nội dung
+                  style: const TextStyle(
                     fontSize: AppFontSize.title_20,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textBlack,
+              // Container(
+              //   margin: const EdgeInsets.symmetric(horizontal: 35),
+              //   child: Text(
+              //     l10n.welcomeMessage,
+              //     textAlign: TextAlign.center,
+              //     style: TextStyle(
+              //       fontSize: AppFontSize.title_20,
+              //       fontWeight: FontWeight.bold,
+              //       color: AppColors.textBlack,
+
                   ),
                 ),
               ),
-              AppPadding.h30,
+              AppPadding.h50,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: SizedBox(
@@ -41,7 +50,7 @@ class WelcomePage extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.textBlue,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -49,7 +58,7 @@ class WelcomePage extends StatelessWidget {
                     child: Text(
                       l10n.loginBtn,
                       style: TextStyle(
-                        fontSize: AppFontSize.content_16,
+                        fontSize: AppFontSize.title_24,
                         color: AppColors.textWhite,
                       ),
                     ),
@@ -70,7 +79,7 @@ class WelcomePage extends StatelessWidget {
                         color: AppColors.textBlue,
                         width: 2,
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -78,14 +87,14 @@ class WelcomePage extends StatelessWidget {
                     child: Text(
                       l10n.registerBtn,
                       style: TextStyle(
-                        fontSize: AppFontSize.content_16,
+                        fontSize: AppFontSize.title_24,
                         color: AppColors.textBlue,
                       ),
                     ),
                   ),
                 ),
               ),
-              AppPadding.h50,
+              AppPadding.h100,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

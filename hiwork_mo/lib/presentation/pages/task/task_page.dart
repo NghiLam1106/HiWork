@@ -16,7 +16,7 @@ class TaskPage extends StatelessWidget {
         title: Text(
           l10n.taskTitle,
           style: TextStyle(
-            color: AppColors.textBlue,
+            color: Color.fromRGBO(22, 98, 179, 1.0),
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -113,7 +113,7 @@ class TaskPage extends StatelessWidget {
               style: TextStyle(
                 color: const Color.fromARGB(255, 95, 95, 79),
                 fontWeight: FontWeight.bold,
-                fontSize: AppFontSize.title_18,
+                fontSize: AppFontSize.title_20,
               ),
             ),
             AppPadding.h12,
@@ -163,7 +163,7 @@ class TaskItem extends StatelessWidget {
               label,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: AppFontSize.content_12,
+                fontSize: AppFontSize.content_16,
               ),
             ),
           ],
