@@ -136,4 +136,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get passwordConfirm => 'Confirmation password does not match!';
+
+  @override
+  String get companyInformation => 'Information company';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get logout => 'Sign out';
 }

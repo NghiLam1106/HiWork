@@ -94,7 +94,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              AppPadding.h100,
+              AppPadding.h30,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

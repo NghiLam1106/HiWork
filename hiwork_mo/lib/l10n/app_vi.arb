@@ -42,5 +42,8 @@
   "taskSalarySlip": "Phiếu lương",
   "emailError": "Email không hợp lệ!",
   "passwordLength": "Mật khẩu phải có ít nhất 6 ký tự!",
-  "passwordConfirm": "Mật khẩu xác nhận không khớp!"
+  "passwordConfirm": "Mật khẩu xác nhận không khớp!",
+  "companyInformation": "Thông tin công ty",
+  "language": "Ngôn ngữ",
+  "logout": "Đăng xuất"
 }
