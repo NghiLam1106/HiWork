@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "545905775326",
+    "project_id": "hiwork-cd1b6",
+    "storage_bucket": "hiwork-cd1b6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545905775326:android:f3d1e78cf9081f7e43284f",
+        "android_client_info": {
+          "package_name": "com.example.hiwork_mo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoDQ7eQ0dUVv6x9ZM3eZUseyMwkvgcHWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

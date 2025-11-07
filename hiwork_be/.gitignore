@@ -32,3 +32,8 @@ yarn.lock
 # Temporary files
 *.tmp
 *.log
+
+# Firebase Service Account Key
+serviceAccountKey.json
+
+.sequelizerc

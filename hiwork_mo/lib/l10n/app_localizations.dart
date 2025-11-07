@@ -335,29 +335,23 @@ abstract class AppLocalizations {
   /// **'Salary Slip'**
   String get taskSalarySlip;
 
-  /// No description provided for @accountTitle.
+  /// No description provided for @emailError.
   ///
   /// In en, this message translates to:
-  /// **'Account'**
-  String get accountTitle;
+  /// **'Invalid email!'**
+  String get emailError;
 
-  /// No description provided for @companyInformation.
+  /// No description provided for @passwordLength.
   ///
   /// In en, this message translates to:
-  /// **'Company Information'**
-  String get companyInformation;
+  /// **'Password must be at least 6 characters!'**
+  String get passwordLength;
 
-  /// No description provided for @language.
+  /// No description provided for @passwordConfirm.
   ///
   /// In en, this message translates to:
-  /// **'Language'**
-  String get language;
-
-  /// No description provided for @logout.
-  ///
-  /// In en, this message translates to:
-  /// **'Logout'**
-  String get logout;
+  /// **'Confirmation password does not match!'**
+  String get passwordConfirm;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

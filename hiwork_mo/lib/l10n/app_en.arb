@@ -40,8 +40,7 @@
   "taskAutomaticSalary": "Automatic Salary Increase Process",
   "taskSalaryHistory": "Automatic Salary Increase History",
   "taskSalarySlip": "Salary Slip",
-  "accountTitle": "Account",
-  "companyInformation": "Company Information",
-  "language": "Language",
-  "logout": "Logout"
+  "emailError": "Invalid email!",
+  "passwordLength": "Password must be at least 6 characters!",
+  "passwordConfirm": "Confirmation password does not match!"
 }
