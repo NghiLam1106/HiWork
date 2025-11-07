@@ -127,4 +127,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get taskSalarySlip => 'Salary Slip';
+
+  @override
+  String get emailError => 'Invalid email!';
+
+  @override
+  String get passwordLength => 'Password must be at least 6 characters!';
+
+  @override
+  String get passwordConfirm => 'Confirmation password does not match!';
 }

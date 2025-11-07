@@ -39,5 +39,8 @@
   "taskSalaryIsOnHold": "Salary in Hold",
   "taskAutomaticSalary": "Automatic Salary Increase Process",
   "taskSalaryHistory": "Automatic Salary Increase History",
-  "taskSalarySlip": "Salary Slip"
+  "taskSalarySlip": "Salary Slip",
+  "emailError": "Invalid email!",
+  "passwordLength": "Password must be at least 6 characters!",
+  "passwordConfirm": "Confirmation password does not match!"
 }

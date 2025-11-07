@@ -127,4 +127,13 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get taskSalarySlip => 'Phiếu lương';
+
+  @override
+  String get emailError => 'Email không hợp lệ!';
+
+  @override
+  String get passwordLength => 'Mật khẩu phải có ít nhất 6 ký tự!';
+
+  @override
+  String get passwordConfirm => 'Mật khẩu xác nhận không khớp!';
 }

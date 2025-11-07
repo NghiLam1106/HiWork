@@ -39,5 +39,8 @@
   "taskSalaryIsOnHold": "Lương đang giữ",
   "taskAutomaticSalary": "Tiến trình tự động tăng lương",
   "taskSalaryHistory": "Lịch sử tự động tăng lương",
-  "taskSalarySlip": "Phiếu lương"
+  "taskSalarySlip": "Phiếu lương",
+  "emailError": "Email không hợp lệ!",
+  "passwordLength": "Mật khẩu phải có ít nhất 6 ký tự!",
+  "passwordConfirm": "Mật khẩu xác nhận không khớp!"
 }
