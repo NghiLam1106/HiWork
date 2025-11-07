@@ -136,4 +136,13 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get passwordConfirm => 'Mật khẩu xác nhận không khớp!';
+
+  @override
+  String get companyInformation => 'Thông tin công ty';
+
+  @override
+  String get language => 'Ngôn ngữ';
+
+  @override
+  String get logout => 'Đăng xuất';
 }

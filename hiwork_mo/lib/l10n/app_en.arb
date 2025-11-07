@@ -42,5 +42,8 @@
   "taskSalarySlip": "Salary Slip",
   "emailError": "Invalid email!",
   "passwordLength": "Password must be at least 6 characters!",
-  "passwordConfirm": "Confirmation password does not match!"
+  "passwordConfirm": "Confirmation password does not match!",
+  "companyInformation": "Information company",
+  "language": "Language",
+  "logout": "Sign out"
 }
