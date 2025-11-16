@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Auth from "../page/auth/auth";
 import Home from "../page/home/homePage";
+import MainLayout from "../layouts/MainLayout";
 
 // 1. Import 2 component mới
 import ProtectedRoute from "./ProtectedRoute"; // (Kiểm tra lại đường dẫn file)
@@ -30,7 +31,9 @@ const AppRoutes = () => (
         path="/home"
         element={
           <ProtectedRoute>
-            <Home />
+            <MainLayout>
+              <Home />
+            </MainLayout>
           </ProtectedRoute>
         }
       />
