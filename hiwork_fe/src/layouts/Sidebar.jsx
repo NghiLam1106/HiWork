@@ -46,27 +46,27 @@ const Sidebar = () => {
       <nav className="sidebar-menu">
         <NavLink to="/home" className="sidebar-link">
           <FaTachometerAlt className="icon" />
-          Dashboard
+          <span>Dashboard</span>
         </NavLink>
         <NavLink to="/nhan-vien" className="sidebar-link">
           <FaUsers className="icon" />
-          Nhân viên
+          <span>Nhân viên</span>
         </NavLink>
         <NavLink to="/phong-ban" className="sidebar-link">
           <FaBuilding className="icon" />
-          Phòng ban
+          <span>Phòng ban</span>
         </NavLink>
         <NavLink to="/cham-cong" className="sidebar-link">
           <FaRegCalendarCheck className="icon" />
-          Chấm công
+          <span>Chấm công</span>
         </NavLink>
         <NavLink to="/bao-cao" className="sidebar-link">
           <FaChartBar className="icon" />
-          Báo cáo
+          <span>Báo cáo</span>
         </NavLink>
         <NavLink to="/cai-dat" className="sidebar-link">
           <FaCog className="icon" />
-          Cài đặt
+          <span>Cài đặt</span>
         </NavLink>
       </nav>
 

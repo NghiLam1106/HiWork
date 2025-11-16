@@ -34,7 +34,7 @@
 
 .sidebar-toggle {
   background: none;
-  padding: auto;
+  padding: 0;
   border: none;
   color: #e5e7eb;
   font-size: 1.5rem;
@@ -134,4 +134,60 @@
 .sidebar-link.logout-link:hover {
   background-color: #ef4444;
   color: #fff;
+}
+
+/* --- Container --- */
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  width: 250px;
+  background-color: #1f2937;
+  color: white;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar.closed {
+  width: 70px;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-size: 1.2em;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar-menu li:hover {
+  background-color: #111827;
+}
+
+/* --- Main content --- */
+.main-content {
+  flex: 1;
+  background-color: #f3f4f6;
+  padding: 20px;
+}
+
+span {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
 }
