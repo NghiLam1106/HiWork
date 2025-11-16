@@ -3,7 +3,7 @@ const userRepository = require('../../repository/auth/authRepository');
 const { auth, admin } = require('../../config/firebaseConfig');
 
 const registerUser = async (userData) => {
-  const { username, email, password, name } = userData;
+  const { username, email, password } = userData;
 
   const existingUser = await userRepository.findUserByEmail(email);
   if (existingUser) {
