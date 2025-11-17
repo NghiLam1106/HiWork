@@ -1,0 +1,105 @@
+import 'package:get_it/get_it.dart';
+import 'package:hiwork_mo/data/datasources/auth_remote_datasource.dart';
+import 'package:hiwork_mo/data/repositories/auth_repository_impl.dart';
+import 'package:hiwork_mo/domain/repositories/auth_repository.dart';
+import 'package:hiwork_mo/domain/usecases/login_usecase.dart'; 
+import 'package:hiwork_mo/presentation/bloc/auth/auth_bloc.dart';
+import 'package:hiwork_mo/data/datasources/notification_remote_datasource.dart';
+import 'package:hiwork_mo/data/repositories/notification_repository_impl.dart';
+import 'package:hiwork_mo/domain/repositories/notification_repository.dart';
+import 'package:hiwork_mo/domain/usecases/get_notifications_usecase.dart';
+import 'package:hiwork_mo/presentation/bloc/notification/notification_bloc.dart';
+import 'package:hiwork_mo/data/datasources/timesheet_remote_datasource.dart';
+import 'package:hiwork_mo/data/repositories/timesheet_repository_impl.dart';
+import 'package:hiwork_mo/domain/repositories/timesheet_repository.dart';
+import 'package:hiwork_mo/domain/usecases/get_weekly_timesheet_usecase.dart';
+import 'package:hiwork_mo/presentation/bloc/timesheet/timesheet_bloc.dart';
+import 'package:hiwork_mo/data/datasources/leave_remote_datasource.dart';
+import 'package:hiwork_mo/data/repositories/leave_repository_impl.dart';
+import 'package:hiwork_mo/domain/repositories/leave_repository.dart';
+import 'package:hiwork_mo/domain/usecases/get_leave_balance_usecase.dart';
+import 'package:hiwork_mo/domain/usecases/get_leave_history_usecase.dart';
+import 'package:hiwork_mo/domain/usecases/submit_leave_request_usecase.dart';
+import 'package:hiwork_mo/presentation/bloc/leave/leave_bloc.dart';
+
+final sl = GetIt.instance; 
+
+Future<void> configureDependencies() async {
+
+  // --- TÍNH NĂNG AUTH (XÁC THỰC) ---
+  sl.registerFactory(
+    () => AuthBloc(
+      logInUseCase: sl(), 
+      authRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton(() => LogInUseCase(sl<AuthRepository>())); 
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(),
+  );
+
+  // --- TÍNH NĂNG NOTIFICATION ---
+  sl.registerFactory(
+    () => NotificationBloc(
+      getNotificationsUseCase: sl(), // Đảm bảo đã thêm 'getNotificationsUseCase'
+    ),
+  );
+  sl.registerLazySingleton(() => GetNotificationsUseCase(sl<NotificationRepository>()));
+  sl.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<NotificationRemoteDataSource>(
+    () => NotificationRemoteDataSourceImpl(), 
+  );
+
+  // --- TÍNH NĂNG TIMESHEET (BẢNG CHẤM CÔNG) ---
+  sl.registerFactory(
+    () => TimesheetBloc(
+      getWeeklyTimesheetUseCase: sl(), 
+    ),
+  );
+  sl.registerLazySingleton(() => GetWeeklyTimesheetUseCase(sl<TimesheetRepository>()));
+  sl.registerLazySingleton<TimesheetRepository>(
+    () => TimesheetRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<TimesheetRemoteDataSource>(
+    () => TimesheetRemoteDataSourceImpl(), 
+  );
+  // --- (Kết thúc Timesheet) ---
+
+
+  // --- TÍNH NĂNG LEAVE (ĐĂNG KÝ NGHỈ) ---
+  sl.registerFactory(
+    () => LeaveBloc(
+      getLeaveBalanceUseCase: sl(), 
+      getLeaveHistoryUseCase: sl(), 
+      submitLeaveUseCase: sl(), 
+    ),
+  );
+  // UseCases
+  sl.registerLazySingleton(() => GetLeaveBalanceUseCase(sl<LeaveRepository>()));
+  sl.registerLazySingleton(() => GetLeaveHistoryUseCase(sl<LeaveRepository>()));
+  sl.registerLazySingleton(() => SubmitLeaveUseCase(sl<LeaveRepository>()));
+  
+  // Repository
+  sl.registerLazySingleton<LeaveRepository>(
+    () => LeaveRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+  
+  // DataSource
+  sl.registerLazySingleton<LeaveRemoteDataSource>(
+    () => LeaveRemoteDataSourceImpl(), 
+  );
+  // --- (Kết thúc Leave) ---
+} 

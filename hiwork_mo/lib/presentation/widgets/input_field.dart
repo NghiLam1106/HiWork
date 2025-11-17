@@ -9,13 +9,13 @@ class InputField extends StatelessWidget {
     super.key,
     required this.icon,
     required this.hintText,
-    this.obscureText = false,
+    this.obscureText = false, required TextEditingController controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 30),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
@@ -32,13 +32,13 @@ class InputField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: const TextStyle(
-            fontSize: 20,
+            fontSize: 15,
             color: Colors.grey,
             fontWeight: FontWeight.w500,
           ),
           prefixIcon: Icon(icon, color: Colors.grey),
           contentPadding: const EdgeInsets.symmetric(
-            vertical: 22,
+            vertical: 18,
             horizontal: 16,
           ),
           enabledBorder: OutlineInputBorder(
