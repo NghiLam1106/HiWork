@@ -7,9 +7,11 @@ const Home = () => {
     <>
       <header className="header">
         <h1>Dashboard</h1>
-        <div className="header-actions">
-          <input type="text" placeholder="Tìm kiếm..." />
-        </div>
+        <div className="d-flex align-items-center">
+        <form className="p-0" style={{ width: 500 }}>
+          <input type="search" className="form-control m-0" placeholder="Search..." aria-label="Search" />
+        </form>
+      </div>
       </header>
       <div className="dashboard-cards">
         <DashboardCard title="Nhân viên" number={120} color="#4CAF50" />
