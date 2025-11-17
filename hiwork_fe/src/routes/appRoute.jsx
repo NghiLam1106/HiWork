@@ -3,6 +3,7 @@ import Auth from "../page/auth/auth";
 import Home from "../page/home/homePage";
 import MainLayout from "../layouts/MainLayout";
 import User from "../page/user/userPage";
+import Profile from "../page/profile/profilePage";
 
 // 1. Import 2 component mới
 import ProtectedRoute from "./ProtectedRoute"; // (Kiểm tra lại đường dẫn file)
@@ -35,6 +36,7 @@ const AppRoutes = () => (
       >
         <Route path="/home" element={<Home />} />
         <Route path="/nhan-vien" element={<User />} />
+        <Route path="/nhan-vien/:id" element={<Profile />} />
       </Route>
     </Routes>
   </BrowserRouter>
