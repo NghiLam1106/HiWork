@@ -1,18 +1,17 @@
-
-import EmployeeTable from "../../components/EmployeeTable";
+import PositionTable from "../../components/PositionTable";
 import SearchBar from "../../layouts/SearchBar";
 import "../user/userPage.css";
 
-const User = () => {
+const Position = () => {
   return (
     <>
       <header className="header">
-        <h1>User</h1>
+        <h1>Vị trí</h1>
         <SearchBar />
       </header>
-      <EmployeeTable />
+      <PositionTable />
     </>
   );
 };
 
-export default User;
+export default Position;

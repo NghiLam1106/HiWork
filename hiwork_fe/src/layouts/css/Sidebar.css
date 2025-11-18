@@ -1,18 +1,29 @@
-/* --- Sidebar --- */
-.sidebar {
-  width: 260px; /* Rộng hơn một chút */
-  background-color: #1f2937; /* Màu nền tối */
-  color: #e5e7eb; /* Màu chữ sáng (xám nhạt) */
+/* src/components/css/Sidebar.css */
+
+/* --- Cấu trúc chung --- */
+.admin-container {
   display: flex;
-  flex-direction: column; /* Sắp xếp các mục theo chiều dọc */
+  min-height: 100vh;
+  width: 100%;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* --- Sidebar Container --- */
+.sidebar {
+  width: 260px;
+  background-color: #1f2937; /* Màu nền tối */
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   transition: width 0.3s ease;
-  overflow: hidden; /* Ẩn text khi thu nhỏ */
+  overflow-y: auto; /* Cho phép cuộn nếu menu quá dài */
+  overflow-x: hidden;
 }
 
 /* --- Trạng thái thu nhỏ --- */
 .sidebar.closed {
-  width: 80px; /* Chiều rộng khi thu nhỏ */
+  width: 80px;
 }
 
 /* --- Header (Logo + Nút gập) --- */
@@ -22,35 +33,37 @@
   justify-content: space-between;
   padding: 20px;
   height: 70px;
-  border-bottom: 1px solid #374151; /* Đường kẻ phân cách */
+  border-bottom: 1px solid #374151;
+  box-sizing: border-box;
 }
 
 .sidebar-logo {
   font-size: 1.5em;
   font-weight: 700;
   color: #fff;
-  white-space: nowrap; /* Ngăn logo bị xuống dòng */
+  white-space: nowrap;
 }
 
 .sidebar-toggle {
   background: none;
-  padding: 0;
   border: none;
   color: #e5e7eb;
   font-size: 1.5rem;
   cursor: pointer;
   transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .sidebar-toggle:hover {
   color: #fff;
-  transform: rotate(90deg); /* Hiệu ứng xoay nút */
+  transform: rotate(90deg);
 }
 
-/* Khi thu nhỏ, căn nút ra giữa */
 .sidebar.closed .sidebar-toggle {
   width: 100%;
-  justify-content: center;
 }
 
 /* --- Menu chính --- */
@@ -58,10 +71,10 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Khoảng cách giữa các mục */
+  gap: 8px;
 }
 
-/* --- Từng mục trong menu --- */
+/* --- Từng mục trong menu (Cha & Con) --- */
 .sidebar-link {
   display: flex;
   align-items: center;
@@ -70,124 +83,144 @@
   text-decoration: none;
   color: #e5e7eb;
   font-weight: 500;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  white-space: nowrap; /* Ngăn text bị xuống dòng */
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none; /* Ngăn bôi đen text khi click nhanh */
+}
+
+/* Nhóm Icon và Text lại để nằm bên trái */
+.link-content {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Khoảng cách giữa Icon và Text */
+  flex-grow: 1;
 }
 
 .sidebar-link .icon {
-  font-size: 1.3rem; /* Kích thước icon */
-  min-width: 30px; /* Giữ icon đúng vị trí khi thu nhỏ */
-  margin-right: 15px;
+  font-size: 1.3rem;
+  min-width: 25px; /* Cố định chiều rộng icon để thẳng hàng */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* --- Hiệu ứng Hover (Khi di chuột) --- */
+/* Mũi tên xoay (Chevron) */
+.arrow-icon {
+  font-size: 0.85rem;
+  margin-left: auto; /* Đảm bảo dính sát lề phải */
+  opacity: 0.7;
+}
+
+/* --- Hiệu ứng Hover & Active --- */
 .sidebar-link:hover {
-  background-color: #374151; /* Màu nền khi hover */
+  background-color: #374151;
   color: #fff;
 }
 
-/* --- Trạng thái Active (Mục đang được chọn) --- */
-/* NavLink sẽ tự động thêm class 'active' này */
 .sidebar-link.active {
-  background-color: #3b82f6; /* Màu xanh nổi bật */
+  background-color: #3b82f6;
   color: #fff;
   font-weight: 600;
 }
 
-/* --- Phần Footer (Đăng xuất) --- */
-.sidebar-footer {
-  margin-top: auto; /* Đẩy mục này xuống dưới cùng */
-  padding: 15px;
-}
-
-.logout-link:hover {
-  background-color: #ef4444; /* Màu đỏ khi hover Đăng xuất */
+/* Menu đang mở rộng (chỉ áp dụng cho menu cha) */
+.sidebar-link.expanded {
+  background-color: #374151; /* Giữ màu sáng hơn chút khi đang mở */
   color: #fff;
 }
 
-/* --- Ẩn text khi sidebar thu nhỏ --- */
-.sidebar.closed .sidebar-link span {
-  display: none;
-}
-.sidebar.closed .sidebar-link {
-  justify-content: center;
-  padding: 12px;
-}
-.sidebar.closed .sidebar-link .icon {
-  margin-right: 0;
-}
-.sidebar.closed .sidebar-logo {
-  display: none;
+/* --- Submenu (Menu con) --- */
+.submenu {
+  display: flex;
+  flex-direction: column;
+  background-color: #374151;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  overflow: hidden;
+  animation: slideDown 0.3s ease-out;
 }
 
-/* Thêm vào file Sidebar.css */
+/* Animation trượt xuống nhẹ */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.submenu-link {
+  padding-left: 20px !important; /* Reset padding */
+  font-size: 0.95rem;
+  color: #fff; /* Màu chữ tối hơn chút */
+  border-radius: 6px;
+  margin: 2px 0;
+}
+
+.submenu-link .submenu-dot {
+  margin-right: 12px;
+  font-size: 1.5rem; /* Dấu chấm to lên */
+  line-height: 0;
+  color: #4b5563;
+}
+
+.submenu-link:hover {
+  background-color: #1f2937 !important;
+  color: #fff;
+}
+
+.submenu-link:hover .submenu-dot {
+  color: #3b82f6;
+}
+
+.submenu-link.active {
+  color: #3b82f6; /* Chữ xanh */
+  background-color: transparent !important;
+}
+.submenu-link.active .submenu-dot {
+  color: #3b82f6;
+}
+
+/* --- Footer (Đăng xuất) --- */
+.sidebar-footer {
+  margin-top: auto;
+  padding: 15px;
+  border-top: 1px solid #374151;
+}
 
 .sidebar-link.logout-link {
+  width: 100%;
   background: none;
   border: none;
-  width: 100%; /* Đảm bảo nó chiếm đủ chiều rộng */
-  cursor: pointer; /* Giữ con trỏ chuột */
-  text-align: left; /* Căn chữ lại bên trái (nếu cần) */
+  justify-content: flex-start; /* Căn trái lại cho nút logout */
 }
 
-/* Giữ nguyên hiệu ứng hover màu đỏ */
 .sidebar-link.logout-link:hover {
   background-color: #ef4444;
   color: #fff;
 }
 
-/* --- Container --- */
-.admin-container {
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-  font-family: "Segoe UI", sans-serif;
+/* --- Xử lý khi Sidebar đóng (.closed) --- */
+.sidebar.closed .sidebar-logo,
+.sidebar.closed .text,
+.sidebar.closed .arrow-icon,
+.sidebar.closed .submenu {
+  display: none; /* Ẩn hết text, mũi tên, menu con */
 }
 
-/* --- Sidebar --- */
-.sidebar {
-  width: 250px;
-  background-color: #1f2937;
-  color: white;
-  transition: width 0.3s ease;
-  overflow: hidden;
+.sidebar.closed .sidebar-link {
+  justify-content: center; /* Căn giữa icon */
+  padding: 15px;
 }
 
-.sidebar.closed {
-  width: 70px;
+.sidebar.closed .link-content {
+  flex-grow: 0;
+  gap: 0;
 }
 
-.sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  font-size: 1.2em;
-}
+/* Tooltip giả (Optional: Có thể thêm title vào HTML để hiện tooltip) */
 
-.sidebar-menu {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar-menu li {
-  padding: 15px 20px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.sidebar-menu li:hover {
-  background-color: #111827;
-}
-
-/* --- Main content --- */
-.main-content {
-  flex: 1;
-  background-color: #f3f4f6;
-  padding: 20px;
-}
-
+/* --- Global Styles (Font) --- */
 span {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px;
+  font-size: 15px;
 }
