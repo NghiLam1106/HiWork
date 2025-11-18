@@ -1,151 +1,58 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hiwork_mo/core/api/api_client.dart';
-import 'package:hiwork_mo/data/repository/auth/auth_repository.dart';
-import 'package:hiwork_mo/l10n/app_localizations.dart';
-
-import 'auth_event.dart';
+import 'package:hiwork_mo/domain/entities/user_entity.dart';
+import 'package:hiwork_mo/domain/repositories/auth_repository.dart'; 
+import 'package:hiwork_mo/domain/usecases/login_usecase.dart'; 
+import 'auth_event.dart'; 
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository _authRepository;
-  final AppLocalizations l10n;
+  // 2. SỬA TÊN LỚP: Dùng SignInUseCase
+  final LogInUseCase logInUseCase;
+  final AuthRepository authRepository; 
 
-  AuthBloc(this._authRepository, this.l10n) : super(AuthState.initial()) {
-    // ==== REGISTER INPUT ==== //
-    on<RegisterFullnameChanged>((event, emit) {
-      emit(
-        state.copyWith(
-          registerUser: state.registerUser.copyWith(fullname: event.fullname),
-        ),
-      );
-    });
+  AuthBloc({required this.logInUseCase, required this.authRepository})
+      : super(AuthInitial()) {
+    on<AppStarted>(_onAppStarted);
+    on<LogInRequested>(_onLogInRequested);
+    on<LogOutRequested>(_onLogOutRequested); 
+  }
 
-    on<RegisterEmailChanged>((event, emit) {
-      emit(
-        state.copyWith(
-          registerUser: state.registerUser.copyWith(email: event.email),
-        ),
-      );
-    });
+  // Khởi động: Kiểm tra token/tình trạng xác thực
+  void _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
+    final isAuthenticated = await authRepository.isAuthenticated();
+    if (isAuthenticated) {
+      emit(const Authenticated(user: UserEntity(
+        id: '1', 
+        fullName: 'Lâm Nghi', 
+        email: 'test@hiwork.com', 
+        role: 'Nhân viên', 
+        token: 'token'
+      )));
+    } else {
+      emit(Unauthenticated());
+    }
+  }
 
-    on<RegisterPasswordChanged>((event, emit) {
-      emit(
-        state.copyWith(
-          registerUser: state.registerUser.copyWith(password: event.password),
-        ),
-      );
-    });
+  void _onLogInRequested(LogInRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final result = await logInUseCase.execute(
+      email: event.email,
+      password: event.password,
+    );
 
-    on<RegisterConfirmPasswordChanged>((event, emit) {
-      emit(state.copyWith(confirmPassword: event.confirmPassword));
-    });
+    result.fold(
+      (failure) => emit(AuthError(message: failure.props.isNotEmpty ? failure.props[0].toString() : 'Lỗi đăng nhập không xác định.')),
+      (user) => emit(Authenticated(user: user)),
+    );
+  }
 
-    // ==== LOGIN INPUT ==== //
-    on<LoginEmailChanged>((event, emit) {
-      emit(state.copyWith(loginEmail: event.email));
-    });
-
-    on<LoginPasswordChanged>((event, emit) {
-      emit(state.copyWith(loginPassword: event.password));
-    });
-
-    // ==== REGISTER SUBMIT ==== //
-    on<RegisterSubmitted>((event, emit) async {
-      emit(
-        state.copyWith(isSubmitting: true, isFailure: false, isSuccess: false),
-      );
-
-      final user = state.registerUser;
-
-      if (user.email.isEmpty || !user.email.contains('@')) {
-        emit(
-          state.copyWith(
-            isSubmitting: false,
-            isFailure: true,
-            errorMessage: l10n.emailError,
-          ),
-        );
-        return;
-      }
-
-      if (user.password.length < 6) {
-        emit(
-          state.copyWith(
-            isSubmitting: false,
-            isFailure: true,
-            errorMessage: l10n.passwordLength,
-          ),
-        );
-        return;
-      }
-
-      if (user.password != state.confirmPassword) {
-        emit(
-          state.copyWith(
-            isSubmitting: false,
-            isFailure: true,
-            errorMessage: l10n.passwordConfirm,
-          ),
-        );
-        return;
-      }
-
-      try {
-        bool result = await _authRepository.register(user);
-        if (result) {
-          emit(state.copyWith(isSubmitting: false, isSuccess: true));
-        } else {
-          emit(
-            state.copyWith(
-              isSubmitting: false,
-              isFailure: true,
-              errorMessage: 'Đăng ký thất bại!',
-            ),
-          );
-        }
-      } catch (e) {
-        emit(
-          state.copyWith(
-            isSubmitting: false,
-            isFailure: true,
-            errorMessage: e.toString(),
-          ),
-        );
-      }
-    });
-
-    // ==== LOGIN SUBMIT ==== //
-    on<LoginSubmitted>((event, emit) async {
-      emit(
-        state.copyWith(isSubmitting: true, isFailure: false, isSuccess: false),
-      );
-
-      final email = state.loginEmail;
-      final password = state.loginPassword;
-
-      try {
-        bool result = await _authRepository.login(email, password);
-        if (result) {
-          emit(state.copyWith(isSubmitting: false, isSuccess: true));
-        } else {
-          emit(
-            state.copyWith(
-              isSubmitting: false,
-              isFailure: true,
-              errorMessage: 'Đăng nhập thất bại!',
-            ),
-          );
-        }
-      } catch (e) {
-        emit(
-          state.copyWith(
-            isSubmitting: false,
-            isFailure: true,
-            errorMessage: e.toString(),
-          ),
-        );
-      }
-    });
+  // 7. SỬA TÊN HÀM VÀ EVENT: Dùng SignOutRequested
+  void _onLogOutRequested(LogOutRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final result = await authRepository.signOut();
+    result.fold(
+      (failure) => emit(const AuthError(message: 'Lỗi đăng xuất')),
+      (_) => emit(Unauthenticated()),
+    );
   }
 }

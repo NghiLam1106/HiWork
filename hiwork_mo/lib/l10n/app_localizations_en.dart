@@ -93,7 +93,84 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskTitle => 'Task';
 
   @override
-  String get taskScheduleTitle => 'Work Schedule';
+  String get workScheduleTitle => 'Work Schedule';
+
+  @override
+  String get thisWeek => 'This week';
+
+  @override
+  String get nextWeek => 'Next week';
+
+  @override
+  String get previousWeek => 'Previous week';
+
+  @override
+  String get shiftMorning => 'Morning shift';
+
+  @override
+  String get shiftNoon => 'Noon shift';
+
+  @override
+  String get shiftEvening => 'Evening shift';
+
+  @override
+  String get dayOff => 'Day off';
+
+  @override
+  String get onTime => 'On time';
+
+  @override
+  String get leftEarly => 'Left early';
+
+  @override
+  String get late => 'Late';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get forgotCheckIn => 'Forgot to check in';
+
+  @override
+  String get notStartedYet => 'Not started yet';
+
+  @override
+  String get leaveRegisterTitle => 'Leave Registration List';
+
+  @override
+  String leaveRegisterMonth(Object month, Object year) {
+    return 'Month $month Year $year';
+  }
+
+  @override
+  String get leaveRegisterHint => 'You can send your leave request here';
+
+  @override
+  String get registerLeaveTitle => 'Register for leave';
+
+  @override
+  String get leaveDate => 'Leave date';
+
+  @override
+  String get selectShift => 'Select shift';
+
+  @override
+  String get reasonLeave => 'Reason for leave';
+
+  @override
+  String get submitLeaveRequest => 'Submit leave request';
+
+  @override
+  String get statusApproved => 'Approved';
+
+  @override
+  String get statusRejected => 'Rejected';
+
+  @override
+  String get statusPending => 'Pending';
+
+  @override
+  String get statusUnknown => 'Unknown';
 
   @override
   String get taskScheduleCommon => 'Common Work Schedule';
@@ -129,20 +206,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskSalarySlip => 'Salary Slip';
 
   @override
-  String get emailError => 'Invalid email!';
+  String get notificationTitle => 'Notification';
 
   @override
-  String get passwordLength => 'Password must be at least 6 characters!';
+  String get accountTitle => 'Account';
 
   @override
-  String get passwordConfirm => 'Confirmation password does not match!';
-
-  @override
-  String get companyInformation => 'Information company';
+  String get companyInformation => 'Company Information';
 
   @override
   String get language => 'Language';
 
   @override
-  String get logout => 'Sign out';
+  String get logout => 'Logout';
+
+  @override
+  String get guest => 'guest';
+
+  @override
+  String get pleaseSignIn => 'please sign in';
+
+  @override
+  String get confirmLogoutTitle => 'confirm logout';
+
+  @override
+  String get confirmLogoutMessage => 'confirm you want to logout?';
+
+  @override
+  String get cancel => 'cancel';
+
+  @override
+  String get confirm => 'confirm';
+
+  @override
+  String get logoutSuccess => 'logout successful';
+
+  @override
+  String get loginSuccess => 'Login successful';
+
+  @override
+  String get invalidCredentials => 'Invalid username or password.';
+
+  @override
+  String get serverError => 'Server error occurred. Please try again later.';
+
+  @override
+  String get unknownError => 'An unknown error has occurred.';
+
+  @override
+  String get authSessionExpired => 'Authentication session has expired.';
+
+  @override
+  String get invalidInput => 'Invalid input provided.';
+
+  @override
+  String notificationsAvailable(Object count) {
+    return 'You have $count notifications available.';
+  }
+
+  @override
+  String get noNotifications => 'No notifications available.';
 }

@@ -3,9 +3,12 @@ import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/l10n/app_localizations.dart';
-import 'package:hiwork_mo/presentation/pages/account/account_page.dart';
-import 'package:hiwork_mo/presentation/pages/notification/notification_page.dart';
-import 'package:hiwork_mo/presentation/pages/task/task_page.dart';
+import 'package:hiwork_mo/presentation/pages/home/account_page.dart';
+import 'package:hiwork_mo/presentation/pages/leave/leave_history_page.dart';
+import 'package:hiwork_mo/presentation/pages/home/notification_page.dart';
+import 'package:hiwork_mo/presentation/pages/home/task_page.dart';
+import 'package:hiwork_mo/presentation/pages/payroll/work_efficiency_page.dart';
+import 'package:hiwork_mo/presentation/pages/schedule/work_schedule_page.dart';
 import 'package:hiwork_mo/presentation/widgets/menu_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -94,7 +97,7 @@ class _HomePageState extends State<HomePage> {
     String activeIcon,
     String label,
     int index, {
-    double iconSize = 30,
+    double iconSize = 18,
   }) {
     final isActive = _currentIndex == index;
     return GestureDetector(
@@ -122,7 +125,7 @@ class _HomePageState extends State<HomePage> {
           Text(
             label,
             style: TextStyle(
-              fontSize: AppFontSize.content_12,
+              fontSize: AppFontSize.content_10,
               color: isActive ? AppColors.navBarText : Colors.grey,
             ),
           ),
@@ -182,7 +185,7 @@ class _HomeContentState extends State<HomeContent> {
             padding: const EdgeInsets.all(16),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppColors.secondaryBackgroundColor,
+              color: const Color.fromRGBO(44, 136, 235, 1),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -191,7 +194,7 @@ class _HomeContentState extends State<HomeContent> {
                 Text(
                   l10n.titleScan,
                   style: TextStyle(
-                    fontSize: AppFontSize.title_24,
+                    fontSize: AppFontSize.title_16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textWhite,
                   ),
@@ -200,7 +203,7 @@ class _HomeContentState extends State<HomeContent> {
                 Text(
                   '${l10n.titleScanHello}, Huong Vo!',
                   style: TextStyle(
-                    fontSize: AppFontSize.content_16,
+                    fontSize: AppFontSize.content_12,
                     color: AppColors.textWhite,
                   ),
                 ),
@@ -216,17 +219,25 @@ class _HomeContentState extends State<HomeContent> {
               MenuCard(
                 icon: AppAssets.calendar,
                 title: l10n.titleCardJob,
-                // subtitle: l10n.menuJobsSubtitle,
                 onTap: () {
-                  // Xử lý khi nhấn vào Menu Jobs
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const WorkSchedulePage(),
+                    ),
+                  );
                 },
               ),
               MenuCard(
                 icon: AppAssets.travel,
-                title: l10n.titleCardJob,
-                // subtitle: l10n.menuJobsSubtitle,
+                title: l10n.titleCardLeave,
                 onTap: () {
-                  // Xử lý khi nhấn vào Menu Jobs
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LeaveHistoryRegisterPage(),
+                    ),
+                  );
                 },
               ),
             ],
@@ -239,15 +250,20 @@ class _HomeContentState extends State<HomeContent> {
             children: [
               MenuCard(
                 icon: AppAssets.money,
-                title: l10n.titleCardJob,
+                title: l10n.titleCardMoney,
                 // subtitle: l10n.menuJobsSubtitle,
                 onTap: () {
-                  // Xử lý khi nhấn vào Menu Jobs
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const WorkEfficiencyPage(),
+                    ),
+                  );
                 },
               ),
               MenuCard(
                 icon: AppAssets.chat,
-                title: l10n.titleCardJob,
+                title: l10n.titleCardChat,
                 // subtitle: l10n.menuJobsSubtitle,
                 onTap: () {
                   // Xử lý khi nhấn vào Menu Jobs

@@ -263,11 +263,161 @@ abstract class AppLocalizations {
   /// **'Task'**
   String get taskTitle;
 
-  /// No description provided for @taskScheduleTitle.
+  /// No description provided for @workScheduleTitle.
   ///
   /// In en, this message translates to:
   /// **'Work Schedule'**
-  String get taskScheduleTitle;
+  String get workScheduleTitle;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get thisWeek;
+
+  /// No description provided for @nextWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Next week'**
+  String get nextWeek;
+
+  /// No description provided for @previousWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous week'**
+  String get previousWeek;
+
+  /// No description provided for @shiftMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning shift'**
+  String get shiftMorning;
+
+  /// No description provided for @shiftNoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Noon shift'**
+  String get shiftNoon;
+
+  /// No description provided for @shiftEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening shift'**
+  String get shiftEvening;
+
+  /// No description provided for @dayOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Day off'**
+  String get dayOff;
+
+  /// No description provided for @onTime.
+  ///
+  /// In en, this message translates to:
+  /// **'On time'**
+  String get onTime;
+
+  /// No description provided for @leftEarly.
+  ///
+  /// In en, this message translates to:
+  /// **'Left early'**
+  String get leftEarly;
+
+  /// No description provided for @late.
+  ///
+  /// In en, this message translates to:
+  /// **'Late'**
+  String get late;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @forgotCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot to check in'**
+  String get forgotCheckIn;
+
+  /// No description provided for @notStartedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not started yet'**
+  String get notStartedYet;
+
+  /// No description provided for @leaveRegisterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave Registration List'**
+  String get leaveRegisterTitle;
+
+  /// No description provided for @leaveRegisterMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month {month} Year {year}'**
+  String leaveRegisterMonth(Object month, Object year);
+
+  /// No description provided for @leaveRegisterHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can send your leave request here'**
+  String get leaveRegisterHint;
+
+  /// No description provided for @registerLeaveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register for leave'**
+  String get registerLeaveTitle;
+
+  /// No description provided for @leaveDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave date'**
+  String get leaveDate;
+
+  /// No description provided for @selectShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Select shift'**
+  String get selectShift;
+
+  /// No description provided for @reasonLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for leave'**
+  String get reasonLeave;
+
+  /// No description provided for @submitLeaveRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit leave request'**
+  String get submitLeaveRequest;
+
+  /// No description provided for @statusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get statusApproved;
+
+  /// No description provided for @statusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get statusRejected;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get statusPending;
+
+  /// No description provided for @statusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get statusUnknown;
 
   /// No description provided for @taskScheduleCommon.
   ///
@@ -335,28 +485,22 @@ abstract class AppLocalizations {
   /// **'Salary Slip'**
   String get taskSalarySlip;
 
-  /// No description provided for @emailError.
+  /// No description provided for @notificationTitle.
   ///
   /// In en, this message translates to:
-  /// **'Invalid email!'**
-  String get emailError;
+  /// **'Notification'**
+  String get notificationTitle;
 
-  /// No description provided for @passwordLength.
+  /// No description provided for @accountTitle.
   ///
   /// In en, this message translates to:
-  /// **'Password must be at least 6 characters!'**
-  String get passwordLength;
-
-  /// No description provided for @passwordConfirm.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirmation password does not match!'**
-  String get passwordConfirm;
+  /// **'Account'**
+  String get accountTitle;
 
   /// No description provided for @companyInformation.
   ///
   /// In en, this message translates to:
-  /// **'Information company'**
+  /// **'Company Information'**
   String get companyInformation;
 
   /// No description provided for @language.
@@ -368,8 +512,98 @@ abstract class AppLocalizations {
   /// No description provided for @logout.
   ///
   /// In en, this message translates to:
-  /// **'Sign out'**
+  /// **'Logout'**
   String get logout;
+
+  /// No description provided for @guest.
+  ///
+  /// In en, this message translates to:
+  /// **'guest'**
+  String get guest;
+
+  /// No description provided for @pleaseSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'please sign in'**
+  String get pleaseSignIn;
+
+  /// No description provided for @confirmLogoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'confirm logout'**
+  String get confirmLogoutTitle;
+
+  /// No description provided for @confirmLogoutMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'confirm you want to logout?'**
+  String get confirmLogoutMessage;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'cancel'**
+  String get cancel;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'confirm'**
+  String get confirm;
+
+  /// No description provided for @logoutSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'logout successful'**
+  String get logoutSuccess;
+
+  /// No description provided for @loginSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Login successful'**
+  String get loginSuccess;
+
+  /// No description provided for @invalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid username or password.'**
+  String get invalidCredentials;
+
+  /// No description provided for @serverError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error occurred. Please try again later.'**
+  String get serverError;
+
+  /// No description provided for @unknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'An unknown error has occurred.'**
+  String get unknownError;
+
+  /// No description provided for @authSessionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication session has expired.'**
+  String get authSessionExpired;
+
+  /// No description provided for @invalidInput.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid input provided.'**
+  String get invalidInput;
+
+  /// No description provided for @notificationsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} notifications available.'**
+  String notificationsAvailable(Object count);
+
+  /// No description provided for @noNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications available.'**
+  String get noNotifications;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
