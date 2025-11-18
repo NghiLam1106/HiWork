@@ -7,11 +7,17 @@ class AppFontSize {
   static const double title_22 = 28;
   static const double title_20 = 20;
   static const double title_18 = 18;
+  static const double title_16 = 16;
+  static const double title_14 = 14;
+  static const double title_12 = 12;
+  
+  
 
 
   static const double content_26 = 26;
   static const double content_22 = 22;
   static const double content_20 = 20;
+  static const double content_18 = 18;
   static const double content_16 = 16;
   static const double content_14 = 14;
   static const double content_12 = 12;

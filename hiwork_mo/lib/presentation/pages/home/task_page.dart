@@ -4,6 +4,7 @@ import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/core/constants/app_padding.dart';
 import 'package:hiwork_mo/l10n/app_localizations.dart';
+import 'package:hiwork_mo/presentation/route/app_route.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
@@ -18,6 +19,7 @@ class TaskPage extends StatelessWidget {
           style: TextStyle(
             color: Color.fromRGBO(22, 98, 179, 1.0),
             fontWeight: FontWeight.bold,
+            fontSize: AppFontSize.title_20
           ),
         ),
         backgroundColor: Colors.white,
@@ -31,12 +33,14 @@ class TaskPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSection(
-              title: l10n.taskScheduleTitle,
+              title: l10n.workScheduleTitle,
               items: [
                 TaskItem(
                   imagePath: AppAssets.calendarr,
                   label: l10n.taskScheduleCommon,
-                  onTap: () {},
+                  onTap: () {
+                    // Navigator.pushNamed(context, AppRoute.schedule);
+                  },
                 ),
                 TaskItem(
                   imagePath: AppAssets.editCalendar,
@@ -113,7 +117,7 @@ class TaskPage extends StatelessWidget {
               style: TextStyle(
                 color: const Color.fromARGB(255, 95, 95, 79),
                 fontWeight: FontWeight.bold,
-                fontSize: AppFontSize.title_20,
+                fontSize: AppFontSize.title_16,
               ),
             ),
             AppPadding.h12,
@@ -163,7 +167,7 @@ class TaskItem extends StatelessWidget {
               label,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: AppFontSize.content_16,
+                fontSize: AppFontSize.content_12,
               ),
             ),
           ],

@@ -7,60 +7,37 @@ abstract class AuthEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-// ---- Register ----
-class RegisterFullnameChanged extends AuthEvent {
-  final String fullname;
-  const RegisterFullnameChanged(this.fullname);
+// 1. Sự kiện: Kiểm tra trạng thái ban đầu khi khởi động ứng dụng
+class AppStarted extends AuthEvent {}
 
-  @override
-  List<Object?> get props => [fullname];
-}
-
-class RegisterEmailChanged extends AuthEvent {
+// 2. Sự kiện: Người dùng yêu cầu Đăng nhập
+class LogInRequested extends AuthEvent {
   final String email;
-  const RegisterEmailChanged(this.email);
-
-  @override
-  List<Object?> get props => [email];
-}
-
-class RegisterPasswordChanged extends AuthEvent {
   final String password;
-  const RegisterPasswordChanged(this.password);
+
+  const LogInRequested({required this.email, required this.password, required String fullName});
 
   @override
-  List<Object?> get props => [password];
+  List<Object?> get props => [email, password];
 }
 
-class RegisterConfirmPasswordChanged extends AuthEvent {
-  final String confirmPassword;
-  const RegisterConfirmPasswordChanged(this.confirmPassword);
+// 3. Sự kiện: Người dùng yêu cầu Đăng xuất (ĐÃ THÊM)
+class LogOutRequested extends AuthEvent {
 
-  @override
-  List<Object?> get props => [confirmPassword];
 }
 
-class RegisterSubmitted extends AuthEvent {
-  const RegisterSubmitted();
-}
-
-// ---- Login ----
-class LoginEmailChanged extends AuthEvent {
+// 4. Sự kiện: Người dùng yêu cầu Đăng ký (ĐÃ THÊM)
+class RegisterRequested extends AuthEvent {
+  final String fullName;
   final String email;
-  const LoginEmailChanged(this.email);
-
-  @override
-  List<Object?> get props => [email];
-}
-
-class LoginPasswordChanged extends AuthEvent {
   final String password;
-  const LoginPasswordChanged(this.password);
+
+  const RegisterRequested({
+    required this.fullName,
+    required this.email,
+    required this.password,
+  });
 
   @override
-  List<Object?> get props => [password];
-}
-
-class LoginSubmitted extends AuthEvent {
-  const LoginSubmitted();
+  List<Object?> get props => [fullName, email, password];
 }

@@ -38,13 +38,13 @@ class InputField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: const TextStyle(
-            fontSize: 20,
+            fontSize: 15,
             color: Colors.grey,
             fontWeight: FontWeight.w500,
           ),
           prefixIcon: Icon(icon, color: Colors.grey),
           contentPadding: const EdgeInsets.symmetric(
-            vertical: 22,
+            vertical: 18,
             horizontal: 16,
           ),
           enabledBorder: OutlineInputBorder(

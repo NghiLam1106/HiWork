@@ -1,73 +1,39 @@
 import 'package:equatable/equatable.dart';
-import 'package:hiwork_mo/data/model/user_model.dart';
+import 'package:hiwork_mo/domain/entities/user_entity.dart';
 
-class AuthState extends Equatable {
-  final UserModel registerUser;     // full name, email, pass
-  final String confirmPassword;
-
-  final String loginEmail;
-  final String loginPassword;
-
-  final bool isSubmitting;
-  final bool isSuccess;
-  final bool isFailure;
-  final String? errorMessage;
-
-  const AuthState({
-    required this.registerUser,
-    required this.confirmPassword,
-    required this.loginEmail,
-    required this.loginPassword,
-    required this.isSubmitting,
-    required this.isSuccess,
-    required this.isFailure,
-    this.errorMessage,
-  });
-
-  factory AuthState.initial() {
-    return AuthState(
-      registerUser: UserModel.empty(),
-      confirmPassword: '',
-      loginEmail: '',
-      loginPassword: '',
-      isSubmitting: false,
-      isSuccess: false,
-      isFailure: false,
-      errorMessage: null,
-    );
-  }
-
-  AuthState copyWith({
-    UserModel? registerUser,
-    String? confirmPassword,
-    String? loginEmail,
-    String? loginPassword,
-    bool? isSubmitting,
-    bool? isSuccess,
-    bool? isFailure,
-    String? errorMessage,
-  }) {
-    return AuthState(
-      registerUser: registerUser ?? this.registerUser,
-      confirmPassword: confirmPassword ?? this.confirmPassword,
-      loginEmail: loginEmail ?? this.loginEmail,
-      loginPassword: loginPassword ?? this.loginPassword,
-      isSubmitting: isSubmitting ?? this.isSubmitting,
-      isSuccess: isSuccess ?? this.isSuccess,
-      isFailure: isFailure ?? this.isFailure,
-      errorMessage: errorMessage,
-    );
-  }
+abstract class AuthState extends Equatable {
+  const AuthState();
 
   @override
-  List<Object?> get props => [
-        registerUser,
-        confirmPassword,
-        loginEmail,
-        loginPassword,
-        isSubmitting,
-        isSuccess,
-        isFailure,
-        errorMessage,
-      ];
+  // --- 1. SỬA LỖI Ở ĐÂY (Thêm dấu ? sau Object) ---
+  List<Object?> get props => [];
+}
+
+// Trạng thái ban đầu (Chưa xác định)
+class AuthInitial extends AuthState {}
+
+// Trạng thái: Đang tải hoặc xử lý
+class AuthLoading extends AuthState {}
+
+// Trạng thái: Đã xác thực và có thông tin người dùng
+class Authenticated extends AuthState {
+  final UserEntity user;
+  const Authenticated({required this.user});
+
+  @override
+  // --- 2. SỬA LỖI Ở ĐÂY (Thêm dấu ? sau Object) ---
+  List<Object?> get props => [user];
+}
+
+// Trạng thái: Chưa xác thực
+class Unauthenticated extends AuthState {}
+
+// Trạng thái: Lỗi
+class AuthError extends AuthState {
+  final String message;
+  const AuthError({required this.message});
+
+  @override
+  // --- 3. SỬA LỖI Ở ĐÂY (Thêm dấu ? sau Object) ---
+  List<Object?> get props => [message];
 }

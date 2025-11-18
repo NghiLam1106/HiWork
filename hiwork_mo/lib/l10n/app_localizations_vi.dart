@@ -93,7 +93,84 @@ class AppLocalizationsVi extends AppLocalizations {
   String get taskTitle => 'Tác vụ';
 
   @override
-  String get taskScheduleTitle => 'Lịch làm việc';
+  String get workScheduleTitle => 'Lịch làm việc';
+
+  @override
+  String get thisWeek => 'Tuần này';
+
+  @override
+  String get nextWeek => 'Tuần sau';
+
+  @override
+  String get previousWeek => 'Tuần trước';
+
+  @override
+  String get shiftMorning => 'Ca sáng';
+
+  @override
+  String get shiftNoon => 'Ca trưa';
+
+  @override
+  String get shiftEvening => 'Ca tối';
+
+  @override
+  String get dayOff => 'Nghỉ';
+
+  @override
+  String get onTime => 'Đúng giờ';
+
+  @override
+  String get leftEarly => 'Về sớm';
+
+  @override
+  String get late => 'Đi muộn';
+
+  @override
+  String get today => 'Hôm nay';
+
+  @override
+  String get forgotCheckIn => 'Quên chấm công';
+
+  @override
+  String get notStartedYet => 'Chưa đến giờ';
+
+  @override
+  String get leaveRegisterTitle => 'Danh sách đăng ký nghỉ';
+
+  @override
+  String leaveRegisterMonth(Object month, Object year) {
+    return 'Tháng $month năm $year';
+  }
+
+  @override
+  String get leaveRegisterHint => 'Bạn có thể gửi yêu cầu đăng ký nghỉ phép tại đây';
+
+  @override
+  String get registerLeaveTitle => 'Đăng ký nghỉ';
+
+  @override
+  String get leaveDate => 'Ngày nghỉ';
+
+  @override
+  String get selectShift => 'Chọn ca nghỉ';
+
+  @override
+  String get reasonLeave => 'Lý do xin nghỉ';
+
+  @override
+  String get submitLeaveRequest => 'Gửi đăng ký nghỉ';
+
+  @override
+  String get statusApproved => 'Đã duyệt';
+
+  @override
+  String get statusRejected => 'Đã từ chối';
+
+  @override
+  String get statusPending => 'Chờ duyệt';
+
+  @override
+  String get statusUnknown => 'Không xác định';
 
   @override
   String get taskScheduleCommon => 'Lịch làm việc chung';
@@ -129,13 +206,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String get taskSalarySlip => 'Phiếu lương';
 
   @override
-  String get emailError => 'Email không hợp lệ!';
+  String get notificationTitle => 'Thông báo';
 
   @override
-  String get passwordLength => 'Mật khẩu phải có ít nhất 6 ký tự!';
-
-  @override
-  String get passwordConfirm => 'Mật khẩu xác nhận không khớp!';
+  String get accountTitle => 'Tài khoản';
 
   @override
   String get companyInformation => 'Thông tin công ty';
@@ -145,4 +219,51 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get logout => 'Đăng xuất';
+
+  @override
+  String get guest => 'Khách';
+
+  @override
+  String get pleaseSignIn => 'Vui lòng đăng nhập';
+
+  @override
+  String get confirmLogoutTitle => 'Xác nhận đăng xuất';
+
+  @override
+  String get confirmLogoutMessage => 'Bạn có chắc chắn muốn đăng xuất không?';
+
+  @override
+  String get cancel => 'Hủy';
+
+  @override
+  String get confirm => 'Xác nhận';
+
+  @override
+  String get logoutSuccess => 'Đăng xuất thành công';
+
+  @override
+  String get loginSuccess => 'Đăng nhập thành công';
+
+  @override
+  String get invalidCredentials => 'Tên đăng nhập hoặc mật khẩu không hợp lệ.';
+
+  @override
+  String get serverError => 'Đã xảy ra lỗi máy chủ. Vui lòng thử lại sau.';
+
+  @override
+  String get unknownError => 'Đã xảy ra lỗi không xác định.';
+
+  @override
+  String get authSessionExpired => 'Phiên đăng nhập đã hết hạn.';
+
+  @override
+  String get invalidInput => 'Dữ liệu nhập vào không hợp lệ.';
+
+  @override
+  String notificationsAvailable(Object count) {
+    return 'Bạn có $count thông báo mới.';
+  }
+
+  @override
+  String get noNotifications => 'Không có thông báo nào.';
 }
