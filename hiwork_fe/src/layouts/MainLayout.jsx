@@ -1,13 +1,18 @@
 
-import React from "react";
-import Sidebar from "./Sidebar";;
-import "./css/Sidebar.css";
+import { Outlet } from 'react-router-dom'; // 1. Import Outlet
+import Sidebar from '../layouts/Sidebar';
 
-export default function AdminLayout({ children }) {
+const MainLayout = () => {
   return (
-    <div className="admin-container">
+    <div className="d-flex">
       <Sidebar />
-        <main className="main-content">{children}</main>
+
+      {/* Phần nội dung chính sẽ thay đổi */}
+      <div className="flex-grow-1 p-4">
+        <Outlet />
+      </div>
     </div>
   );
-}
+};
+
+export default MainLayout;
