@@ -212,7 +212,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountTitle => 'Account';
 
   @override
-  String get companyInformation => 'Company Information';
+  String get companyInformation => 'Information company';
 
   @override
   String get language => 'Language';

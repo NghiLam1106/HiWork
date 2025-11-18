@@ -5,11 +5,17 @@ import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/core/constants/app_padding.dart';
+import 'package:hiwork_mo/data/repository/auth/auth_repository.dart';
 import 'package:hiwork_mo/l10n/app_localizations.dart';
 import 'package:hiwork_mo/presentation/bloc/auth/auth_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/auth/auth_event.dart';
 import 'package:hiwork_mo/presentation/bloc/auth/auth_state.dart';
 import 'package:hiwork_mo/presentation/widgets/input_field.dart';
+import 'package:lottie/lottie.dart';
+
+import '../../bloc/auth/auth_bloc.dart';
+import '../../bloc/auth/auth_event.dart';
+import '../../bloc/auth/auth_state.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

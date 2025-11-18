@@ -4,18 +4,22 @@ class InputField extends StatelessWidget {
   final IconData icon;
   final String hintText;
   final bool obscureText;
+  final ValueChanged<String>? onChanged;
+  final TextEditingController? controller;
 
   const InputField({
     super.key,
     required this.icon,
     required this.hintText,
-    this.obscureText = false, required TextEditingController controller,
+    this.obscureText = false,
+    this.onChanged,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 35),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
@@ -28,7 +32,9 @@ class InputField extends StatelessWidget {
         ],
       ),
       child: TextField(
+        controller: controller,
         obscureText: obscureText,
+        onChanged: onChanged,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: const TextStyle(

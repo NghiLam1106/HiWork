@@ -494,13 +494,13 @@ abstract class AppLocalizations {
   /// No description provided for @accountTitle.
   ///
   /// In en, this message translates to:
-  /// **'Account'**
-  String get accountTitle;
+  /// **'Confirmation password does not match!'**
+  String get passwordConfirm;
 
   /// No description provided for @companyInformation.
   ///
   /// In en, this message translates to:
-  /// **'Company Information'**
+  /// **'Information company'**
   String get companyInformation;
 
   /// No description provided for @language.
@@ -512,7 +512,7 @@ abstract class AppLocalizations {
   /// No description provided for @logout.
   ///
   /// In en, this message translates to:
-  /// **'Logout'**
+  /// **'Sign out'**
   String get logout;
 
   /// No description provided for @guest.
