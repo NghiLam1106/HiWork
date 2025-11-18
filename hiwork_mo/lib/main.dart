@@ -5,7 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 
 // Import Dependency Injection (DI)
-import 'package:hiwork_mo/core/injection/dependency_injection.dart' as di; 
+import 'package:hiwork_mo/core/injection/dependency_injection.dart' as di;
+import 'package:hiwork_mo/l10n/app_localizations.dart'; 
 
 // Import các BLoC
 import 'package:hiwork_mo/presentation/bloc/auth/auth_bloc.dart';
