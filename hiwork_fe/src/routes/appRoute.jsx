@@ -7,6 +7,9 @@ import Profile from "../page/profile/profilePage";
 import Position from "../page/position/positionPage";
 import AddPosition from "../page/position/addPositionPage";
 import DetailPosition from "../page/position/detailPositionPage";
+import Shift from "../page/shift/shiftPage";
+import AddShift from "../page/shift/addShiftsPage";
+import DetailShift from "../page/shift/detailShiftsPage";
 
 // 1. Import 2 component mới
 import ProtectedRoute from "./ProtectedRoute"; // (Kiểm tra lại đường dẫn file)
@@ -38,11 +41,14 @@ const AppRoutes = () => (
         }
       >
         <Route path="/home" element={<Home />} />
-        <Route path="/nhan-vien/danh-sach" element={<User />} />
+        <Route path="/nhan-vien" element={<User />} />
         <Route path="/nhan-vien/:id" element={<Profile />} />
         <Route path="/vi-tri/them-moi" element={<AddPosition />} />
-        <Route path="/vi-tri/danh-sach" element={<Position />} />
-        <Route path="/vi-tri/danh-sach/:id" element={<DetailPosition />} />
+        <Route path="/vi-tri" element={<Position />} />
+        <Route path="/vi-tri/:id" element={<DetailPosition />} />
+        <Route path="/ca-lam" element={<Shift />} />
+        <Route path="/ca-lam/them-moi" element={<AddShift />} />
+        <Route path="/ca-lam/:id" element={<DetailShift />} />
       </Route>
     </Routes>
   </BrowserRouter>

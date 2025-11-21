@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt, FaEye, FaPlus } from "react-icons/fa";
+import './css/Pagination.css';
 
 const EmployeeTable = () => {
   const employees = [
@@ -165,7 +166,7 @@ const EmployeeTable = () => {
 
         <div className="card-footer bg-white py-3">
           <nav aria-label="Page navigation">
-            <ul className="pagination justify-content-end mb-0 pagination-sm">
+            <ul className="pagination justify-content-end mb-0 pagination-sm custom-pagination">
               <li className="page-item disabled">
                 <a className="page-link" href="#">
                   Trước
