@@ -24,11 +24,11 @@ app.get('/', (req, res) => {
 });
 
 // Route xác thực
-app.use('/api/auth', authRoutes);
+app.use('/api/admin/auth', authRoutes);
 
-app.use('/api/positions', positionRoutes);
+app.use('/api/admin/positions', positionRoutes);
 
-app.use('/api/shifts', shiftsRoutes);
+app.use('/api/admin/shifts', shiftsRoutes);
 
 // Chạy server cho phép thiết bị ngoài kết nối
 app.listen(PORT, '0.0.0.0', () => {

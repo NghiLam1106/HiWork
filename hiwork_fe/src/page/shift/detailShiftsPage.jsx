@@ -77,10 +77,10 @@ const DetailShift = () => {
       let response;
       if (id) {
         // Update ca làm
-        response = await apiClient.put(`/shifts/${id}`, payload);
+        response = await apiClient.put(`/admin/shifts/${id}`, payload);
       } else {
         // Thêm mới ca làm
-        response = await apiClient.post("/shifts/them-moi", payload);
+        response = await apiClient.post("/admin/shifts/them-moi", payload);
       }
 
       if (response.status === 200 || response.status === 201) {

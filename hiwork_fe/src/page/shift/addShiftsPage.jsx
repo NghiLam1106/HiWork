@@ -55,7 +55,7 @@ const AddShift = () => {
     setIsLoading(true);
 
     try {
-      const response = await apiClient.post("/shifts/them-moi", payload);
+      const response = await apiClient.post("/admin/shifts/them-moi", payload);
 
       if (response.status === 200 || response.status === 201) {
         toast.success("Đã thêm ca làm thành công!");

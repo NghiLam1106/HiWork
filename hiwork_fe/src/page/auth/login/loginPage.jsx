@@ -6,7 +6,7 @@ import "../auth.css";
 import apiClient from "../../../api/clientAppi";
 
 const LoginPage = () => {
-  const [state, setState] = useState({ email: "", password: "" });
+  const [state, setState] = useState({ email: "", password: "", role: 1 });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate(); // Khởi tạo hook
@@ -21,25 +21,30 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const res = await apiClient.post("auth/login", state);
+      const res = await apiClient.post("/admin/auth/login", state);
 
       const data = res.data;
 
       if (data.user) {
         localStorage.setItem("token", data.user.firebaseToken);
+        if (data.user.user.role !== 0) {
+          toast.error("Bạn không có quyền truy cập vào trang này.");
+          setLoading(false);
+          return;
+        }
         toast.success("Đăng nhập thành công!");
-        navigate("/home");
+        navigate("/admin/home");
       } else {
         alert("Đăng nhập thành công nhưng không nhận được token.");
       }
 
     } catch (err) {
       if (err.response) {
-        setError(err.response.data.message || "Sai email hoặc mật khẩu!");
+        toast.error(err.response.data.message || "Sai email hoặc mật khẩu!");
       } else if (err.request) {
-        setError("Không thể kết nối tới máy chủ. Vui lòng thử lại.");
+        toast.error("Không thể kết nối tới máy chủ. Vui lòng thử lại.");
       } else {
-        setError("Đã xảy ra lỗi. Vui lòng thử lại.");
+        toast.error("Đã xảy ra lỗi. Vui lòng thử lại.");
       }
       console.error("Login error:", err);
     }
@@ -52,8 +57,8 @@ const LoginPage = () => {
       <form onSubmit={handleSubmit}>
         <h1>Sign In</h1>
         <br/><br/><br/>
-        <input type="email" name="email" placeholder="Email" value={state.email} onChange={handleChange} />
-        <input type="password" name="password" placeholder="Password" value={state.password} onChange={handleChange} />
+        <input type="email" name="email" placeholder="Email" value={state.email} onChange={handleChange} required />
+        <input type="password" name="password" placeholder="Password" value={state.password} onChange={handleChange} required />
         {error && <p style={{ color: "red" }}>{error}</p>}
         <a href="#">Forgot your password?</a>
         <button type="submit" disabled={loading}>{loading ? "Signing In..." : "Sign In"}</button>

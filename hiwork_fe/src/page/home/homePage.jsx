@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPositionCount = async () => {
       try {
-        const res = await apiClient.get("/positions?limit=1"); // lấy 1 item để đọc pagination
+        const res = await apiClient.get("/admin/positions?limit=1"); // lấy 1 item để đọc pagination
         const total = res.data.pagination?.totalItems || 0; // backend trả về tổng số items
         setPositionCount(total);
       } catch (err) {

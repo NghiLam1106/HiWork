@@ -25,7 +25,7 @@ const AddPosition = () => {
     setIsLoading(true);
 
     try {
-      const response = await apiClient.post("/positions/them-moi", {
+      const response = await apiClient.post("/admin/positions/them-moi", {
         name: title,
       });
 
