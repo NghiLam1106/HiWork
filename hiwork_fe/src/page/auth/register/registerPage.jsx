@@ -26,14 +26,14 @@ const RegisterPage = () => {
     setError("");
 
     if (state.password !== state.confirmPassword) {
-      setError("Password và Confirm Password không khớp!");
+      toast.error("Password và Confirm Password không khớp!");
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await apiClient.post("auth/register", state);
+      const res = await apiClient.post("/admin/auth/register", state);
 
       const data = res.data;
       console.log("Register success:", data);
@@ -41,7 +41,7 @@ const RegisterPage = () => {
       if (data.user) {
         localStorage.setItem("token", data.user.firebaseToken);
         toast.success("Đăng ký thành công!");
-        navigate("/home");
+        navigate("/admin/home");
       } else {
         alert("Đăng ký thành công nhưng không nhận được token.");
       }
@@ -50,11 +50,11 @@ const RegisterPage = () => {
 
     } catch (err) {
       if (err.response) {
-        setError(err.response.data.message || "Đăng ký thất bại!");
+        toast.error(err.response.data.message || "Đăng ký thất bại!");
       } else if (err.request) {
-        setError("Không thể kết nối tới máy chủ. Vui lòng thử lại.");
+        toast.error("Không thể kết nối tới máy chủ. Vui lòng thử lại.");
       } else {
-        setError("Đã xảy ra lỗi. Vui lòng thử lại.");
+        toast.error("Đã xảy ra lỗi. Vui lòng thử lại.");
       }
       console.error("Register error:", err);
     }
@@ -66,23 +66,23 @@ const RegisterPage = () => {
     <div className="form-container sign-up-container">
       <form onSubmit={handleSubmit}>
         <h1>Create Account</h1>
-        <br /><br />
+        <br />
 
         <input type="text" name="username" placeholder="Username"
-          value={state.username} onChange={handleChange} />
+          value={state.username} onChange={handleChange} required />
 
         <input type="email" name="email" placeholder="Email"
-          value={state.email} onChange={handleChange} />
+          value={state.email} onChange={handleChange} required />
 
         <input type="password" name="password" placeholder="Password"
-          value={state.password} onChange={handleChange} />
+          value={state.password} onChange={handleChange} required />
 
         <input type="password" name="confirmPassword" placeholder="Confirm Password"
-          value={state.confirmPassword} onChange={handleChange} />
+          value={state.confirmPassword} onChange={handleChange} required />
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <br /><br />
+        <br />
         <button type="submit" disabled={loading}>
           {loading ? "Signing Up..." : "Sign Up"}
         </button>

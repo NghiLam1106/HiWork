@@ -44,7 +44,7 @@ const PositionDetail = () => {
 
     setIsSaving(true);
     try {
-      const res = await apiClient.put(`/positions/${id}`, { name: title });
+      const res = await apiClient.put(`/admin/positions/${id}`, { name: title });
 
       if (res.status === 200) {
         toast.success("Cập nhật vị trí thành công!"); // toast khi thành công

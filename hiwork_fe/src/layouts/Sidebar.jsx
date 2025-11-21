@@ -28,37 +28,37 @@ const Sidebar = () => {
   // Cấu hình danh sách menu
   const menuItems = [
     {
-      path: "/home",
+      path: "/admin/home",
       name: "Dashboard",
       icon: <FaTachometerAlt />,
     },
     {
       name: "Nhân viên",
       icon: <FaUsers />,
-      path: "/nhan-vien",
+      path: "/admin/nhan-vien",
     },
     {
       name: "Vị trí",
       icon: <FaBuilding />,
-      path: "/vi-tri",
+      path: "/admin/vi-tri",
     },
     {
-      path: "/ca-lam",
+      path: "/admin/ca-lam",
       name: "Ca làm",
       icon: <FaShoppingBag />,
     },
     {
-      path: "/cham-cong",
+      path: "/admin/cham-cong",
       name: "Chấm công",
       icon: <FaRegCalendarCheck />,
     },
     {
-      path: "/bao-cao",
+      path: "/admin/bao-cao",
       name: "Báo cáo",
       icon: <FaChartBar />,
     },
     {
-      path: "/cai-dat",
+      path: "/admin/cai-dat",
       name: "Cài đặt",
       icon: <FaCog />,
     },

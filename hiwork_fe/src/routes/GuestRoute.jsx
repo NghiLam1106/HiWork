@@ -9,7 +9,7 @@ const GuestRoute = ({ children }) => {
   if (token) {
     // Nếu ĐÃ đăng nhập, chuyển hướng sang trang Home
     // 'replace' sẽ thay thế lịch sử, người dùng không thể nhấn "Back" lại
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/admin/home" replace />;
   }
 
   // Nếu CHƯA đăng nhập, hiển thị component con (chính là trang <Auth />)

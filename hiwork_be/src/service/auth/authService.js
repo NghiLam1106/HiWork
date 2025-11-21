@@ -1,13 +1,13 @@
-const bcrypt = require('bcrypt');
-const userRepository = require('../../repository/auth/authRepository');
-const { auth, admin } = require('../../config/firebaseConfig');
+const bcrypt = require("bcrypt");
+const userRepository = require("../../repository/auth/authRepository");
+const { auth, admin } = require("../../config/firebaseConfig");
 
 const registerUser = async (userData) => {
   const { username, email, password } = userData;
 
   const existingUser = await userRepository.findUserByEmail(email);
   if (existingUser) {
-    throw new Error('Email đã được sử dụng');
+    throw new Error("Email đã được sử dụng");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -16,7 +16,7 @@ const registerUser = async (userData) => {
     username,
     email,
     password: hashedPassword,
-    role: '2',
+    role: "0",
   });
 
   await auth.createUser({
@@ -27,7 +27,7 @@ const registerUser = async (userData) => {
   });
 
   // Gán role vào custom claims
-  await admin.auth().setCustomUserClaims(newUser.id.toString(), { role: '2' });
+  await admin.auth().setCustomUserClaims(newUser.id.toString(), { role: "0" });
 
   return newUser;
 };
@@ -63,6 +63,11 @@ const loginUser = async (credentials) => {
   // Trả về thông tin user + Firebase token
   return {
     firebaseToken: firebaseData.idToken,
+    user: {
+      id: user.id,
+      name: user.name,
+      role: user.role,
+    },
   };
 };
 

@@ -19,7 +19,7 @@ const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
       {/* Route mặc định, tự động chuyển hướng */}
-      <Route path="/" element={<Navigate to="/home" replace />} />
+      <Route path="/" element={<Navigate to="/admin/home" replace />} />
 
       {/* Bọc <Auth /> bằng <GuestRoute /> */}
       <Route
@@ -40,15 +40,15 @@ const AppRoutes = () => (
           </ProtectedRoute>
         }
       >
-        <Route path="/home" element={<Home />} />
-        <Route path="/nhan-vien" element={<User />} />
-        <Route path="/nhan-vien/:id" element={<Profile />} />
-        <Route path="/vi-tri/them-moi" element={<AddPosition />} />
-        <Route path="/vi-tri" element={<Position />} />
-        <Route path="/vi-tri/:id" element={<DetailPosition />} />
-        <Route path="/ca-lam" element={<Shift />} />
-        <Route path="/ca-lam/them-moi" element={<AddShift />} />
-        <Route path="/ca-lam/:id" element={<DetailShift />} />
+        <Route path="/admin/home" element={<Home />} />
+        <Route path="/admin/nhan-vien" element={<User />} />
+        <Route path="/admin/nhan-vien/:id" element={<Profile />} />
+        <Route path="/admin/vi-tri/them-moi" element={<AddPosition />} />
+        <Route path="/admin/vi-tri" element={<Position />} />
+        <Route path="/admin/vi-tri/:id" element={<DetailPosition />} />
+        <Route path="/admin/ca-lam" element={<Shift />} />
+        <Route path="/admin/ca-lam/them-moi" element={<AddShift />} />
+        <Route path="/admin/ca-lam/:id" element={<DetailShift />} />
       </Route>
     </Routes>
   </BrowserRouter>
