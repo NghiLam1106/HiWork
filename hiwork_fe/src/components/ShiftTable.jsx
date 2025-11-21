@@ -5,36 +5,36 @@ import { toast } from "react-hot-toast";
 import apiClient from "../api/clientAppi";
 import ConfirmPopup from "./ConfirmPopup";
 
-const PositionTable = () => {
-  const [positions, setPositions] = useState([]);
+const ShiftTable = () => {
+  const [shifts, setShifts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [showConfirm, setShowConfirm] = useState(false);
-  const [deletePosition, setDeletePosition] = useState(null); // lưu object position
+  const [deleteShift, setDeleteShift] = useState(null);
 
-  const fetchPositions = async (pageNumber = 1) => {
+  const fetchShifts = async (pageNumber = 1) => {
     setLoading(true);
     try {
-      const res = await apiClient.get(`/positions?page=${pageNumber}&limit=5`);
+      const res = await apiClient.get(`/shifts?page=${pageNumber}&limit=5`);
       const data = res.data;
 
-      setPositions(data.data || []);
+      setShifts(data.data || []);
       setPage(data.pagination?.currentPage || 1);
       setTotalPages(data.pagination?.totalPages || 1);
       setError(null);
     } catch (err) {
       console.error(err);
-      setError("Không thể tải danh sách vị trí.");
+      setError("Không thể tải danh sách ca làm.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPositions(page);
+    fetchShifts(page);
   }, [page]);
 
   const handlePageChange = (newPage) => {
@@ -43,45 +43,45 @@ const PositionTable = () => {
     }
   };
 
-  const handleDeleteClick = (position) => {
-    setDeletePosition(position); // lưu toàn bộ object
+  const handleDeleteClick = (shift) => {
+    setDeleteShift(shift);
     setShowConfirm(true);
   };
 
   const handleConfirmDelete = async () => {
     setShowConfirm(false);
-    if (!deletePosition) return;
+    if (!deleteShift) return;
 
     try {
-      const res = await apiClient.delete(`/positions/${deletePosition.id}`);
+      const res = await apiClient.delete(`/shifts/${deleteShift.id}`);
       if (res.status === 200) {
-        toast.success(`Xóa vị trí "${deletePosition.name}" thành công!`);
-        fetchPositions(page);
+        toast.success(`Xóa "${deleteShift.name}" thành công!`);
+        fetchShifts(page);
       } else {
         toast.error("Xóa không thành công!");
       }
     } catch (err) {
       console.error(err);
       toast.error(
-        err.response?.data?.message || "Đã xảy ra lỗi khi xóa vị trí."
+        err.response?.data?.message || "Đã xảy ra lỗi khi xóa ca làm."
       );
     } finally {
-      setDeletePosition(null);
+      setDeleteShift(null);
     }
   };
 
   const handleCancelDelete = () => {
     setShowConfirm(false);
-    setDeletePosition(null);
+    setDeleteShift(null);
   };
 
   return (
     <div className="container-fluid mt-4">
       <div className="card shadow-sm border-0 rounded-3">
         <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-          <h5 className="mb-0 fw-bold text-primary">Danh sách vị trí</h5>
+          <h5 className="mb-0 fw-bold text-primary">Danh sách ca làm</h5>
           <Link
-            to="/vi-tri/them-moi"
+            to="/ca-lam/them-moi"
             className="btn btn-primary btn-sm d-flex align-items-center gap-2"
           >
             <FaPlus /> Thêm mới
@@ -93,61 +93,70 @@ const PositionTable = () => {
             <table className="table table-hover align-middle mb-0">
               <thead className="table-light">
                 <tr>
-                  <th className="ps-4 py-3" style={{ width: "200px" }}>
-                    Mã ID
+                  <th className="ps-4 py-3" style={{ width: "120px" }}>
+                    ID
                   </th>
-                  <th className="ps-4 py-3">Tên vị trí</th>
-                  <th className="text-end pe-4 ps-4 py-3">Hành động</th>
+                  <th className="py-3">Tên ca làm</th>
+                  <th className="py-3">Giờ bắt đầu</th>
+                  <th className="py-3">Giờ kết thúc</th>
+                  <th className="text-end pe-4 py-3">Hành động</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="3" className="text-center py-3">
+                    <td colSpan="5" className="text-center py-3">
                       Đang tải dữ liệu...
                     </td>
                   </tr>
                 ) : error ? (
                   <tr>
-                    <td colSpan="3" className="text-center py-3 text-danger">
+                    <td colSpan="5" className="text-center py-3 text-danger">
                       {error}
                     </td>
                   </tr>
-                ) : positions.length === 0 ? (
+                ) : shifts.length === 0 ? (
                   <tr>
-                    <td colSpan="3" className="text-center py-3 text-muted">
+                    <td colSpan="5" className="text-center py-3 text-muted">
                       Không có dữ liệu
                     </td>
                   </tr>
                 ) : (
-                  positions.map((position) => (
-                    <tr key={position.id}>
+                  shifts.map((shift) => (
+                    <tr key={shift.id}>
                       <td className="ps-4">
                         <span
                           className="badge text-dark"
                           style={{ fontSize: 16 }}
                         >
-                          {position.id}
+                          {shift.id}
                         </span>
                       </td>
+
                       <td>
-                        <div className="fw-bold text-dark">{position.name}</div>
+                        <div className="fw-bold text-dark">{shift.name}</div>
                       </td>
+
+                      <td>{shift.startTime}</td>
+
+                      <td>{shift.endTime}</td>
+
                       <td className="text-end pe-4">
                         <div className="d-flex align-items-center justify-content-end gap-2">
                           <Link
-                            to={`/vi-tri/${position.id}`}
+                            to={`/ca-lam/${shift.id}`}
                             className="btn btn-primary btn-sm d-flex align-items-center justify-content-center"
                             style={{ width: "34px", height: "34px" }}
                             title="Xem chi tiết"
                           >
                             <FaEye />
                           </Link>
+
                           <button
                             className="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
                             style={{ width: "34px", height: "34px" }}
                             title="Xóa"
-                            onClick={() => handleDeleteClick(position)} // truyền cả object
+                            onClick={() => handleDeleteClick(shift)}
                           >
                             <FaTrashAlt />
                           </button>
@@ -211,11 +220,11 @@ const PositionTable = () => {
         </div>
       </div>
 
-      {/* Popup Xác nhận */}
+      {/* Popup xác nhận */}
       <ConfirmPopup
         show={showConfirm}
         title="Xác nhận xóa"
-        message={`Bạn có chắc chắn muốn xóa vị trí "${deletePosition?.name}" không?`}
+        message={`Bạn có chắc chắn muốn xóa ca làm "${deleteShift?.name}" không?`}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
       />
@@ -223,4 +232,4 @@ const PositionTable = () => {
   );
 };
 
-export default PositionTable;
+export default ShiftTable;

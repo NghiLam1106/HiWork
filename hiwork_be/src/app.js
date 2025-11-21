@@ -8,6 +8,7 @@ require('./config/firebaseConfig');
 // Import Routes
 const authRoutes = require('./routes/authRoutes');
 const positionRoutes = require('./routes/positionRoute');
+const shiftsRoutes = require('./routes/shiftsRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,6 +27,8 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 
 app.use('/api/positions', positionRoutes);
+
+app.use('/api/shifts', shiftsRoutes);
 
 // Chạy server cho phép thiết bị ngoài kết nối
 app.listen(PORT, '0.0.0.0', () => {

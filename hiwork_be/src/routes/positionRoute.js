@@ -1,27 +1,27 @@
-    const express = require('express');
-    const router = express.Router();
+// routes/position.routes.js
+const express = require('express');
+const router = express.Router();
 
-    const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../middleware/authMiddleware');
+const positionController = require('../controllers/position/positionController');
 
-    // Import controller tương ứng (giả sử bạn đã tạo)
-    const positionController = require('../controllers/position/positionController');
-    // Import middleware xác thực (để bảo vệ route này)
-    // const authMiddleware = require('../middleware/authMiddleware');
+// ----------------------------
+// POSITION ROUTES
+// ----------------------------
 
-    // Định nghĩa các endpoint
-    // GET /api/positions
-    router.get('/', positionController.getAllPositions);
+// Lấy danh sách tất cả vị trí
+router.get('/', positionController.getAllPositions);
 
-    // POST /api/positions (Cần đăng nhập mới được tạo)
-    router.post('/them-moi', authMiddleware, positionController.createPosition);
+// Tạo vị trí mới (Yêu cầu đăng nhập)
+router.post('/them-moi', authMiddleware, positionController.createPosition);
 
-    // GET /api/positions/:id
-    router.get('/:id', positionController.getPositionById);
+// Lấy chi tiết một vị trí theo ID
+router.get('/:id', positionController.getPositionById);
 
-    // PUT /api/positions/:id
-    router.put('/:id', authMiddleware, positionController.updatePosition);
+// Cập nhật vị trí theo ID
+router.put('/:id', authMiddleware, positionController.updatePosition);
 
-    // DELETE /api/positions/:id
-    router.delete('/:id', authMiddleware, positionController.deletePosition);
+// Xóa vị trí theo ID
+router.delete('/:id', authMiddleware, positionController.deletePosition);
 
-    module.exports = router;
+module.exports = router;

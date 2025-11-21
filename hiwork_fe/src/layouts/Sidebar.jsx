@@ -14,6 +14,7 @@ import {
   FaSignOutAlt,
   FaTachometerAlt,
   FaUsers,
+  FaShoppingBag,
   FaChevronDown, // Icon mũi tên xuống
   FaChevronRight, // Icon mũi tên phải
 } from "react-icons/fa";
@@ -34,19 +35,17 @@ const Sidebar = () => {
     {
       name: "Nhân viên",
       icon: <FaUsers />,
-      // Định nghĩa menu con
-      subItems: [
-        { path: "/nhan-vien/them-moi", name: "Thêm mới NV" },
-        { path: "/nhan-vien/danh-sach", name: "Danh sách NV" },
-      ],
+      path: "/nhan-vien",
     },
     {
       name: "Vị trí",
       icon: <FaBuilding />,
-      subItems: [
-        { path: "/vi-tri/them-moi", name: "Thêm mới Vị trí" },
-        { path: "/vi-tri/danh-sach", name: "Danh sách Vị trí" },
-      ],
+      path: "/vi-tri",
+    },
+    {
+      path: "/ca-lam",
+      name: "Ca làm",
+      icon: <FaShoppingBag />,
     },
     {
       path: "/cham-cong",
