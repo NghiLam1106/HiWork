@@ -2,21 +2,26 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Auth from "../page/auth/auth";
 import Home from "../page/home/homePage";
 import MainLayout from "../layouts/MainLayout";
+import User from "../page/user/userPage";
+import Profile from "../page/profile/profilePage";
+import Position from "../page/position/positionPage";
+import AddPosition from "../page/position/addPositionPage";
+import DetailPosition from "../page/position/detailPositionPage";
+import Shift from "../page/shift/shiftPage";
+import AddShift from "../page/shift/addShiftsPage";
+import DetailShift from "../page/shift/detailShiftsPage";
 
 // 1. Import 2 component mới
 import ProtectedRoute from "./ProtectedRoute"; // (Kiểm tra lại đường dẫn file)
-import GuestRoute from "./GuestRoute";     // (Kiểm tra lại đường dẫn file)
+import GuestRoute from "./GuestRoute"; // (Kiểm tra lại đường dẫn file)
 
 const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
-      {/* 2. Thêm route mặc định, tự động chuyển hướng */}
-      <Route
-        path="/"
-        element={<Navigate to="/home" replace />}
-      />
+      {/* Route mặc định, tự động chuyển hướng */}
+      <Route path="/" element={<Navigate to="/admin/home" replace />} />
 
-      {/* 3. Bọc <Auth /> bằng <GuestRoute /> */}
+      {/* Bọc <Auth /> bằng <GuestRoute /> */}
       <Route
         path="/auth"
         element={
@@ -26,17 +31,25 @@ const AppRoutes = () => (
         }
       />
 
-      {/* 4. Bọc <Home /> bằng <ProtectedRoute /> */}
+      {/* 4. Bọc các trang còn lại bằng <ProtectedRoute /> */}
       <Route
-        path="/home"
         element={
           <ProtectedRoute>
             <MainLayout>
-              <Home />
             </MainLayout>
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/admin/home" element={<Home />} />
+        <Route path="/admin/nhan-vien" element={<User />} />
+        <Route path="/admin/nhan-vien/:id" element={<Profile />} />
+        <Route path="/admin/vi-tri/them-moi" element={<AddPosition />} />
+        <Route path="/admin/vi-tri" element={<Position />} />
+        <Route path="/admin/vi-tri/:id" element={<DetailPosition />} />
+        <Route path="/admin/ca-lam" element={<Shift />} />
+        <Route path="/admin/ca-lam/them-moi" element={<AddShift />} />
+        <Route path="/admin/ca-lam/:id" element={<DetailShift />} />
+      </Route>
     </Routes>
   </BrowserRouter>
 );

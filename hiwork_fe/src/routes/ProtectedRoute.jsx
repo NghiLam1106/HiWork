@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (!token) {
     // Nếu CHƯA đăng nhập, chuyển hướng về trang Auth
-    return <Navigate to="/auth" replace />;
+    return <Navigate to="/admin/auth" replace />;
   }
 
   // Nếu ĐÃ đăng nhập, hiển thị component con (chính là trang <Home />)
