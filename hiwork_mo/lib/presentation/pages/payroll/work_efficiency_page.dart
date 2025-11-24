@@ -62,7 +62,7 @@ class _WorkEfficiencyPageState extends State<WorkEfficiencyPage> {
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: const Icon(
-                      Icons.arrow_back_ios,
+                      Icons.arrow_back,
                       size: 24,
                       color: Color(0xFF1A73E8),
                     ),
@@ -98,7 +98,7 @@ class _WorkEfficiencyPageState extends State<WorkEfficiencyPage> {
                         color: Color(0xFFE5E9F0),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.arrow_back_ios, size: 18),
+                      child: const Icon(Icons.arrow_back_ios, size: 16, color: Color(0xFF1A73E8)),
                     ),
                   ),
 
@@ -125,7 +125,7 @@ class _WorkEfficiencyPageState extends State<WorkEfficiencyPage> {
                           color: Color(0xFFE5E9F0),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.arrow_forward_ios, size: 18),
+                        child: const Icon(Icons.arrow_forward_ios, size: 16,color: Color(0xFF1A73E8)),
                       ),
                     ),
                 ],

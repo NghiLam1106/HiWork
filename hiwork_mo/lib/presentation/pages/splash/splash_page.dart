@@ -9,29 +9,37 @@ class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
   @override
-  _SplashPageState createState() => _SplashPageState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
+
   @override
   void initState() {
     super.initState();
-    _checkLogin();
+    _startApp();
   }
 
-  void _checkLogin() async {
-    // chờ 1.5s cho animation splash
+  Future<void> _startApp() async {
+    // Chờ splash hiển thị
     await Future.delayed(const Duration(seconds: 2));
 
-    User? user = FirebaseAuth.instance.currentUser;
+    // Kiểm tra FirebaseAuth sau khi Firebase đã được initialize từ main.dart
+    User? user;
+
+    try {
+      user = FirebaseAuth.instance.currentUser;
+    } catch (e) {
+      debugPrint("⚠️ FirebaseAuth chưa initialize hoặc lỗi: $e");
+    }
 
     if (!mounted) return;
 
     if (user != null) {
-      // ✅ đã đăng nhập → chuyển Home
+      // Đã login → vào Home
       Navigator.pushReplacementNamed(context, AppRoute.home);
     } else {
-      // ❌ chưa đăng nhập → chuyển Welcome/Login
+      // Chưa login → vào Welcome
       Navigator.pushReplacement(
         context,
         _createRoute(),
@@ -52,7 +60,10 @@ class _SplashPageState extends State<SplashPage> {
 
         return FadeTransition(
           opacity: animation,
-          child: SlideTransition(position: animation.drive(tween), child: child),
+          child: SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          ),
         );
       },
     );
@@ -60,6 +71,10 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Image.asset(AppAssets.logoText)));
+    return const Scaffold(
+      body: Center(
+        child: FlutterLogo(size: 120), // đổi lại logo của bạn
+      ),
+    );
   }
 }
