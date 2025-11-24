@@ -47,9 +47,6 @@ class _WorkSchedulePageState extends State<WorkSchedulePage> {
     }
   }
 
-  // --- [MỚI] BƯỚC 2: TÁCH LOGIC LẤY DỮ LIỆU ---
-  // Trong Clean Architecture, hàm này sẽ được thay thế bằng
-  // việc gọi Cubit/Bloc, ví dụ: context.read<WorkScheduleCubit>().fetchSchedule();
   void _loadDemoData() {
     setState(() {
       _isLoading = true;
@@ -146,20 +143,23 @@ class _WorkSchedulePageState extends State<WorkSchedulePage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6FA),
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Color(0xFF1A73E8)),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(
           l10n.workScheduleTitle,
           style: const TextStyle(
-            fontSize: 22,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF1662B3),
+            color: Color(0xFF1A73E8),
           ),
         ),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        elevation: 0.5,
         centerTitle: false,
-        iconTheme: const IconThemeData(color: Colors.black),
       ),
+
       body: Column(
         children: [
           _buildWeekHeader(l10n), // Widget này không đổi
@@ -185,35 +185,49 @@ class _WorkSchedulePageState extends State<WorkSchedulePage> {
   }
 
   Widget _buildWeekHeader(AppLocalizations l10n) {
+    final Color primaryBlue = const Color(0xFF1A73E8);
+
     return Column(
       children: [
         Container(height: 0.5, color: Colors.black26),
+
         Container(
           color: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.arrow_back_ios, size: 16, color: Colors.grey[700]),
-              const SizedBox(width: 10),
-              Column(
-                children: [
-                  Text(
-                    l10n.thisWeek,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  const Text(
-                    "3/11/2025 – 09/11/2025", // Dữ liệu giả lập
-                    style: TextStyle(fontSize: 13, color: Colors.grey),
-                  ),
-                ],
+              IconButton(
+                onPressed: () {
+                },
+                icon: Icon(Icons.arrow_back_ios, size: 18, color: primaryBlue),
               ),
-              const SizedBox(width: 10),
-              Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey[700]),
+
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "3/11/2025 – 09/11/2025", // Data mẫu
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(width: 6),
+                    Icon(Icons.keyboard_arrow_down, size: 20),
+                  ],
+                ),
+              ),
+
+              IconButton(
+                onPressed: () {
+                },
+                icon: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 18,
+                  color: primaryBlue,
+                ),
+              ),
             ],
           ),
         ),
@@ -221,9 +235,7 @@ class _WorkSchedulePageState extends State<WorkSchedulePage> {
     );
   }
 
-  // [SỬA] Dùng _DayScheduleViewModel thay vì Map
   Widget _buildDayItem(_DayScheduleViewModel item, AppLocalizations l10n) {
-    // Không cần gán biến nữa, dùng trực tiếp
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(color: Colors.white),

@@ -260,7 +260,6 @@ class _LeaveRequestPageState extends State<LeaveRequestPage> {
 
 
   // (Các hàm UI Components: _buildDatePicker, _buildShiftSelector, v.v... giữ nguyên)
-  // ... (Toàn bộ code UI gốc của bạn nằm ở đây)
   // ---------------- UI COMPONENTS -------------------
 
   Widget _buildDatePicker({
@@ -391,14 +390,15 @@ class _LeaveRequestPageState extends State<LeaveRequestPage> {
   }
 
   Future<void> _pickDate(bool isStart) async {
-    // --- 9. SỬA LỖI Ở ĐÂY ---
-    // Code cũ (trong ảnh): builder: const CustomCalendarDialog(),
-    // Code mới:
+    
     final result = await showDialog<DateTime>(
       context: context,
-      builder: (_) => const CustomCalendarDialog(),
+      builder: (_) => CustomCalendarDialog(
+        initialDate: isStart
+            ? (fromDate ?? DateTime.now())
+            : (toDate ?? DateTime.now()),
+      ),
     );
-    // --- (Kết thúc sửa lỗi) ---
 
     if (result != null) {
       setState(() {

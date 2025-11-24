@@ -6,7 +6,6 @@ import 'auth_event.dart';
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  // 2. SỬA TÊN LỚP: Dùng SignInUseCase
   final LogInUseCase logInUseCase;
   final AuthRepository authRepository; 
 
@@ -17,7 +16,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogOutRequested>(_onLogOutRequested); 
   }
 
-  // Khởi động: Kiểm tra token/tình trạng xác thực
   void _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     final isAuthenticated = await authRepository.isAuthenticated();
     if (isAuthenticated) {
@@ -26,7 +24,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         fullName: 'Lâm Nghi', 
         email: 'test@hiwork.com', 
         role: 'Nhân viên', 
-        token: 'token'
       )));
     } else {
       emit(Unauthenticated());
@@ -46,7 +43,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  // 7. SỬA TÊN HÀM VÀ EVENT: Dùng SignOutRequested
   void _onLogOutRequested(LogOutRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     final result = await authRepository.signOut();

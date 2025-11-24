@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hiwork_mo/presentation/pages/attendance/add_edit_attendance_page.dart';
 import 'package:hiwork_mo/presentation/pages/home/home_page.dart';
 import 'package:hiwork_mo/presentation/pages/leave/leave_request_page.dart';
 import 'package:hiwork_mo/presentation/pages/login/login_page.dart';
 import 'package:hiwork_mo/presentation/pages/register/register_page.dart';
+import 'package:hiwork_mo/presentation/pages/schedule/common_work_schedule_page.dart';
 import 'package:hiwork_mo/presentation/pages/splash/splash_page.dart';
 import 'package:hiwork_mo/presentation/pages/home/task_page.dart';
 import 'package:hiwork_mo/presentation/pages/welcome/welcome_page.dart';
+import 'package:hiwork_mo/presentation/pages/schedule/register_work_schedule_page.dart';
 
 class AppRoute {
   static const String splash = '/';
@@ -15,6 +18,12 @@ class AppRoute {
   static const String home = '/home';
   static const String task = '/task';
   static const String leaveRequest = '/leave_request';
+
+  static const String commonWorkSchedule = '/common_work_schedule';
+
+  static const String registerWorkSchedule = '/register_work_schedule';
+
+  static const String addEditAttendance = '/add_edit_attendance';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -32,13 +41,17 @@ class AppRoute {
         return MaterialPageRoute(builder: (_) => const TaskPage());
       case leaveRequest:
         return MaterialPageRoute(builder: (_) => const LeaveRequestPage());
+      case commonWorkSchedule:
+        return MaterialPageRoute(builder: (_) => const CommonWorkSchedulePage());
+      case registerWorkSchedule:
+        return MaterialPageRoute(builder: (_) => const RegisterWorkSchedulePage());
+      case addEditAttendance:
+        return MaterialPageRoute(builder: (_) => const AddEditAttendancePage());
       default:
         return MaterialPageRoute(
-          builder: (context) => Scaffold(
-            body: Center(
-              child: Text("404 - Page Not Found"),
-            ),
-          ),
+          builder:
+              (context) =>
+                  Scaffold(body: Center(child: Text("404 - Page Not Found"))),
         );
     }
   }

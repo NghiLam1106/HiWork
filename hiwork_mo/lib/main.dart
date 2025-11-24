@@ -3,29 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
-
-// Import Dependency Injection (DI)
+import 'firebase_options.dart';
 import 'package:hiwork_mo/core/injection/dependency_injection.dart' as di;
-import 'package:hiwork_mo/l10n/app_localizations.dart'; 
+import 'package:hiwork_mo/l10n/app_localizations.dart';
 
-// Import các BLoC
 import 'package:hiwork_mo/presentation/bloc/auth/auth_bloc.dart';
-import 'package:hiwork_mo/presentation/bloc/auth/auth_event.dart'; 
+import 'package:hiwork_mo/presentation/bloc/auth/auth_event.dart';
 import 'package:hiwork_mo/presentation/bloc/language/language_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/language/language_state.dart';
 import 'package:hiwork_mo/presentation/bloc/notification/notification_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/timesheet/timesheet_bloc.dart';
 
-// --- 1. IMPORT LEAVE BLOC ---
 import 'package:hiwork_mo/presentation/bloc/leave/leave_bloc.dart';
 
-// Import Route
-import 'package:hiwork_mo/presentation/route/app_route.dart'; 
+import 'package:hiwork_mo/presentation/route/app_route.dart';
 
-void main() async { 
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await di.configureDependencies(); 
-  runApp(const MyApp()); 
+
+  /// 🔥 BẮT BUỘC: Khởi tạo Firebase trước khi dùng FirebaseAuth
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  /// Khởi tạo DI
+  await di.configureDependencies();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -35,31 +39,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // A. Cung cấp LanguageBloc
         BlocProvider(
           create: (_) => LanguageBloc(),
         ),
-        // B. Cung cấp AuthBloc
         BlocProvider<AuthBloc>(
-          create: (context) => di.sl<AuthBloc>() 
-            ..add(AppStarted()), 
+          create: (context) => di.sl<AuthBloc>()..add(AppStarted()),
         ),
-        // C. Cung cấp NotificationBloc
         BlocProvider<NotificationBloc>(
           create: (context) => di.sl<NotificationBloc>(),
         ),
-        // D. Cung cấp TimesheetBloc
         BlocProvider<TimesheetBloc>(
           create: (context) => di.sl<TimesheetBloc>(),
         ),
-        // --- 2. CUNG CẤP LEAVE BLOC ---
         BlocProvider<LeaveBloc>(
           create: (context) => di.sl<LeaveBloc>(),
         ),
       ],
       child: BlocBuilder<LanguageBloc, LanguageState>(
         builder: (context, state) {
-          // (Phần MaterialApp giữ nguyên)
           return MaterialApp(
             title: 'HiWork',
             theme: ThemeData(
@@ -67,8 +64,8 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor: AppColors.backgroundColor,
             ),
             debugShowCheckedModeBanner: false,
-            initialRoute: AppRoute.splash, 
-            onGenerateRoute: AppRoute.generateRoute, 
+            initialRoute: AppRoute.splash,
+            onGenerateRoute: AppRoute.generateRoute,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -76,8 +73,8 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: const [
-              Locale('en'), // Tiếng Anh
-              Locale('vi'), // Tiếng Việt
+              Locale('en'),
+              Locale('vi'),
             ],
             locale: state.locale,
           );
