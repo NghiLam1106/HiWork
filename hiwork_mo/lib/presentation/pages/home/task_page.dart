@@ -4,6 +4,9 @@ import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/core/constants/app_padding.dart';
 import 'package:hiwork_mo/l10n/app_localizations.dart';
+import 'package:hiwork_mo/presentation/pages/attendance/attendance_history_page.dart';
+import 'package:hiwork_mo/presentation/pages/schedule/common_work_schedule_page.dart';
+import 'package:hiwork_mo/presentation/pages/schedule/register_history_work_schedule_page.dart';
 import 'package:hiwork_mo/presentation/route/app_route.dart';
 
 class TaskPage extends StatelessWidget {
@@ -19,7 +22,7 @@ class TaskPage extends StatelessWidget {
           style: TextStyle(
             color: Color.fromRGBO(22, 98, 179, 1.0),
             fontWeight: FontWeight.bold,
-            fontSize: AppFontSize.title_20
+            fontSize: AppFontSize.title_20,
           ),
         ),
         backgroundColor: Colors.white,
@@ -39,13 +42,25 @@ class TaskPage extends StatelessWidget {
                   imagePath: AppAssets.calendarr,
                   label: l10n.taskScheduleCommon,
                   onTap: () {
-                    // Navigator.pushNamed(context, AppRoute.schedule);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CommonWorkSchedulePage(),
+                      ),
+                    );
                   },
                 ),
                 TaskItem(
                   imagePath: AppAssets.editCalendar,
                   label: l10n.taskScheduleRegister,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const WorkHistoryRegisterPage(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -56,7 +71,14 @@ class TaskPage extends StatelessWidget {
                 TaskItem(
                   imagePath: AppAssets.addTask,
                   label: l10n.taskAddAndEditAdtendance,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AttendanceHistoryPage(),
+                      ),
+                    );
+                  },
                 ),
                 TaskItem(
                   imagePath: AppAssets.device,
@@ -166,9 +188,7 @@ class TaskItem extends StatelessWidget {
             Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: AppFontSize.content_12,
-              ),
+              style: const TextStyle(fontSize: AppFontSize.content_12),
             ),
           ],
         ),

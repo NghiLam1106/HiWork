@@ -11,7 +11,7 @@ class DailyDetailPage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF1A73E8)),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF1A73E8)),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(

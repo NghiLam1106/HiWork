@@ -21,7 +21,6 @@ class UserModel {
       fullName: name,
       email: email,
       role: '',
-      token: '',
     );
   }
 }

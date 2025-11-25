@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomCalendarDialog extends StatefulWidget {
-  const CustomCalendarDialog({super.key});
+  const CustomCalendarDialog({super.key, required DateTime initialDate});
 
   @override
   State<CustomCalendarDialog> createState() => _CustomCalendarDialogState();
