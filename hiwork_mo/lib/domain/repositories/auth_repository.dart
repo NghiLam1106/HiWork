@@ -9,6 +9,12 @@ abstract class AuthRepository {
     required String password,
   });
 
+  Future<Either<Failure, Unit>> register({
+    required String username,
+    required String email,
+    required String password, required String role,
+  });
+
   // 2. Đăng xuất
   // Trả về Either: Failure khi lỗi, Unit khi thành công (không có dữ liệu trả về)
   Future<Either<Failure, Unit>> signOut();

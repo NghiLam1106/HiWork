@@ -26,9 +26,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController =
-      TextEditingController(text: 'test@hiwork.com');
+      TextEditingController();
   final TextEditingController _passwordController =
-      TextEditingController(text: '123456');
+      TextEditingController();
 
   @override
   void dispose() {
@@ -37,14 +37,13 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _onLoginPressed(BuildContext context) {
-    
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      '/home', 
-      (Route<dynamic> route) => false,
+  void _onLoginPressed(String email, String password) {
+    context.read<AuthBloc>().add(
+      LogInRequested(
+        email: email,
+        password: password,
+      ),
     );
-    // --- KẾT THÚC SỬA TẠM ---
   }
 
   @override
@@ -52,13 +51,13 @@ class _LoginPageState extends State<LoginPage> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-    
+
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is Authenticated) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              '/home', 
+              '/home',
               (Route<dynamic> route) => false,
             );
           }
@@ -118,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // (InputFields giữ nguyên)
                 InputField(
-                  controller: _emailController, 
+                  controller: _emailController,
                   hintText: l10n.hintTextUsername,
                   icon: Icons.person_outline,
                   obscureText: false,
@@ -156,10 +155,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
                         }
-                        
+
                         // Nút Đăng nhập (Sẽ gọi hàm _onLoginPressed đã sửa)
                         return ElevatedButton(
-                          onPressed: () => _onLoginPressed(context), 
+                          onPressed: () => _onLoginPressed(_emailController.text, _passwordController.text),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.textBlue,
                             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -181,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                
+
                 AppPadding.h70,
 
                 TextButton(

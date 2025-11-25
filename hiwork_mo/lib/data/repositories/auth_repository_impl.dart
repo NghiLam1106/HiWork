@@ -16,13 +16,13 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     try {
       final userModel = await remoteDataSource.signIn(email: email, password: password);
-      
+
       // ✨ CẢI TIẾN: Chuyển đổi UserModel thành UserEntity
       // Đây là bước quan trọng để tuân thủ Hợp đồng Repository (trả về Entity)
       // *Bạn cần đảm bảo lớp UserModel có phương thức toEntity() hoặc tương đương*
-      final userEntity = userModel.toEntity(); 
-      
-      return Right(userEntity); 
+      final userEntity = userModel.toEntity();
+
+      return Right(userEntity);
     } on AuthFailure catch (e) {
       // Bắt AuthFailure và trả về đối tượng lỗi
       return Left(e);
@@ -33,10 +33,32 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<Failure, Unit>> register({
+    required String username,
+    required String email,
+    required String password,
+    String role = 'user',
+  }) async {
+    try {
+      await remoteDataSource.register(
+        username: username,
+        email: email,
+        password: password,
+        role: role,
+      );
+      return const Right(unit);
+    } on AuthFailure catch (e) {
+      return Left(e);
+    } on Exception {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, Unit>> signOut() async {
     try {
       await remoteDataSource.signOut();
-      return const Right(unit); 
+      return const Right(unit);
     } on Exception {
       return Left(ServerFailure());
     }

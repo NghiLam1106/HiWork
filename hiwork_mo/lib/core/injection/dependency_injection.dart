@@ -2,7 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:hiwork_mo/data/datasources/auth_remote_datasource.dart';
 import 'package:hiwork_mo/data/repositories/auth_repository_impl.dart';
 import 'package:hiwork_mo/domain/repositories/auth_repository.dart';
-import 'package:hiwork_mo/domain/usecases/login_usecase.dart'; 
+import 'package:hiwork_mo/domain/usecases/login_usecase.dart';
+import 'package:hiwork_mo/domain/usecases/register_usecase.dart';
 import 'package:hiwork_mo/presentation/bloc/auth/auth_bloc.dart';
 import 'package:hiwork_mo/data/datasources/notification_remote_datasource.dart';
 import 'package:hiwork_mo/data/repositories/notification_repository_impl.dart';
@@ -22,18 +23,20 @@ import 'package:hiwork_mo/domain/usecases/get_leave_history_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/submit_leave_request_usecase.dart';
 import 'package:hiwork_mo/presentation/bloc/leave/leave_bloc.dart';
 
-final sl = GetIt.instance; 
+final sl = GetIt.instance;
 
 Future<void> configureDependencies() async {
 
   // --- TÍNH NĂNG AUTH (XÁC THỰC) ---
   sl.registerFactory(
     () => AuthBloc(
-      logInUseCase: sl(), 
+      logInUseCase: sl(),
+      registerUseCase: sl(),
       authRepository: sl(),
     ),
   );
-  sl.registerLazySingleton(() => LogInUseCase(sl<AuthRepository>())); 
+  sl.registerLazySingleton(() => LogInUseCase(sl<AuthRepository>()));
+  sl.registerLazySingleton(() => RegisterUsecase(sl<AuthRepository>()));
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       remoteDataSource: sl(),
@@ -56,13 +59,13 @@ Future<void> configureDependencies() async {
     ),
   );
   sl.registerLazySingleton<NotificationRemoteDataSource>(
-    () => NotificationRemoteDataSourceImpl(), 
+    () => NotificationRemoteDataSourceImpl(),
   );
 
   // --- TÍNH NĂNG TIMESHEET (BẢNG CHẤM CÔNG) ---
   sl.registerFactory(
     () => TimesheetBloc(
-      getWeeklyTimesheetUseCase: sl(), 
+      getWeeklyTimesheetUseCase: sl(),
     ),
   );
   sl.registerLazySingleton(() => GetWeeklyTimesheetUseCase(sl<TimesheetRepository>()));
@@ -72,7 +75,7 @@ Future<void> configureDependencies() async {
     ),
   );
   sl.registerLazySingleton<TimesheetRemoteDataSource>(
-    () => TimesheetRemoteDataSourceImpl(), 
+    () => TimesheetRemoteDataSourceImpl(),
   );
   // --- (Kết thúc Timesheet) ---
 
@@ -80,26 +83,26 @@ Future<void> configureDependencies() async {
   // --- TÍNH NĂNG LEAVE (ĐĂNG KÝ NGHỈ) ---
   sl.registerFactory(
     () => LeaveBloc(
-      getLeaveBalanceUseCase: sl(), 
-      getLeaveHistoryUseCase: sl(), 
-      submitLeaveUseCase: sl(), 
+      getLeaveBalanceUseCase: sl(),
+      getLeaveHistoryUseCase: sl(),
+      submitLeaveUseCase: sl(),
     ),
   );
   // UseCases
   sl.registerLazySingleton(() => GetLeaveBalanceUseCase(sl<LeaveRepository>()));
   sl.registerLazySingleton(() => GetLeaveHistoryUseCase(sl<LeaveRepository>()));
   sl.registerLazySingleton(() => SubmitLeaveUseCase(sl<LeaveRepository>()));
-  
+
   // Repository
   sl.registerLazySingleton<LeaveRepository>(
     () => LeaveRepositoryImpl(
       remoteDataSource: sl(),
     ),
   );
-  
+
   // DataSource
   sl.registerLazySingleton<LeaveRemoteDataSource>(
-    () => LeaveRemoteDataSourceImpl(), 
+    () => LeaveRemoteDataSourceImpl(),
   );
   // --- (Kết thúc Leave) ---
-} 
+}
