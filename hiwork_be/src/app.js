@@ -30,6 +30,9 @@ app.use('/api/admin/positions', positionRoutes);
 
 app.use('/api/admin/shifts', shiftsRoutes);
 
+// Route user
+app.use('/api/user/auth', authRoutes);
+
 // Chạy server cho phép thiết bị ngoài kết nối
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`\n🚀 Server đang chạy trên tất cả địa chỉ mạng`);

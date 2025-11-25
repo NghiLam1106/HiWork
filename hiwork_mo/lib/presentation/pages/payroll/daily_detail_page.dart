@@ -25,45 +25,47 @@ class DailyDetailPage extends StatelessWidget {
         centerTitle: true,
       ),
 
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        children: [
-          _buildDayCard(
-            date: "01/11/2025",
-            data: {
-              "Số ca": "1",
-              "Giờ thực tế": "5.7",
-              "Giờ thường": "5.7",
-              "Giờ tăng ca": "0.0",
-              "Giờ tính lương": "5.7",
-              "Lương hệ số": "0.0",
-              "Lương ngày": "150,000",
-              "Phụ cấp": "0",
-              "Tổng phiếu cộng tiền": "0",
-              "Phạt": "0",
-              "Tổng phiếu trừ tiền": "0",
-              "Lương thực nhận": "150,000",
-            },
-          ),
-          const SizedBox(height: 16),
-          _buildDayCard(
-            date: "02/11/2025",
-            data: {
-              "Số ca": "1",
-              "Giờ thực tế": "5.7",
-              "Giờ thường": "5.7",
-              "Giờ tăng ca": "0.0",
-              "Giờ tính lương": "5.7",
-              "Lương hệ số": "0.0",
-              "Lương ngày": "150,000",
-              "Phụ cấp": "0",
-              "Tổng phiếu cộng tiền": "0",
-              "Phạt": "0",
-              "Tổng phiếu trừ tiền": "0",
-              "Lương thực nhận": "150,000",
-            },
-          ),
-        ],
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          children: [
+            _buildDayCard(
+              date: "01/11/2025",
+              data: {
+                "Số ca": "1",
+                "Giờ thực tế": "5.7",
+                "Giờ thường": "5.7",
+                "Giờ tăng ca": "0.0",
+                "Giờ tính lương": "5.7",
+                "Lương hệ số": "0.0",
+                "Lương ngày": "150,000",
+                "Phụ cấp": "0",
+                "Tổng phiếu cộng tiền": "0",
+                "Phạt": "0",
+                "Tổng phiếu trừ tiền": "0",
+                "Lương thực nhận": "150,000",
+              },
+            ),
+            const SizedBox(height: 16),
+            _buildDayCard(
+              date: "02/11/2025",
+              data: {
+                "Số ca": "1",
+                "Giờ thực tế": "5.7",
+                "Giờ thường": "5.7",
+                "Giờ tăng ca": "0.0",
+                "Giờ tính lương": "5.7",
+                "Lương hệ số": "0.0",
+                "Lương ngày": "150,000",
+                "Phụ cấp": "0",
+                "Tổng phiếu cộng tiền": "0",
+                "Phạt": "0",
+                "Tổng phiếu trừ tiền": "0",
+                "Lương thực nhận": "150,000",
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

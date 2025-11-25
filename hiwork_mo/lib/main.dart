@@ -6,11 +6,11 @@ import 'package:hiwork_mo/core/constants/app_colors.dart';
 
 // Import Dependency Injection (DI)
 import 'package:hiwork_mo/core/injection/dependency_injection.dart' as di;
-import 'package:hiwork_mo/l10n/app_localizations.dart'; 
+import 'package:hiwork_mo/l10n/app_localizations.dart';
 
 // Import các BLoC
 import 'package:hiwork_mo/presentation/bloc/auth/auth_bloc.dart';
-import 'package:hiwork_mo/presentation/bloc/auth/auth_event.dart'; 
+import 'package:hiwork_mo/presentation/bloc/auth/auth_event.dart';
 import 'package:hiwork_mo/presentation/bloc/language/language_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/language/language_state.dart';
 import 'package:hiwork_mo/presentation/bloc/notification/notification_bloc.dart';
@@ -20,12 +20,13 @@ import 'package:hiwork_mo/presentation/bloc/timesheet/timesheet_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/leave/leave_bloc.dart';
 
 // Import Route
-import 'package:hiwork_mo/presentation/route/app_route.dart'; 
+import 'package:hiwork_mo/presentation/route/app_route.dart';
 
-void main() async { 
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await di.configureDependencies(); 
-  runApp(const MyApp()); 
+  await di.configureDependencies();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -41,8 +42,8 @@ class MyApp extends StatelessWidget {
         ),
         // B. Cung cấp AuthBloc
         BlocProvider<AuthBloc>(
-          create: (context) => di.sl<AuthBloc>() 
-            ..add(AppStarted()), 
+          create: (context) => di.sl<AuthBloc>()
+            ..add(AppStarted()),
         ),
         // C. Cung cấp NotificationBloc
         BlocProvider<NotificationBloc>(
@@ -67,8 +68,8 @@ class MyApp extends StatelessWidget {
               scaffoldBackgroundColor: AppColors.backgroundColor,
             ),
             debugShowCheckedModeBanner: false,
-            initialRoute: AppRoute.splash, 
-            onGenerateRoute: AppRoute.generateRoute, 
+            initialRoute: AppRoute.splash,
+            onGenerateRoute: AppRoute.generateRoute,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,

@@ -57,15 +57,14 @@ class _RegisterPageState extends State<RegisterPage> {
       );
       return;
     }
-    
+
     // (Thêm các kiểm tra khác nếu cần)
 
     // Gửi Event đến BLoC
     context.read<AuthBloc>().add(
-          LogInRequested(
-            fullName: fullName,
+          RegisterRequested(
             email: email,
-            password: password,
+            password: password, username: fullName,
           ),
         );
   }
@@ -79,10 +78,10 @@ class _RegisterPageState extends State<RegisterPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           // A. Nếu xác thực thành công (Authenticated) -> Điều hướng đến Home
-          if (state is Authenticated) {
+          if (state is Unauthenticated) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              '/home', 
+              '/home',
               (Route<dynamic> route) => false,
             );
           }
