@@ -22,7 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     final isAuthenticated = await authRepository.isAuthenticated();
     if (isAuthenticated) {
-      emit(const Authenticated(user: UserEntity(id: 0, fullName: '', email: '', role: '', token: '')));
+      emit(const Authenticated(user: UserEntity(id: 0, fullName: '', email: '', role: '')));
     } else {
       emit(Unauthenticated());
     }
