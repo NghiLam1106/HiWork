@@ -11,7 +11,7 @@ class SubmitUseCase {
   // Hàm thực thi: nhận Entity và trả về Either<String, bool>
   Future<Either<String, bool>> call({required AttendanceEntity correctionData}) async {
     // 1. Kiểm tra các điều kiện logic nghiệp vụ (ví dụ: giờ Check-in phải trước giờ Check-out)
-    if (correctionData.newCheckIn != null && 
+    if (correctionData.newCheckIn != null &&
         correctionData.newCheckOut != null &&
         correctionData.newCheckIn!.isAfter(correctionData.newCheckOut!)) {
       return const Left('Giờ Check-in không thể sau giờ Check-out.');
@@ -24,7 +24,7 @@ class SubmitUseCase {
 
     // 3. Gọi Repository để gửi yêu cầu
     return await repository.submitCorrection(
-            correctionData: correctionData, 
+            correctionData: correctionData,
       );
   }
 }
