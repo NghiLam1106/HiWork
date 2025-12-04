@@ -10,7 +10,8 @@ const RegisterPage = () => {
     username: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    role: "manager",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -33,7 +34,7 @@ const RegisterPage = () => {
     setLoading(true);
 
     try {
-      const res = await apiClient.post("/admin/auth/register", state);
+      const res = await apiClient.post("/manager/auth/register", state);
 
       const data = res.data;
       console.log("Register success:", data);
@@ -41,13 +42,11 @@ const RegisterPage = () => {
       if (data.user) {
         localStorage.setItem("token", data.user.firebaseToken);
         toast.success("Đăng ký thành công!");
-        navigate("/admin/home");
       } else {
         alert("Đăng ký thành công nhưng không nhận được token.");
       }
 
       setState({ username: "", email: "", password: "", confirmPassword: "" });
-
     } catch (err) {
       if (err.response) {
         toast.error(err.response.data.message || "Đăng ký thất bại!");
@@ -68,17 +67,41 @@ const RegisterPage = () => {
         <h1>Create Account</h1>
         <br />
 
-        <input type="text" name="username" placeholder="Username"
-          value={state.username} onChange={handleChange} required />
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={state.username}
+          onChange={handleChange}
+          required
+        />
 
-        <input type="email" name="email" placeholder="Email"
-          value={state.email} onChange={handleChange} required />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={state.email}
+          onChange={handleChange}
+          required
+        />
 
-        <input type="password" name="password" placeholder="Password"
-          value={state.password} onChange={handleChange} required />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={state.password}
+          onChange={handleChange}
+          required
+        />
 
-        <input type="password" name="confirmPassword" placeholder="Confirm Password"
-          value={state.confirmPassword} onChange={handleChange} required />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={state.confirmPassword}
+          onChange={handleChange}
+          required
+        />
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 

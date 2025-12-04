@@ -5,7 +5,6 @@ const { auth, admin } = require("../../config/firebaseConfig");
 const registerUser = async (userData) => {
   const { username, email, password, role } = userData;
 
-  console.log("Registering user with role:", role);
   const existingUser = await userRepository.findUserByEmail(email);
   if (existingUser) {
     throw new Error("Email đã được sử dụng");
@@ -28,10 +27,30 @@ const registerUser = async (userData) => {
       displayName: User.name,
     });
     // Gán role vào custom claims
+    await admin.auth().setCustomUserClaims(User.id.toString(), { role: "2" });
+    return User;
+  } else if (role == "manager") {
+    const newUser = await userRepository.createUser({
+      username,
+      email,
+      password: hashedPassword,
+      role: "1",
+    });
+
+  console.log("role value:", newUser.email);
+    await auth.createUser({
+      uid: newUser.id.toString(),
+      email: newUser.email,
+      password: password,
+      displayName: newUser.username,
+    });
+
+    // Gán role vào custom claims
     await admin
       .auth()
-      .setCustomUserClaims(User.id.toString(), { role: "1" });
-    return User;
+      .setCustomUserClaims(newUser.id.toString(), { role: "1" });
+
+    return newUser;
   } else {
     const newUser = await userRepository.createUser({
       username,
@@ -44,7 +63,7 @@ const registerUser = async (userData) => {
       uid: newUser.id.toString(),
       email: newUser.email,
       password: password,
-      displayName: newUser.name,
+      displayName: newUser.username,
     });
 
     // Gán role vào custom claims
@@ -91,6 +110,7 @@ const loginUser = async (credentials) => {
       id: user.id,
       name: user.username,
       email: user.email,
+      role: user.role,
     },
   };
 };

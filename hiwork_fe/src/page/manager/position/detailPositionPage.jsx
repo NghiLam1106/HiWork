@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { FaSave } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast"; // Thêm thư viện toast
-import apiClient from "../../api/clientAppi";
+import { FaSave } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import apiClient from "../../../api/clientAppi";
 
 const PositionDetail = () => {
   const { id } = useParams();
@@ -15,7 +15,7 @@ const PositionDetail = () => {
     const fetchPosition = async () => {
       setLoading(true);
       try {
-        const res = await apiClient.get(`/positions/${id}`);
+        const res = await apiClient.get(`manager/positions/${id}`);
         setTitle(res.data.name || "");
         setError("");
       } catch (err) {
@@ -44,7 +44,7 @@ const PositionDetail = () => {
 
     setIsSaving(true);
     try {
-      const res = await apiClient.put(`/admin/positions/${id}`, { name: title });
+      const res = await apiClient.put(`/manager/positions/${id}`, { name: title });
 
       if (res.status === 200) {
         toast.success("Cập nhật vị trí thành công!"); // toast khi thành công

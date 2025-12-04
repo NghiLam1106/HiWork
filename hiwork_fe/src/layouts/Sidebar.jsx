@@ -14,6 +14,7 @@ import {
   FaSignOutAlt,
   FaTachometerAlt,
   FaUsers,
+  FaUser,
   FaShoppingBag,
   FaChevronDown, // Icon mũi tên xuống
   FaChevronRight, // Icon mũi tên phải
@@ -22,45 +23,72 @@ import {
 const Sidebar = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [expandedMenu, setExpandedMenu] = useState({}); // State quản lý menu nào đang mở
+  const userRole = localStorage.getItem("role");
+  const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const location = useLocation();
 
   // Cấu hình danh sách menu
   const menuItems = [
     {
-      path: "/admin/home",
+      path: "manager/home",
       name: "Dashboard",
       icon: <FaTachometerAlt />,
+      role: [1], // Chỉ hiển thị cho manager và admin
+    },
+    {
+      path: "admin/home",
+      name: "Dashboard",
+      icon: <FaTachometerAlt />,
+      role: [0], // Chỉ hiển thị cho manager và admin
+    },
+    {
+      path: `/manager/profile/${userId}`,
+      name: "Thông tin cá nhân",
+      icon: <FaUser />,
+      role: [1], // Chỉ hiển thị cho manager
+    },
+    {
+      path: `/admin/profile/${userId}`,
+      name: "Thông tin cá nhân",
+      icon: <FaUser />,
+      role: [0], // Chỉ hiển thị cho admin
     },
     {
       name: "Nhân viên",
       icon: <FaUsers />,
-      path: "/admin/nhan-vien",
+      path: "/manager/nhan-vien",
+      role: [1], // Chỉ hiển thị cho manager
     },
     {
       name: "Vị trí",
       icon: <FaBuilding />,
-      path: "/admin/vi-tri",
+      path: "/manager/vi-tri",
+      role: [1], // Chỉ hiển thị cho manager
     },
     {
-      path: "/admin/ca-lam",
+      path: "/manager/ca-lam",
       name: "Ca làm",
       icon: <FaShoppingBag />,
+      role: [1], // Chỉ hiển thị cho manager
     },
     {
-      path: "/admin/cham-cong",
+      path: "/manager/cham-cong",
       name: "Chấm công",
       icon: <FaRegCalendarCheck />,
+      role: [1], // Chỉ hiển thị cho manager
     },
     {
-      path: "/admin/bao-cao",
+      path: "/manager/bao-cao",
       name: "Báo cáo",
       icon: <FaChartBar />,
+      role: [1], // Chỉ hiển thị cho manager
     },
     {
-      path: "/admin/cai-dat",
+      path: "/manager/cai-dat",
       name: "Cài đặt",
       icon: <FaCog />,
+      role: [1], // Chỉ hiển thị cho manager
     },
   ];
 
@@ -83,13 +111,14 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/auth", { replace: true });
   };
 
   return (
     <div className={`sidebar ${isClosed ? "closed" : ""}`}>
       <div className="sidebar-header">
-        {!isClosed && <h1 className="sidebar-logo">HR Admin</h1>}
+        {!isClosed && <h1 className="sidebar-logo">Manager</h1>}
         <button className="sidebar-toggle" onClick={toggleSidebar}>
           <FaBars />
         </button>
@@ -97,6 +126,9 @@ const Sidebar = () => {
 
       <nav className="sidebar-menu">
         {menuItems.map((item, index) => {
+          if (!item.role.includes(parseInt(userRole))) {
+            return null;
+          }
           // Kiểm tra xem item này có subItems không
           if (item.subItems) {
             return (

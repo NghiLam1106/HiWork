@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
-  console.log("Auth Header:", authHeader);
+  // console.log("Auth Header:", authHeader);
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "Token thiếu hoặc sai định dạng." });

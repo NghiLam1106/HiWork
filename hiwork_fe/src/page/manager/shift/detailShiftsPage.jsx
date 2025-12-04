@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaSave } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import apiClient from "../../api/clientAppi";
+import { useParams } from "react-router-dom"; // để lấy id từ URL
+import apiClient from "../../../api/clientAppi";
 
-const AddShift = () => {
+const DetailShift = () => {
+  const { id } = useParams(); // lấy id từ URL
   const [formData, setFormData] = useState({
     name: "",
     startTime: "",
@@ -17,15 +19,36 @@ const AddShift = () => {
   };
 
   const formatTime = (time) => {
-    // time FE nhận từ input type=time dạng HH:mm
     if (!time) return "";
-
-    // Nếu đã có giây rồi thì giữ nguyên
-    if (time.length === 8) return time;
-
-    // Nếu dạng HH:mm → thêm giây
-    return `${time}:00`;
+    if (time.length === 8) return time; // HH:mm:ss
+    return `${time}:00`; // HH:mm → HH:mm:ss
   };
+
+  // --- LẤY DỮ LIỆU CA LÀM THEO ID ---
+  const fetchShiftDetail = async () => {
+    if (!id) return; // nếu không có id thì không gọi
+    setIsLoading(true);
+    try {
+      const response = await apiClient.get(`manager/shifts/${id}`);
+      if (response.status === 200) {
+        const { name, startTime, endTime } = response.data;
+        setFormData({
+          name: name || "",
+          startTime: startTime ? startTime.slice(0, 5) : "", // Lấy HH:mm
+          endTime: endTime ? endTime.slice(0, 5) : "",
+        });
+      }
+    } catch (err) {
+      console.error("Lỗi khi lấy chi tiết ca làm:", err);
+      toast.error("Không lấy được chi tiết ca làm.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchShiftDetail();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,9 +66,6 @@ const AddShift = () => {
       return;
     }
 
-    console.log("Submitting form data:", formatTime(formData.startTime), formatTime(formData.endTime));
-
-    // Tạo body chuẩn hóa
     const payload = {
       name: formData.name,
       startTime: formatTime(formData.startTime),
@@ -53,22 +73,23 @@ const AddShift = () => {
     };
 
     setIsLoading(true);
-
     try {
-      const response = await apiClient.post("/admin/shifts/them-moi", payload);
+      let response;
+      if (id) {
+        // Update ca làm
+        response = await apiClient.put(`/manager/shifts/${id}`, payload);
+      } else {
+        // Thêm mới ca làm
+        response = await apiClient.post("/manager/shifts/them-moi", payload);
+      }
 
       if (response.status === 200 || response.status === 201) {
-        toast.success("Đã thêm ca làm thành công!");
-
-        setFormData({
-          name: "",
-          startTime: "",
-          endTime: "",
-        });
+        toast.success(
+          id ? "Cập nhật ca làm thành công!" : "Thêm ca làm thành công!"
+        );
       }
     } catch (err) {
       console.error("Lỗi API:", err);
-
       if (err.response) {
         toast.error(err.response.data.message || "Có lỗi từ server.");
       } else if (err.request) {
@@ -84,7 +105,7 @@ const AddShift = () => {
   return (
     <>
       <header className="header mb-4">
-        <h1>Ca làm</h1>
+        <h1>{id ? "Chi tiết ca làm" : "Thêm ca làm"}</h1>
       </header>
 
       <div
@@ -95,7 +116,9 @@ const AddShift = () => {
           <div className="col-12">
             <div className="card shadow-lg border-0 rounded-4 overflow-hidden">
               <div className="card-header bg-primary bg-gradient text-white p-3 border-0 text-start ps-4">
-                <h5 className="mb-0 fw-bold">Thêm ca làm mới</h5>
+                <h5 className="mb-0 fw-bold">
+                  {id ? "Cập nhật ca làm" : "Thêm ca làm mới"}
+                </h5>
               </div>
 
               <div className="card-body p-4 bg-light bg-opacity-10">
@@ -128,7 +151,7 @@ const AddShift = () => {
                         </label>
                         <input
                           type="time"
-                          step="60" // ÉP 24 GIỜ
+                          step="60"
                           lang="en"
                           className="form-control shadow-none py-3"
                           name="startTime"
@@ -147,7 +170,7 @@ const AddShift = () => {
                         </label>
                         <input
                           type="time"
-                          step="60" // ÉP 24 GIỜ
+                          step="60"
                           lang="en"
                           className="form-control shadow-none py-3"
                           name="endTime"
@@ -187,4 +210,4 @@ const AddShift = () => {
   );
 };
 
-export default AddShift;
+export default DetailShift;

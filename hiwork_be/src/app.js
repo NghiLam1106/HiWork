@@ -5,10 +5,14 @@ const cors = require('cors');
 // Khởi tạo Firebase
 require('./config/firebaseConfig');
 
+// Khởi tạo Cloudinary
+require('./config/cloudinaryConfig');
+
 // Import Routes
 const authRoutes = require('./routes/authRoutes');
 const positionRoutes = require('./routes/positionRoute');
 const shiftsRoutes = require('./routes/shiftsRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,11 +28,13 @@ app.get('/', (req, res) => {
 });
 
 // Route xác thực
-app.use('/api/admin/auth', authRoutes);
+app.use('/api/manager/auth', authRoutes);
 
-app.use('/api/admin/positions', positionRoutes);
+app.use('/api/manager/positions', positionRoutes);
 
-app.use('/api/admin/shifts', shiftsRoutes);
+app.use('/api/manager/shifts', shiftsRoutes);
+
+app.use('/api/manager/profile', profileRoutes);
 
 // Route user
 app.use('/api/user/auth', authRoutes);
