@@ -1,25 +1,27 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Auth from "../page/auth/auth";
-import Home from "../page/home/homePage";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import User from "../page/user/userPage";
-import Profile from "../page/profile/profilePage";
-import Position from "../page/position/positionPage";
-import AddPosition from "../page/position/addPositionPage";
-import DetailPosition from "../page/position/detailPositionPage";
-import Shift from "../page/shift/shiftPage";
-import AddShift from "../page/shift/addShiftsPage";
-import DetailShift from "../page/shift/detailShiftsPage";
+import HomeAdmin from "../page/admin/home/homePage";
+import Auth from "../page/auth/auth";
+import Home from "../page/manager/home/homePage";
+import AddPosition from "../page/manager/position/addPositionPage";
+import DetailPosition from "../page/manager/position/detailPositionPage";
+import Position from "../page/manager/position/positionPage";
+import Profile from "../page/manager/profile/profilePage";
+import AddShift from "../page/manager/shift/addShiftsPage";
+import DetailShift from "../page/manager/shift/detailShiftsPage";
+import Shift from "../page/manager/shift/shiftPage";
+import User from "../page/manager/user/userPage";
+import UpdateProfile from "../page/manager/profile/updateProfilePage";
 
 // 1. Import 2 component mới
-import ProtectedRoute from "./ProtectedRoute"; // (Kiểm tra lại đường dẫn file)
 import GuestRoute from "./GuestRoute"; // (Kiểm tra lại đường dẫn file)
+import ProtectedRoute from "./ProtectedRoute"; // (Kiểm tra lại đường dẫn file)
 
 const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
       {/* Route mặc định, tự động chuyển hướng */}
-      <Route path="/" element={<Navigate to="/admin/home" replace />} />
+      <Route path="/" element={<Navigate to="/manager/home" replace />} />
 
       {/* Bọc <Auth /> bằng <GuestRoute /> */}
       <Route
@@ -40,15 +42,21 @@ const AppRoutes = () => (
           </ProtectedRoute>
         }
       >
-        <Route path="/admin/home" element={<Home />} />
-        <Route path="/admin/nhan-vien" element={<User />} />
-        <Route path="/admin/nhan-vien/:id" element={<Profile />} />
-        <Route path="/admin/vi-tri/them-moi" element={<AddPosition />} />
-        <Route path="/admin/vi-tri" element={<Position />} />
-        <Route path="/admin/vi-tri/:id" element={<DetailPosition />} />
-        <Route path="/admin/ca-lam" element={<Shift />} />
-        <Route path="/admin/ca-lam/them-moi" element={<AddShift />} />
-        <Route path="/admin/ca-lam/:id" element={<DetailShift />} />
+        {/* Trang manager */}
+        <Route path="/manager/home" element={<Home />} />
+        <Route path="/manager/nhan-vien" element={<User />} />
+        <Route path="/manager/nhan-vien/:id" element={<Profile />} />
+        <Route path="/manager/vi-tri/them-moi" element={<AddPosition />} />
+        <Route path="/manager/vi-tri" element={<Position />} />
+        <Route path="/manager/vi-tri/:id" element={<DetailPosition />} />
+        <Route path="/manager/ca-lam" element={<Shift />} />
+        <Route path="/manager/ca-lam/them-moi" element={<AddShift />} />
+        <Route path="/manager/ca-lam/:id" element={<DetailShift />} />
+        <Route path="/manager/profile/:id" element={<Profile />} />
+        <Route path="/manager/profile/:id/edit" element={<UpdateProfile />} />
+
+        {/* Trang admin */}
+        <Route path="/admin/home" element={<HomeAdmin />} />
       </Route>
     </Routes>
   </BrowserRouter>

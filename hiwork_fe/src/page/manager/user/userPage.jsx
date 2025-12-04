@@ -1,7 +1,7 @@
 
-import EmployeeTable from "../../components/EmployeeTable";
-import SearchBar from "../../layouts/SearchBar";
-import "../user/userPage.css";
+import EmployeeTable from "../../../components/EmployeeTable";
+import SearchBar from "../../../layouts/SearchBar";
+import "./userPage.css";
 
 const User = () => {
   return (

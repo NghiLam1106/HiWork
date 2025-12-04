@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaSave } from "react-icons/fa";
 import { toast } from "react-hot-toast"; // Thêm toast
-import apiClient from "../../api/clientAppi";
+import apiClient from "../../../api/clientAppi";
 
 const AddPosition = () => {
   const [title, setTitle] = useState("");
@@ -25,7 +25,7 @@ const AddPosition = () => {
     setIsLoading(true);
 
     try {
-      const response = await apiClient.post("/admin/positions/them-moi", {
+      const response = await apiClient.post("/manager/positions/them-moi", {
         name: title,
       });
 
