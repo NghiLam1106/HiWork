@@ -17,9 +17,6 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final userModel = await remoteDataSource.signIn(email: email, password: password);
       
-      // ✨ CẢI TIẾN: Chuyển đổi UserModel thành UserEntity
-      // Đây là bước quan trọng để tuân thủ Hợp đồng Repository (trả về Entity)
-      // *Bạn cần đảm bảo lớp UserModel có phương thức toEntity() hoặc tương đương*
       final userEntity = userModel.toEntity(); 
       
       return Right(userEntity); 

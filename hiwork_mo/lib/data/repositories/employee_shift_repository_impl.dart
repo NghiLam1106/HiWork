@@ -1,39 +1,58 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
-import '../../domain/repositories/employee_shift_repository.dart';
-import '../../domain/entities/employee_shift_registration_entity.dart';
-import '../models/employee_shift_registration_model.dart';
+import 'package:hiwork_mo/data/datasources/attendance_remote_datasource.dart';
+import '../models/attendance_model.dart';
+abstract class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
 
-// Giả lập cơ chế giao tiếp với API hoặc Database
-class EmployeeShiftRepositoryImpl implements EmployeeShiftRepository {
-  // Giả định có một DataSource tương ứng
-  // final EmployeeShiftDataSource dataSource; 
-  // EmployeeShiftRepositoryImpl({required this.dataSource});
+  final List<String> mockBackendErrors = [
+    'Shift ID not found for the given date.',
+    'Correction request time is invalid (out of shift bounds).',
+    'Connection timed out.',
+    'Success',
+  ];
 
   @override
-  Future<Either<String, bool>> registerShift({
-    required EmployeeShiftRegistrationEntity registrationData,
-  }) async {
-    // 1. Chuyển Entity sang Model (DTO)
-    final model = EmployeeShiftRegistrationModel.fromEntity(registrationData);
-    final jsonPayload = model.toJson();
+  Future<AttendanceModel> getAttendanceDetail(String id) async {
+    try {
+      await Future.delayed(const Duration(milliseconds: 500));
 
-    // 2. Giả lập gọi API (Network delay)
-    await Future.delayed(const Duration(milliseconds: 700));
+      // Mock API response
+      final mockJson = {
+        'id': id,
+        'employee_id': 'EMP123',
+        'work_date': DateTime.now().toIso8601String().substring(0, 10),
+        'shift_id': 'SHIFT1',
+        'new_check_in_time': null,
+        'new_check_out_time': null,
+        'note': '',
+        'status': 'approved',
+      };
 
-    debugPrint('--- Gửi Đăng ký Lịch Làm Việc ---');
-    debugPrint('Payload: $jsonPayload');
+      return AttendanceModel.fromJson(mockJson);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 
-    // 3. Giả lập kết quả API
-    if (model.shiftId == 'invalid_shift_id') {
-      // Trường hợp lỗi nghiệp vụ (ví dụ: ID ca không tồn tại)
-      return const Left('ID ca làm việc không hợp lệ.');
-    } else if (model.workDate.day % 2 == 0) {
-      // Giả lập thành công (Ngày chẵn)
-      return const Right(true);
+  @override
+  Future<bool> submitAttendance(AttendanceModel model) async {
+    await Future.delayed(const Duration(seconds: 1));
+    print('--- Submit API ---');
+    print(model.toJson());
+
+    if (model.note.toLowerCase().contains('invalid')) {
+      throw Exception('Lý do không hợp lệ');
+    }
+
+    final index = DateTime.now().millisecond % mockBackendErrors.length;
+    final response = mockBackendErrors[index];
+
+    if (response == 'Success') {
+      print('Đã gửi thành công lên server');
+      return true;
+    } else if (response == 'Success') {
+      return true;
     } else {
-      // Giả lập lỗi server (Ngày lẻ)
-      return const Left('Lỗi mạng hoặc server không phản hồi.');
+      throw Exception(response);
     }
   }
 }
