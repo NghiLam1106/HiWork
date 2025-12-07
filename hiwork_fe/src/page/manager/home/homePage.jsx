@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import DashboardCard from "../../components/DashboardCard";
-import EmployeeTable from "../../components/EmployeeTable";
-import SearchBar from "../../layouts/SearchBar";
-import apiClient from "../../api/clientAppi"; // import api client
-import "../home/homePage.css";
+import apiClient from "../../../api/clientAppi"; // import api client
+import DashboardCard from "../../../components/DashboardCard";
+import EmployeeTable from "../../../components/EmployeeTable";
+import SearchBar from "../../../layouts/SearchBar";
+import "./homePage.css";
 
 const Home = () => {
   const [positionCount, setPositionCount] = useState(0); // số lượng vị trí
@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchPositionCount = async () => {
       try {
-        const res = await apiClient.get("/admin/positions?limit=1"); // lấy 1 item để đọc pagination
+        const res = await apiClient.get("/manager/positions?limit=1"); // lấy 1 item để đọc pagination
         const total = res.data.pagination?.totalItems || 0; // backend trả về tổng số items
         setPositionCount(total);
       } catch (err) {

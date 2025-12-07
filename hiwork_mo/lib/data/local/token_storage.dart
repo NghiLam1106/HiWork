@@ -15,4 +15,12 @@ class TokenStorage {
   Future<void> deleteToken() async {
     await _storage.delete(key: _keyToken);
   }
+
+  Future<bool> isAuthenticated() async {
+    // Lấy token từ Secure Storage
+    final token = await _storage.read(key: _keyToken);
+
+    // Nếu token tồn tại và không rỗng → đã xác thực
+    return token != null && token.isNotEmpty;
+  }
 }

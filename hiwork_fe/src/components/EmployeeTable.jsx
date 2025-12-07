@@ -8,7 +8,6 @@ const EmployeeTable = () => {
       id: 1,
       name: "Nguyễn Văn A",
       email: "vana@company.com",
-      department: "IT",
       role: "Developer",
       status: "Active",
     },
@@ -16,7 +15,6 @@ const EmployeeTable = () => {
       id: 2,
       name: "Trần Thị B",
       email: "thib@company.com",
-      department: "HR",
       role: "Recruiter",
       status: "OnLeave",
     },
@@ -24,7 +22,6 @@ const EmployeeTable = () => {
       id: 3,
       name: "Lê Văn C",
       email: "vanc@company.com",
-      department: "Sales",
       role: "Manager",
       status: "Inactive",
     },
@@ -32,7 +29,6 @@ const EmployeeTable = () => {
       id: 4,
       name: "Phạm Thu D",
       email: "thud@company.com",
-      department: "Marketing",
       role: "Designer",
       status: "Active",
     },
@@ -116,7 +112,6 @@ const EmployeeTable = () => {
 
                     <td>
                       <div className="fw-semibold">{emp.role}</div>
-                      <small className="text-muted">{emp.department}</small>
                     </td>
 
                     <td>{getStatusBadge(emp.status)}</td>

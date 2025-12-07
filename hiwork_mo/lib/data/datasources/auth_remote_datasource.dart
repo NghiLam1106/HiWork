@@ -1,49 +1,78 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+import 'package:hiwork_mo/core/api/api_client.dart';
 import 'package:hiwork_mo/core/error/exceptions.dart'; // Từ Bước 1
+import 'package:hiwork_mo/data/local/token_storage.dart';
 import 'package:hiwork_mo/data/models/user_model.dart'; // Từ file trên
 
-const String BASE_URL = 'https://api.hiwork.com/v1/auth/';
+final Dio _dio = Dio(BaseOptions(baseUrl: "http://localhost:3000"));
 
 // Interface cho DataSource
 abstract class AuthRemoteDataSource {
   Future<UserModel> signIn({required String email, required String password});
+  Future<void> register({required String username, required String email, required String password, required String role});
   Future<void> signOut();
   Future<bool> isAuthenticated();
 }
 
 // Triển khai DataSource
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  String? _cachedToken; // Giả lập cache token
 
   @override
-  Future<UserModel> signIn({required String email, required String password}) async {
-    await Future.delayed(const Duration(milliseconds: 700)); // Giả lập độ trễ mạng
+  Future<UserModel> signIn({
+    required String email,
+    required String password,
+  }) async {
+    // await Future.delayed(const Duration(milliseconds: 700)); // Giả lập độ trễ mạng
 
-   
-    if (email == 'test@hiwork.com' && password == '123456') { // Giả lập đăng nhập thành công
-      final jsonResponse = {
-        'id': 'user-001',
-        'full_name': 'Lâm Nghi',
-        'email': email,
-        'department': 'Kế toán',
-        'position': 'Nhân viên',
-        'token': 'super_secure_jwt_token_12345',
-      };
-      _cachedToken = jsonResponse['token'] as String;
-      return UserModel.fromJson(jsonResponse);
+    final response = await _dio.post(
+      "${ApiUrl.auth}/login",
+      data: {'email': email, 'password': password},
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final token = response.data["user"]["firebaseToken"];
+      await TokenStorage().saveToken(token);
+      return UserModel.fromJson(response.data["user"]["user"]);
+    } else if (response.statusCode == 401) {
+      throw const AuthException(message: 'Sai email hoặc mật khẩu.');
     } else {
-      throw const AuthException(message: 'Tên đăng nhập hoặc mật khẩu không chính xác.');
+      throw const ServerException(
+        message: 'Lỗi máy chủ. Vui lòng thử lại sau.',
+        statusCode: 500,
+      );
+    }
+  }
+
+  @override
+  Future<void> register({
+    required String username,
+    required String email,
+    required String password,
+    required String role,
+  }) async {
+    final response = await _dio.post(
+      "${ApiUrl.auth}/register",
+      data: {'username': username, 'email': email, 'password': password, 'role': role},
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return Future.value();
+    } else {
+      throw const ServerException(
+        message: 'Lỗi máy chủ. Vui lòng thử lại sau.',
+        statusCode: 500,
+      );
     }
   }
 
   @override
   Future<void> signOut() async {
-    _cachedToken = null;
-    await Future.delayed(const Duration(milliseconds: 300));
+    await TokenStorage().deleteToken();
     return Future.value();
   }
 
   @override
   Future<bool> isAuthenticated() async {
-    return Future.value(_cachedToken != null && _cachedToken!.isNotEmpty);
+    return Future.value(await TokenStorage().isAuthenticated());
   }
 }

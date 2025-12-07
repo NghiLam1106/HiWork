@@ -18,7 +18,7 @@ const ShiftTable = () => {
   const fetchShifts = async (pageNumber = 1) => {
     setLoading(true);
     try {
-      const res = await apiClient.get(`/admin/shifts?page=${pageNumber}&limit=5`);
+      const res = await apiClient.get(`/manager/shifts?page=${pageNumber}&limit=5`);
       const data = res.data;
 
       setShifts(data.data || []);
@@ -53,7 +53,7 @@ const ShiftTable = () => {
     if (!deleteShift) return;
 
     try {
-      const res = await apiClient.delete(`/admin/shifts/${deleteShift.id}`);
+      const res = await apiClient.delete(`/manager/shifts/${deleteShift.id}`);
       if (res.status === 200) {
         toast.success(`Xóa "${deleteShift.name}" thành công!`);
         fetchShifts(page);
@@ -144,7 +144,7 @@ const ShiftTable = () => {
                       <td className="text-end pe-4">
                         <div className="d-flex align-items-center justify-content-end gap-2">
                           <Link
-                            to={`/admin/ca-lam/${shift.id}`}
+                            to={`/manager/ca-lam/${shift.id}`}
                             className="btn btn-primary btn-sm d-flex align-items-center justify-content-center"
                             style={{ width: "34px", height: "34px" }}
                             title="Xem chi tiết"

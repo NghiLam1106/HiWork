@@ -1,0 +1,88 @@
+/* --- Header --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header input {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* --- Dashboard cards --- */
+.dashboard-cards {
+  display: grid;
+  /* SỬA TẠI ĐÂY: Thay số 2 thành số 4 để chia làm 4 cột bằng nhau */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* Responsive: Khi màn hình nhỏ (máy tính bảng/điện thoại) thì tự xuống dòng */
+@media (max-width: 992px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, 1fr); /* Màn hình vừa: 2 cột */
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr; /* Điện thoại: 1 cột dọc */
+  }
+}
+
+.dashboard-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.dashboard-card h3 {
+  margin: 0;
+  font-size: 1.1em;
+  color: #555;
+}
+
+.dashboard-card p {
+  font-size: 1.8em;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* --- Employee table --- */
+.employee-table {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-x: auto; /* Cho phép cuộn ngang nếu bảng quá dài */
+}
+
+.employee-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employee-table th,
+.employee-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.employee-table tr:hover {
+  background-color: #f1f5f9;
+}

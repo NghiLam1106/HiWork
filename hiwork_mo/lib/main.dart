@@ -16,6 +16,8 @@ import 'package:hiwork_mo/presentation/bloc/timesheet/timesheet_bloc.dart';
 
 import 'package:hiwork_mo/presentation/bloc/leave/leave_bloc.dart';
 
+// Import Route
+import 'package:hiwork_mo/presentation/route/app_route.dart';
 import 'package:hiwork_mo/presentation/route/app_route.dart';
 
 void main() async {

@@ -21,19 +21,29 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const res = await apiClient.post("/admin/auth/login", state);
+      const res = await apiClient.post("/manager/auth/login", state);
 
       const data = res.data;
 
       if (data.user) {
-        localStorage.setItem("token", data.user.firebaseToken);
-        if (data.user.user.role !== 0) {
+        if (data.user.user.role === 1) {
+          toast.success("Đăng nhập thành công!");
+          localStorage.setItem("token", data.user.firebaseToken);
+          localStorage.setItem("role", data.user.user.role);
+          localStorage.setItem("userId", data.user.user.id);
+          navigate("/manager/home");
+        } else if (data.user.user.role === 0) {
+          toast.success("Đăng nhập thành công!");
+          localStorage.setItem("token", data.user.firebaseToken);
+          localStorage.setItem("role", data.user.user.role);
+          navigate("/admin/home");
+        } else {
           toast.error("Bạn không có quyền truy cập vào trang này.");
           setLoading(false);
           return;
         }
-        toast.success("Đăng nhập thành công!");
-        navigate("/admin/home");
+        // toast.success("Đăng nhập thành công!");
+        // navigate("/manager/home");
       } else {
         alert("Đăng nhập thành công nhưng không nhận được token.");
       }

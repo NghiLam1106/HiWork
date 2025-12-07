@@ -18,7 +18,7 @@ const PositionTable = () => {
   const fetchPositions = async (pageNumber = 1) => {
     setLoading(true);
     try {
-      const res = await apiClient.get(`/admin/positions?page=${pageNumber}&limit=5`);
+      const res = await apiClient.get(`/manager/positions?page=${pageNumber}&limit=5`);
       const data = res.data;
 
       setPositions(data.data || []);
@@ -53,7 +53,7 @@ const PositionTable = () => {
     if (!deletePosition) return;
 
     try {
-      const res = await apiClient.delete(`/admin/positions/${deletePosition.id}`);
+      const res = await apiClient.delete(`/manager/positions/${deletePosition.id}`);
       if (res.status === 200) {
         toast.success(`Xóa vị trí "${deletePosition.name}" thành công!`);
         fetchPositions(page);
@@ -136,7 +136,7 @@ const PositionTable = () => {
                       <td className="text-end pe-4">
                         <div className="d-flex align-items-center justify-content-end gap-2">
                           <Link
-                            to={`/admin/vi-tri/${position.id}`}
+                            to={`/manager/vi-tri/${position.id}`}
                             className="btn btn-primary btn-sm d-flex align-items-center justify-content-center"
                             style={{ width: "34px", height: "34px" }}
                             title="Xem chi tiết"

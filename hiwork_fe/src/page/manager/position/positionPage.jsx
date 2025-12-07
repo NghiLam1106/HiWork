@@ -1,5 +1,5 @@
-import PositionTable from "../../components/PositionTable";
-import SearchBar from "../../layouts/SearchBar";
+import PositionTable from "../../../components/PositionTable";
+import SearchBar from "../../../layouts/SearchBar";
 import "../user/userPage.css";
 
 const Position = () => {

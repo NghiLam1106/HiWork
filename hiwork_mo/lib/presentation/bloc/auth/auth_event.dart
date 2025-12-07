@@ -15,7 +15,7 @@ class LogInRequested extends AuthEvent {
   final String email;
   final String password;
 
-  const LogInRequested({required this.email, required this.password, required String fullName});
+  const LogInRequested({required this.email, required this.password,});
 
   @override
   List<Object?> get props => [email, password];
@@ -28,16 +28,16 @@ class LogOutRequested extends AuthEvent {
 
 // 4. Sự kiện: Người dùng yêu cầu Đăng ký (ĐÃ THÊM)
 class RegisterRequested extends AuthEvent {
-  final String fullName;
+  final String username;
   final String email;
   final String password;
 
   const RegisterRequested({
-    required this.fullName,
+    required this.username,
     required this.email,
     required this.password,
   });
 
   @override
-  List<Object?> get props => [fullName, email, password];
+  List<Object?> get props => [username, email, password];
 }

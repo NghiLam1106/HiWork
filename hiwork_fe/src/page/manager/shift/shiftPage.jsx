@@ -1,6 +1,6 @@
 
-import SearchBar from "../../layouts/SearchBar";
-import ShiftTable from "../../components/ShiftTable";
+import ShiftTable from "../../../components/ShiftTable";
+import SearchBar from "../../../layouts/SearchBar";
 
 const Shift = () => {
   return (
