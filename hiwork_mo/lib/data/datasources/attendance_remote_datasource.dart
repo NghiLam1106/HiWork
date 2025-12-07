@@ -9,10 +9,12 @@ abstract class AttendanceRemoteDataSource {
 
   /// Lấy chi tiết chấm công theo ID
   Future<AttendanceModel> getAttendanceDetail(String id);
+
+  Future<void> submitCorrection(AttendanceModel model) async {}
 }
 
 /// Implementation: mock server
-class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
+abstract class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
   final List<String> mockBackendErrors = [
     'Shift ID not found for the given date.',
     'Correction request time is invalid (out of shift bounds).',

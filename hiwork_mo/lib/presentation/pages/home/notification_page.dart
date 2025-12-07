@@ -66,7 +66,7 @@ class _NotificationPageState extends State<NotificationPage> {
           style: const TextStyle(
             color: Color.fromRGBO(22, 98, 179, 1.0),
             fontWeight: FontWeight.bold,
-            fontSize: AppFontSize.title_24,
+            fontSize: AppFontSize.title_20,
           ),
         ),
         centerTitle: false,
@@ -77,25 +77,24 @@ class _NotificationPageState extends State<NotificationPage> {
       backgroundColor: const Color(0xFFF4F6FA),
 
       // --- CODE DEMO (DÙNG DỮ LIỆU MAP) ---
-      body: notifications.isEmpty
-          ? Center(child: Text(l10n.noNotifications)) // Dùng l10n
-          : ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              itemCount: notifications.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 15),
-              itemBuilder: (context, index) {
-                final item = notifications[index];
-                return _NotificationItem(item: item);
-              },
-            ),
-
-      /* // --- CODE BLOC GỐC (Đã ẩn đi) ---
-      body: BlocBuilder<NotificationBloc, NotificationState>(
-        builder: (context, state) {
-          // ... (code BLoC của bạn)
-        },
-      ),
-      */
+      body:
+          notifications.isEmpty
+              ? Center(child: Text(l10n.noNotifications))
+              : ListView.separated(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                itemCount: notifications.length,
+                separatorBuilder: (context, i) => const SizedBox(height: 15),
+                itemBuilder: (context, i) {
+                  return SizedBox(
+                    width: double.infinity,
+                    height: 150,
+                    child: _NotificationItem(item: notifications[i]),
+                  );
+                },
+              ),
     );
   }
 }
@@ -138,7 +137,6 @@ class _NotificationItem extends StatelessWidget {
           children: [
             // Icon
             Container(
-              
               decoration: BoxDecoration(
                 color: const Color(0xFFCDE8FF),
                 borderRadius: BorderRadius.circular(50),
@@ -159,29 +157,32 @@ class _NotificationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title, // <-- Lấy từ Map
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: AppFontSize.title_18,
-                      fontWeight: titleWeight, // <-- Dùng logic
+                      fontWeight: titleWeight,
                       color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 6),
-                  Text(
-                    content, // <-- Lấy từ Map
-                    style: const TextStyle(
-                      fontSize: AppFontSize.content_16,
-                      color: Colors.black87,
-                      height: 1.4,
+                  Flexible(
+                    child: Text(
+                      content,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: AppFontSize.content_16,
+                        color: Colors.black87,
+                        height: 1.4,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    time, // <-- Lấy từ Map
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
+                    time,
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ],
               ),
