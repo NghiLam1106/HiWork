@@ -9,6 +9,7 @@ const createUser = async (userData) => {
   console.log("role value:", newUser.role);
   await employee.create({
     user_id: newUser.id,
+    status: "1",
   });
   return newUser;
 };

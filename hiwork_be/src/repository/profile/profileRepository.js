@@ -5,7 +5,7 @@ class ProfileRepository {
   async findById(userId) {
     return await employee.findOne({
       where: { user_id: userId },
-      include: [{ model: user, as: "user", attributes: ["email"] }, { model: position, as: "position", attributes: ["name"]  }]
+      include: [{ model: user, as: "user", attributes: ["email", "role"] }, { model: position, as: "position", attributes: ["name"]  }]
     });
   }
 

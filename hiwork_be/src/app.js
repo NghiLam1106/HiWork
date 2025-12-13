@@ -13,6 +13,7 @@ const authRoutes = require('./routes/authRoutes');
 const positionRoutes = require('./routes/positionRoute');
 const shiftsRoutes = require('./routes/shiftsRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const emmployeesRoutes = require('./routes/employeesRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,8 +37,13 @@ app.use('/api/manager/shifts', shiftsRoutes);
 
 app.use('/api/manager/profile', profileRoutes);
 
+app.use('/api/manager/employees', emmployeesRoutes);
+
 // Route user
 app.use('/api/user/auth', authRoutes);
+
+// Route admin
+app.use('/api/admin/employees', emmployeesRoutes);
 
 // Chạy server cho phép thiết bị ngoài kết nối
 app.listen(PORT, '0.0.0.0', () => {

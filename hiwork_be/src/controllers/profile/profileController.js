@@ -4,7 +4,7 @@ const profileController = {
   // Lấy thông tin profile từ userId trong token
   async getProfile(req, res) {
     try {
-      const userId = req.params.id; // authMiddleware gắn vào req.user
+      const userId = Number(req.params.id); // authMiddleware gắn vào req.user
       const user = await profileService.getProfile(userId);
       return res.json({ user });
     } catch (error) {

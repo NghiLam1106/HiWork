@@ -112,13 +112,14 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("userId");
     navigate("/auth", { replace: true });
   };
 
   return (
     <div className={`sidebar ${isClosed ? "closed" : ""}`}>
       <div className="sidebar-header">
-        {!isClosed && <h1 className="sidebar-logo">Manager</h1>}
+        {!isClosed && <h1 className="sidebar-logo">{parseInt(userRole) === 1 ? "Manager" : parseInt(userRole) === 0 ? "Admin" : ""}</h1>}
         <button className="sidebar-toggle" onClick={toggleSidebar}>
           <FaBars />
         </button>

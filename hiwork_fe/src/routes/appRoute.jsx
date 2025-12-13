@@ -12,6 +12,10 @@ import DetailShift from "../page/manager/shift/detailShiftsPage";
 import Shift from "../page/manager/shift/shiftPage";
 import User from "../page/manager/user/userPage";
 import UpdateProfile from "../page/manager/profile/updateProfilePage";
+import Employee from "../page/admin/employee/employeePage";
+import UpdateEmployee from "../page/admin/employee/updateEmployeePage";
+import EmployeeManager from "../page/manager/employee/employeePage";
+import UpdateEmployeeManager from "../page/manager/employee/updateEmployeePage";
 
 // 1. Import 2 component mới
 import GuestRoute from "./GuestRoute"; // (Kiểm tra lại đường dẫn file)
@@ -45,7 +49,8 @@ const AppRoutes = () => (
         {/* Trang manager */}
         <Route path="/manager/home" element={<Home />} />
         <Route path="/manager/nhan-vien" element={<User />} />
-        <Route path="/manager/nhan-vien/:id" element={<Profile />} />
+        <Route path="/manager/nhan-vien/:id" element={<EmployeeManager />} />
+        <Route path="/manager/nhan-vien/:id/edit" element={<UpdateEmployeeManager />} />
         <Route path="/manager/vi-tri/them-moi" element={<AddPosition />} />
         <Route path="/manager/vi-tri" element={<Position />} />
         <Route path="/manager/vi-tri/:id" element={<DetailPosition />} />
@@ -57,6 +62,8 @@ const AppRoutes = () => (
 
         {/* Trang admin */}
         <Route path="/admin/home" element={<HomeAdmin />} />
+        <Route path="/admin/nhan-vien/:id" element={<Employee />} />
+        <Route path="/admin/nhan-vien/:id/edit" element={<UpdateEmployee />} />
       </Route>
     </Routes>
   </BrowserRouter>
