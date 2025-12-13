@@ -2,28 +2,25 @@ import { useEffect, useState } from "react";
 import apiClient from "../../../api/clientAppi";
 import { useNavigate, useParams } from "react-router-dom";
 
-import "./profilePage.css";
-import toast from "react-hot-toast";
+import "./employeePage"; // nếu đây là css thì nên đổi thành "./employeePage.css"
 
-const Profile = () => {
+const Employee = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [uploading, setUploading] = useState(false);
 
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // Load profile
   useEffect(() => {
     fetchProfile();
   }, []);
 
   const fetchProfile = async () => {
     try {
-      const response = await apiClient.get(`/manager/profile/${userId}`);
-      setUserData(response.data.user);
+      const response = await apiClient.get(`/manager/employees/${id}`);
+      setUserData(response.data.employee);
     } catch (err) {
       setError(
         err.response?.data?.message || "Không thể lấy dữ liệu người dùng"
@@ -33,32 +30,19 @@ const Profile = () => {
     }
   };
 
-  // Handle change avatar
-  const handleAvatarChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setUploading(true);
-
-    try {
-      const formData = new FormData();
-      formData.append("avatar", file);
-
-      await apiClient.put(`/manager/profile/${userId}/avatar`, formData);
-
-      toast.success("Đổi ảnh thành công!");
-
-      // Reload dữ liệu sau khi cập nhật avatar
-      fetchProfile();
-    } catch (err) {
-      console.error(err);
-      alert("Lỗi khi tải ảnh lên!");
-    } finally {
-      setUploading(false);
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case 1:
+        return <span className="badge bg-success">Đang làm việc</span>;
+      case 2:
+        return <span className="badge bg-warning text-dark">Nghỉ phép</span>;
+      case 0:
+        return <span className="badge bg-secondary">Đã nghỉ</span>;
+      default:
+        return <span className="badge bg-light text-dark">Chưa cập nhật</span>;
     }
   };
 
-  // LOADING
   if (loading)
     return (
       <div
@@ -73,7 +57,6 @@ const Profile = () => {
       </div>
     );
 
-  // ERROR
   if (error) {
     return <div className="text-danger text-center mt-5">{error}</div>;
   }
@@ -90,44 +73,44 @@ const Profile = () => {
         {/* Profile Card */}
         <div className="card shadow-sm rounded-4 p-4 mb-4 border-0">
           <div className="row align-items-center">
-            {/* Avatar */}
-            <div className="col-md-3 text-center">
+            {/* ✅ AVATAR (chỉ hiển thị ảnh, KHÔNG có nút đổi ảnh) */}
+            <div className="col-md-3 text-center mb-3 mb-md-0">
               <img
-                src={userData.avatar_url || "https://i.pravatar.cc/300?img=12"}
+                src={
+                  userData.avatar_url
+                    ? userData.avatar_url
+                    : userData.gender === 1
+                    ? "https://i.pravatar.cc/300?img=12" // nam
+                    : "https://i.pravatar.cc/300?img=47"
+                }
                 alt="avatar"
                 className="rounded-circle img-fluid shadow-sm"
-                style={{ width: 140, height: 140, objectFit: "cover" }}
+                style={{
+                  width: 140,
+                  height: 140,
+                  objectFit: "cover",
+                }}
               />
-
-              <label className="btn btn-primary btn-sm mt-3 px-4 rounded-pill">
-                {uploading ? "Đang tải..." : "Đổi ảnh"}
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={handleAvatarChange}
-                />
-              </label>
             </div>
 
             {/* Basic Info */}
             <div className="col-md-9">
-              <h4 className="fw-bold">{userData.name}</h4>
+              <h4 className="fw-bold">{userData.name || "Chưa cập nhật"}</h4>
               <p className="text-muted">
-                {userData.positionName || "Nhân viên"}
+                {userData.position?.name || "Nhân viên"}
               </p>
 
               <div className="row mt-4">
                 <div className="col-md-6 mb-3">
                   <label className="text-muted small fw-bold">Email</label>
-                  <p className="fw-semibold">{userData.user.email}</p>
+                  <p className="fw-semibold">{userData?.user?.email || "Chưa cập nhật"}</p>
                 </div>
 
                 <div className="col-md-6 mb-3">
                   <label className="text-muted small fw-bold">
                     Số điện thoại
                   </label>
-                  <p className="fw-semibold">{userData.phone}</p>
+                  <p className="fw-semibold">{userData.phone || "Chưa cập nhật"}</p>
                 </div>
 
                 <div className="col-md-6 mb-3">
@@ -135,15 +118,27 @@ const Profile = () => {
                     Ngày gia nhập
                   </label>
                   <p className="fw-semibold">
-                    {new Date(userData.createdAt).toLocaleDateString("vi-VN")}
+                    {userData.createdAt
+                      ? new Date(userData.createdAt).toLocaleDateString("vi-VN")
+                      : "—"}
                   </p>
                 </div>
 
                 <div className="col-md-6 mb-3">
                   <label className="text-muted small fw-bold">Vai trò</label>
                   <p className="fw-semibold">
-                    {userData.role === 0 ? "Quản trị" : "Nhân viên"}
+                    {userData.user?.role === 0
+                      ? "Quản trị"
+                      : userData.user?.role === 1
+                      ? "Quản lí"
+                      : "Chưa cập nhật"}
                   </p>
+                </div>
+
+                {/* ✅ TRẠNG THÁI */}
+                <div className="col-md-6 mb-3">
+                  <label className="text-muted small fw-bold">Trạng thái</label>
+                  <div className="mt-1">{getStatusBadge(userData.status)}</div>
                 </div>
               </div>
             </div>
@@ -178,7 +173,7 @@ const Profile = () => {
 
           <button
             className="btn btn-outline-primary mt-3 px-4 rounded-pill"
-            onClick={() => navigate(`/manager/profile/${userId}/edit`)}
+            onClick={() => navigate(`/manager/nhan-vien/${id}/edit`)}
           >
             Chỉnh sửa thông tin
           </button>
@@ -188,4 +183,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Employee;
