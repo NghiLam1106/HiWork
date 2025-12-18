@@ -15,9 +15,10 @@ import {
   FaTachometerAlt,
   FaUsers,
   FaUser,
-  FaShoppingBag,
+  FaBriefcase,
   FaChevronDown, // Icon mũi tên xuống
   FaChevronRight, // Icon mũi tên phải
+  FaUserTie
 } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -62,14 +63,20 @@ const Sidebar = () => {
     },
     {
       name: "Vị trí",
-      icon: <FaBuilding />,
+      icon: <FaUserTie />,
       path: "/manager/vi-tri",
       role: [1], // Chỉ hiển thị cho manager
     },
     {
       path: "/manager/ca-lam",
       name: "Ca làm",
-      icon: <FaShoppingBag />,
+      icon: <FaBriefcase />,
+      role: [1], // Chỉ hiển thị cho manager
+    },
+    {
+      name: "Công ty",
+      icon: <FaBuilding />,
+      path: "/manager/cong-ty",
       role: [1], // Chỉ hiển thị cho manager
     },
     {

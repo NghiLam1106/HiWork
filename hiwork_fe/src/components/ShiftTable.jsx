@@ -81,7 +81,7 @@ const ShiftTable = () => {
         <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
           <h5 className="mb-0 fw-bold text-primary">Danh sách ca làm</h5>
           <Link
-            to="/ca-lam/them-moi"
+            to="/manager/ca-lam/them-moi"
             className="btn btn-primary btn-sm d-flex align-items-center gap-2"
           >
             <FaPlus /> Thêm mới
