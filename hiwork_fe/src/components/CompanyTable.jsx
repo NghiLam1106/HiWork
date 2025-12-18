@@ -5,36 +5,36 @@ import { toast } from "react-hot-toast";
 import apiClient from "../api/clientAppi";
 import ConfirmPopup from "./ConfirmPopup";
 
-const PositionTable = () => {
-  const [positions, setPositions] = useState([]);
+const CompanyTable = () => {
+  const [companies, setCompanies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [showConfirm, setShowConfirm] = useState(false);
-  const [deletePosition, setDeletePosition] = useState(null); // lưu object position
+  const [deleteCompany, setDeleteCompany] = useState(null); // lưu object position
 
-  const fetchPositions = async (pageNumber = 1) => {
+  const fetchCompany = async (pageNumber = 1) => {
     setLoading(true);
     try {
-      const res = await apiClient.get(`/manager/positions?page=${pageNumber}&limit=5`);
+      const res = await apiClient.get(`/manager/companies?page=${pageNumber}&limit=5`);
       const data = res.data;
 
-      setPositions(data.data || []);
+      setCompanies(data.data || []);
       setPage(data.pagination?.currentPage || 1);
       setTotalPages(data.pagination?.totalPages || 1);
       setError(null);
     } catch (err) {
       console.error(err);
-      setError("Không thể tải danh sách vị trí.");
+      setError("Không thể tải danh sách công ty.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPositions(page);
+    fetchCompany(page);
   }, [page]);
 
   const handlePageChange = (newPage) => {
@@ -43,45 +43,45 @@ const PositionTable = () => {
     }
   };
 
-  const handleDeleteClick = (position) => {
-    setDeletePosition(position); // lưu toàn bộ object
+  const handleDeleteClick = (company) => {
+    setDeleteCompany(company); // lưu toàn bộ object
     setShowConfirm(true);
   };
 
   const handleConfirmDelete = async () => {
     setShowConfirm(false);
-    if (!deletePosition) return;
+    if (!deleteCompany) return;
 
     try {
-      const res = await apiClient.delete(`/manager/positions/${deletePosition.id}`);
+      const res = await apiClient.delete(`/manager/companies/${deleteCompany.id}`);
       if (res.status === 200) {
-        toast.success(`Xóa vị trí "${deletePosition.name}" thành công!`);
-        fetchPositions(page);
+        toast.success(`Xóa công ty "${deleteCompany.name}" thành công!`);
+        fetchCompany(page);
       } else {
         toast.error("Xóa không thành công!");
       }
     } catch (err) {
       console.error(err);
       toast.error(
-        err.response?.data?.message || "Đã xảy ra lỗi khi xóa vị trí."
+        err.response?.data?.message || "Đã xảy ra lỗi khi xóa công ty."
       );
     } finally {
-      setDeletePosition(null);
+      setDeleteCompany(null);
     }
   };
 
   const handleCancelDelete = () => {
     setShowConfirm(false);
-    setDeletePosition(null);
+    setDeleteCompany(null);
   };
 
   return (
     <div className="container-fluid mt-4">
       <div className="card shadow-sm border-0 rounded-3">
         <div className="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-          <h5 className="mb-0 fw-bold text-primary">Danh sách vị trí</h5>
+          <h5 className="mb-0 fw-bold text-primary">Danh sách công ty</h5>
           <Link
-            to="/manager/vi-tri/them-moi"
+            to="/manager/cong-ty/them-moi"
             className="btn btn-primary btn-sm d-flex align-items-center gap-2"
           >
             <FaPlus /> Thêm mới
@@ -96,7 +96,9 @@ const PositionTable = () => {
                   <th className="ps-4 py-3" style={{ width: "200px" }}>
                     Mã ID
                   </th>
-                  <th className="py-3">Tên vị trí</th>
+                  <th className="py-3">Tên công ty</th>
+                  <th className="py-3">Loại công ty</th>
+                  <th className="py-3">Địa chỉ</th>
                   <th className="text-end pe-4 ps-4 py-3">Hành động</th>
                 </tr>
               </thead>
@@ -113,30 +115,36 @@ const PositionTable = () => {
                       {error}
                     </td>
                   </tr>
-                ) : positions.length === 0 ? (
+                ) : companies.length === 0 ? (
                   <tr>
                     <td colSpan="3" className="text-center py-3 text-muted">
                       Không có dữ liệu
                     </td>
                   </tr>
                 ) : (
-                  positions.map((position) => (
-                    <tr key={position.id}>
+                  companies.map((company) => (
+                    <tr key={company.id}>
                       <td className="ps-4">
                         <span
                           className="badge text-dark"
                           style={{ fontSize: 16 }}
                         >
-                          {position.id}
+                          {company.id}
                         </span>
                       </td>
                       <td>
-                        <div className="fw-bold text-dark">{position.name}</div>
+                        <div className="fw-bold text-dark">{company.name}</div>
+                      </td>
+                      <td>
+                        <div className="fw-bold text-dark">{company.companyType}</div>
+                      </td>
+                      <td>
+                        <div className="fw-bold text-dark">{company.address}</div>
                       </td>
                       <td className="text-end pe-4">
                         <div className="d-flex align-items-center justify-content-end gap-2">
                           <Link
-                            to={`/manager/vi-tri/${position.id}`}
+                            to={`/manager/cong-ty/${company.id}`}
                             className="btn btn-primary btn-sm d-flex align-items-center justify-content-center"
                             style={{ width: "34px", height: "34px" }}
                             title="Xem chi tiết"
@@ -147,7 +155,7 @@ const PositionTable = () => {
                             className="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
                             style={{ width: "34px", height: "34px" }}
                             title="Xóa"
-                            onClick={() => handleDeleteClick(position)} // truyền cả object
+                            onClick={() => handleDeleteClick(company)} // truyền cả object
                           >
                             <FaTrashAlt />
                           </button>
@@ -215,7 +223,7 @@ const PositionTable = () => {
       <ConfirmPopup
         show={showConfirm}
         title="Xác nhận xóa"
-        message={`Bạn có chắc chắn muốn xóa công ty "${deletePosition?.name}" không?`}
+        message={`Bạn có chắc chắn muốn xóa công ty "${deleteCompany?.name}" không?`}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
       />
@@ -223,4 +231,4 @@ const PositionTable = () => {
   );
 };
 
-export default PositionTable;
+export default CompanyTable;

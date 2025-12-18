@@ -14,6 +14,7 @@ const positionRoutes = require('./routes/positionRoute');
 const shiftsRoutes = require('./routes/shiftsRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const emmployeesRoutes = require('./routes/employeesRoutes');
+const companyRoutes = require('./routes/companyRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,6 +39,8 @@ app.use('/api/manager/shifts', shiftsRoutes);
 app.use('/api/manager/profile', profileRoutes);
 
 app.use('/api/manager/employees', emmployeesRoutes);
+
+app.use('/api/manager/companies', companyRoutes);
 
 // Route user
 app.use('/api/user/auth', authRoutes);
