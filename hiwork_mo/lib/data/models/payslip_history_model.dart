@@ -1,6 +1,5 @@
 import 'package:hiwork_mo/domain/entities/payslip_history_entity.dart';
 
-// 2. Model cho MỘT HÀNG LỊCH SỬ (kế thừa Entity)
 class PayslipHistoryModel extends PayslipHistoryEntity {
   const PayslipHistoryModel({
     required super.id,
