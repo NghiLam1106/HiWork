@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hiwork_mo/presentation/pages/attendance/add_edit_attendance_page.dart';
+import 'package:hiwork_mo/presentation/pages/attendance/scan_face_page.dart';
 import 'package:hiwork_mo/presentation/pages/home/home_page.dart';
 import 'package:hiwork_mo/presentation/pages/leave/leave_request_page.dart';
 import 'package:hiwork_mo/presentation/pages/login/login_page.dart';
@@ -18,6 +19,8 @@ class AppRoute {
   static const String home = '/home';
   static const String task = '/task';
   static const String leaveRequest = '/leave_request';
+
+  static const String scanFace = '/scan_face';
 
   static const String commonWorkSchedule = '/common_work_schedule';
 
@@ -39,6 +42,8 @@ class AppRoute {
         return MaterialPageRoute(builder: (_) => const HomePage());
       case task:
         return MaterialPageRoute(builder: (_) => const TaskPage());
+      case scanFace:
+        return MaterialPageRoute(builder: (_) => const ScanFacePage());
       case leaveRequest:
         return MaterialPageRoute(builder: (_) => const LeaveRequestPage());
       case commonWorkSchedule:

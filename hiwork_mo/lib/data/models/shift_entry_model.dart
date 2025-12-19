@@ -1,4 +1,4 @@
-import 'package:hiwork_mo/domain/entities/shifts_entity.dart'; // Import file Entity của bạn
+import 'package:hiwork_mo/domain/entities/shifts_entity.dart'; 
 
 // Model này kế thừa Entity của bạn
 class ShiftAssignmentModel extends ShiftAssignmentEntity {

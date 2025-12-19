@@ -1,35 +1,33 @@
 import 'package:equatable/equatable.dart';
 
-// Lớp cơ sở cho tất cả các loại lỗi
 abstract class Failure extends Equatable {
-  const Failure();
+  final String message;
+  const Failure({required this.message});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }
 
 // Lỗi liên quan đến server (API)
 class ServerFailure extends Failure {
-  final String message;
-  const ServerFailure({this.message = 'Lỗi kết nối hoặc xử lý từ máy chủ.'});
-  @override
-  List<Object> get props => [message];
+  const ServerFailure({String message = 'Lỗi kết nối hoặc xử lý từ máy chủ.'})
+      : super(message: message);
 }
 
 // Lỗi dữ liệu cục bộ (Cache)
-class CacheFailure extends Failure {}
+class CacheFailure extends Failure {
+  const CacheFailure({String message = 'Lỗi dữ liệu cục bộ (Cache).'})
+      : super(message: message);
+}
 
 // Lỗi xác thực (Đăng nhập, đăng ký)
 class AuthFailure extends Failure {
-  final String message;
-  const AuthFailure({this.message = 'Tên đăng nhập hoặc mật khẩu không hợp lệ.'});
-  @override
-  List<Object> get props => [message];
+  const AuthFailure({String message = 'Tên đăng nhập hoặc mật khẩu không hợp lệ.'})
+      : super(message: message);
 }
 
 // Lỗi yêu cầu (Ví dụ: dữ liệu không hợp lệ)
 class InvalidInputFailure extends Failure {
-  final String message;
-  const InvalidInputFailure({this.message = 'Dữ liệu đầu vào không hợp lệ.'});
-  @override
-  List<Object> get props => [message];
+  const InvalidInputFailure({String message = 'Dữ liệu đầu vào không hợp lệ.'})
+      : super(message: message);
 }
