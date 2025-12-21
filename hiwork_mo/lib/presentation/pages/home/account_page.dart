@@ -12,7 +12,6 @@ import 'package:hiwork_mo/presentation/route/app_route.dart';
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
 
-  // Hàm xác nhận Đăng xuất
   void _confirmSignOut(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
@@ -20,23 +19,23 @@ class AccountPage extends StatelessWidget {
       context: context,
       builder:
           (ctx) => AlertDialog(
-            title: Text(l10n.confirmLogoutTitle), // "Xác nhận Đăng xuất"
+            title: Text(l10n.confirmLogoutTitle), 
             content: Text(
               l10n.confirmLogoutMessage,
-            ), // "Bạn có chắc chắn muốn đăng xuất?"
+            ), 
             actions: [
               TextButton(
-                child: Text(l10n.cancel), // "Hủy"
+                child: Text(l10n.cancel), 
                 onPressed: () => Navigator.of(ctx).pop(),
               ),
               TextButton(
                 child: Text(
-                  l10n.logout, // "Đăng xuất"
+                  l10n.logout, 
                   style: const TextStyle(color: Colors.red),
                 ),
                 onPressed: () {
                   context.read<AuthBloc>().add(LogOutRequested());
-                  Navigator.of(ctx).pop(); // Đóng dialog
+                  Navigator.of(ctx).pop(); 
                 },
               ),
             ],
@@ -53,7 +52,6 @@ class AccountPage extends StatelessWidget {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is Unauthenticated) {
-            // Nếu đã đăng xuất, đẩy về trang Login
             Navigator.of(
               context,
             ).pushNamedAndRemoveUntil(AppRoute.login, (route) => false);
@@ -61,14 +59,11 @@ class AccountPage extends StatelessWidget {
         },
         child: Column(
           children: [
-            // 3. Bọc Header bằng BlocBuilder để lấy thông tin User
             BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
-                // Đây là trạng thái MẶC ĐỊNH
                 String userName = l10n.guest;
                 String userEmail = l10n.pleaseSignIn;
 
-                // Nếu ĐÃ XÁC THỰC, gán lại giá trị
                 if (state is Authenticated) {
                   userName = state.user.fullName;
                   userEmail = state.user.email;
@@ -81,13 +76,13 @@ class AccountPage extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  _buildMenuItem(
-                    imagePath: AppAssets.companyInfo,
-                    text: l10n.companyInformation,
-                    onTap: () {
-                      // Navigator.pushNamed(context, AppRoute.companyInfo);
-                    },
-                  ),
+                  // _buildMenuItem(
+                  //   imagePath: AppAssets.companyInfo,
+                  //   text: l10n.companyInformation,
+                  //   onTap: () {
+                  //     // Navigator.pushNamed(context, AppRoute.companyInfo);
+                  //   },
+                  // ),
                   _buildMenuItem(
                     imagePath: AppAssets.language,
                     text: l10n.language,
@@ -124,14 +119,13 @@ class AccountPage extends StatelessWidget {
             radius: 40,
             backgroundImage: AssetImage(
               'assets/images/avatar.jpg',
-            ), // Giữ avatar mẫu
+            ), 
           ),
           const SizedBox(width: 20),
           Expanded(
             child: GestureDetector(
               onTap: () {
-                // Điều hướng đến trang Chỉnh sửa hồ sơ
-                // Navigator.pushNamed(context, AppRoute.editProfile);
+                Navigator.pushNamed(context, AppRoute.profilePage);
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
