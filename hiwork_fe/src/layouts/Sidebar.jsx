@@ -1,10 +1,7 @@
-// src/components/Sidebar.js
-
 import { useState } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "./css/Sidebar.css";
 
-// Import icons
 import {
   FaBars,
   FaBuilding,
@@ -16,86 +13,92 @@ import {
   FaUsers,
   FaUser,
   FaBriefcase,
-  FaChevronDown, // Icon mũi tên xuống
-  FaChevronRight, // Icon mũi tên phải
+  FaChevronDown,
+  FaChevronRight,
+  FaCalendarAlt,
   FaUserTie
 } from "react-icons/fa";
 
 const Sidebar = () => {
   const [isClosed, setIsClosed] = useState(false);
-  const [expandedMenu, setExpandedMenu] = useState({}); // State quản lý menu nào đang mở
+  const [expandedMenu, setExpandedMenu] = useState({});
   const userRole = localStorage.getItem("role");
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Cấu hình danh sách menu
   const menuItems = [
     {
       path: "manager/home",
       name: "Dashboard",
       icon: <FaTachometerAlt />,
-      role: [1], // Chỉ hiển thị cho manager và admin
+      role: [1],
     },
     {
       path: "admin/home",
       name: "Dashboard",
       icon: <FaTachometerAlt />,
-      role: [0], // Chỉ hiển thị cho manager và admin
+      role: [0],
     },
     {
       path: `/manager/profile/${userId}`,
       name: "Thông tin cá nhân",
       icon: <FaUser />,
-      role: [1], // Chỉ hiển thị cho manager
+      role: [1],
     },
     {
       path: `/admin/profile/${userId}`,
       name: "Thông tin cá nhân",
       icon: <FaUser />,
-      role: [0], // Chỉ hiển thị cho admin
+      role: [0],
     },
     {
       name: "Nhân viên",
       icon: <FaUsers />,
       path: "/manager/nhan-vien",
-      role: [1], // Chỉ hiển thị cho manager
+      role: [1],
     },
     {
       name: "Vị trí",
       icon: <FaUserTie />,
       path: "/manager/vi-tri",
-      role: [1], // Chỉ hiển thị cho manager
+      role: [1],
     },
     {
       path: "/manager/ca-lam",
       name: "Ca làm",
       icon: <FaBriefcase />,
-      role: [1], // Chỉ hiển thị cho manager
+      role: [1],
     },
+    // {
+    //   name: "Công ty",
+    //   icon: <FaBuilding />,
+    //   path: "/manager/cong-ty",
+    //   role: [1],
+    // },
     {
-      name: "Công ty",
-      icon: <FaBuilding />,
-      path: "/manager/cong-ty",
-      role: [1], // Chỉ hiển thị cho manager
+      name: "Lịch làm việc",
+      icon: <FaCalendarAlt />,
+      path: "/manager/lich-lam-viec",
+      role: [1],
     },
     {
       path: "/manager/cham-cong",
       name: "Chấm công",
       icon: <FaRegCalendarCheck />,
-      role: [1], // Chỉ hiển thị cho manager
+      role: [1],
     },
     {
       path: "/manager/bao-cao",
       name: "Báo cáo",
       icon: <FaChartBar />,
-      role: [1], // Chỉ hiển thị cho manager
+      role: [1],
     },
     {
       path: "/manager/cai-dat",
       name: "Cài đặt",
       icon: <FaCog />,
-      role: [1], // Chỉ hiển thị cho manager
+      role: [1],
     },
   ];
 

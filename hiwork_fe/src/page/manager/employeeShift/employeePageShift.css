@@ -1,0 +1,16 @@
+.header {
+  padding: 20px 0;
+}
+
+.profile-container {
+  max-width: 900px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+}
+
+.card p {
+  margin-bottom: 0;
+}

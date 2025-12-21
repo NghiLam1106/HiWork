@@ -114,7 +114,7 @@ const UpdateProfile = () => {
 
             {/* Gender */}
             <div className="col-md-6 mb-3">
-              <label className="fw-bold small">Giới tính</label>
+              <label className="fw-bold small pb-2">Giới tính</label>
               <select
                 name="gender"
                 className="form-select rounded-3"

@@ -23,6 +23,9 @@ import DetailCompany from "../page/manager/company/detailCompanyPage";
 // 1. Import 2 component mới
 import GuestRoute from "./GuestRoute"; // (Kiểm tra lại đường dẫn file)
 import ProtectedRoute from "./ProtectedRoute"; // (Kiểm tra lại đường dẫn file)
+import EmployeeShiftPage from "../page/manager/employeeShift/employeeShiftPage";
+import AddEmployeeShift from "../page/manager/employeeShift/addEmployeeShiftPage";
+import UpdateEmployeeShift from "../page/manager/employeeShift/updateEmployeeShiftPage";
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -65,6 +68,9 @@ const AppRoutes = () => (
         <Route path="/manager/cong-ty" element={<Company />} />
         <Route path="/manager/cong-ty/them-moi" element={<AddCompany />} />
         <Route path="/manager/cong-ty/:id" element={<DetailCompany />} />
+        <Route path="/manager/lich-lam-viec" element={<EmployeeShiftPage />} />
+        <Route path="/manager/lich-lam-viec/them-moi" element={<AddEmployeeShift />} />
+        <Route path="/manager/lich-lam-viec/:id" element={<UpdateEmployeeShift />} />
 
         {/* Trang admin */}
         <Route path="/admin/home" element={<HomeAdmin />} />
