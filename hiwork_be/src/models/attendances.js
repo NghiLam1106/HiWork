@@ -11,19 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.user, { foreignKey: 'id_employee_schedules', as: 'employee_schedules' });
+      this.belongsTo(models.employeeSchedule, {
+        foreignKey: "id_EmployeeShift",
+        as: "employeeSchedule",
+      });
     }
   }
   attendances.init({
-    idEmployeeShift: DataTypes.INTEGER,
-    checkIn: DataTypes.DATE,
-    checkOut: DataTypes.DATE,
-    photoUrl: DataTypes.STRING,
-    confidenceScore: DataTypes.FLOAT,
-    status: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'attendances',
-  });
+  id_EmployeeShift: DataTypes.INTEGER,
+  checkIn: DataTypes.DATE,
+  checkOut: DataTypes.DATE,
+  photoUrl: DataTypes.STRING,
+  confidenceScore: DataTypes.FLOAT,
+  status: DataTypes.INTEGER,
+}, {
+  sequelize,
+  modelName: "attendances",
+  tableName: "attendances",
+});
   return attendances;
 };

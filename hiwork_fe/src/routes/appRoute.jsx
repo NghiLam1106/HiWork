@@ -19,6 +19,8 @@ import UpdateEmployeeManager from "../page/manager/employee/updateEmployeePage";
 import Company from "../page/manager/company/companyPage";
 import AddCompany from "../page/manager/company/addCompanyPage";
 import DetailCompany from "../page/manager/company/detailCompanyPage";
+import AttendancePage from "../page/manager/attendance/attendancePage";
+import UpdateAttendanceShift from "../page/manager/attendance/detailAttendancePage";
 
 // 1. Import 2 component mới
 import GuestRoute from "./GuestRoute"; // (Kiểm tra lại đường dẫn file)
@@ -71,6 +73,8 @@ const AppRoutes = () => (
         <Route path="/manager/lich-lam-viec" element={<EmployeeShiftPage />} />
         <Route path="/manager/lich-lam-viec/them-moi" element={<AddEmployeeShift />} />
         <Route path="/manager/lich-lam-viec/:id" element={<UpdateEmployeeShift />} />
+        <Route path="/manager/cham-cong" element={<AttendancePage />} />
+        <Route path="/manager/cham-cong/:id" element={<UpdateAttendanceShift />} />
 
         {/* Trang admin */}
         <Route path="/admin/home" element={<HomeAdmin />} />
