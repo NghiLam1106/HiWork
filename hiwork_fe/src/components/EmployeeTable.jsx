@@ -13,12 +13,8 @@ const EmployeeTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Phân quyền
   const userRole = localStorage.getItem("role");
-
-  // =========================
-  // 📌 FETCH EMPLOYEES (y chang flow PositionTable)
-  // =========================
+  
   const fetchEmployees = async (pageNumber = 1) => {
     setLoading(true);
     try {

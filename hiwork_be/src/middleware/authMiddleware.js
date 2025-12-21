@@ -17,7 +17,7 @@ const authMiddleware = async (req, res, next) => {
     req.user = decoded; // Firebase user info
     next();
   } catch (err) {
-    return res.status(401).json({ message: "Token Firebase không hợp lệ." });
+    return res.status(401).json({ message: "Token Firebase không hợp lệ hoặc hết hạn." });
   }
 };
 module.exports = authMiddleware;
