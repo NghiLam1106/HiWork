@@ -5,12 +5,8 @@ import 'package:hiwork_mo/presentation/bloc/auth/auth_state.dart';
 import 'package:hiwork_mo/presentation/pages/home/home_page.dart';
 import 'package:hiwork_mo/presentation/pages/leave/leave_request_page.dart';
 import 'package:hiwork_mo/presentation/pages/login/login_page.dart';
+import 'package:hiwork_mo/presentation/pages/profile/profile_page.dart';
 import 'package:hiwork_mo/presentation/route/app_route.dart';
-import 'package:hiwork_mo/presentation/route/app_route.dart';
-
-// Giả sử bạn có các file trang này
-// import 'package:hiwork_mo/presentation/pages/register/register_page.dart';
-// import 'package:hiwork_mo/presentation/pages/splash/splash_page.dart';
 
 class RouteGenerator {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -38,17 +34,15 @@ class RouteGenerator {
       // case AppRoute.register:
       //   return MaterialPageRoute(builder: (_) => const RegisterPage());
 
-      // --- Main App ---
       case AppRoute.home:
         return MaterialPageRoute(builder: (_) => const HomePage());
 
-      // --- Features ---
       case AppRoute.leaveRequest:
         return MaterialPageRoute(builder: (_) => const LeaveRequestPage());
       
-      // ... (Thêm các route khác ở đây, ví dụ: schedule, payroll)
-
-      // Nếu không tìm thấy route
+      case AppRoute.profilePage:
+        return MaterialPageRoute(builder: (_) => const ProfilePage());
+        
       default:
         return _errorRoute();
     }

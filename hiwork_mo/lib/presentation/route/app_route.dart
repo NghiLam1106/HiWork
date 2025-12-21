@@ -4,6 +4,7 @@ import 'package:hiwork_mo/presentation/pages/attendance/scan_face_page.dart';
 import 'package:hiwork_mo/presentation/pages/home/home_page.dart';
 import 'package:hiwork_mo/presentation/pages/leave/leave_request_page.dart';
 import 'package:hiwork_mo/presentation/pages/login/login_page.dart';
+import 'package:hiwork_mo/presentation/pages/profile/profile_page.dart';
 import 'package:hiwork_mo/presentation/pages/register/register_page.dart';
 import 'package:hiwork_mo/presentation/pages/schedule/common_work_schedule_page.dart';
 import 'package:hiwork_mo/presentation/pages/splash/splash_page.dart';
@@ -27,6 +28,8 @@ class AppRoute {
   static const String registerWorkSchedule = '/register_work_schedule';
 
   static const String addEditAttendance = '/add_edit_attendance';
+
+  static const String profilePage = '/profile_page';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -52,6 +55,8 @@ class AppRoute {
         return MaterialPageRoute(builder: (_) => const RegisterWorkSchedulePage());
       case addEditAttendance:
         return MaterialPageRoute(builder: (_) => const AddEditAttendancePage());
+      case profilePage:
+        return MaterialPageRoute(builder: (_) => const ProfilePage());
       default:
         return MaterialPageRoute(
           builder:
