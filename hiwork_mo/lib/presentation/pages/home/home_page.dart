@@ -3,6 +3,7 @@ import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
 import 'package:hiwork_mo/l10n/app_localizations.dart';
+import 'package:hiwork_mo/presentation/pages/attendance/scan_face_page.dart';
 import 'package:hiwork_mo/presentation/pages/home/account_page.dart';
 import 'package:hiwork_mo/presentation/pages/leave/leave_history_page.dart';
 import 'package:hiwork_mo/presentation/pages/home/notification_page.dart';
@@ -102,6 +103,7 @@ class _HomePageState extends State<HomePage> {
     final isActive = _currentIndex == index;
     return GestureDetector(
       onTap: () => _onTabSelected(index),
+
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -143,6 +145,8 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
+  bool _isCheckedIn = false;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -177,8 +181,34 @@ class _HomeContentState extends State<HomeContent> {
           ],
         ),
         GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, '/nextPage'); // ví dụ điều hướng
+          onTap: () async {
+            if (_isCheckedIn) {
+              setState(() => _isCheckedIn = false);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Bạn đã check-out thành công")),
+              );
+              return;
+            }
+
+            final selectedShift = await Navigator.push<String>(
+              context,
+              MaterialPageRoute(builder: (_) => const ScanFacePage()),
+            );
+
+            if (selectedShift == null) return;
+
+            setState(() => _isCheckedIn = true);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Bạn đã check in ca $selectedShift")),
+            );
+
+            // if (result == null) return;
+
+            // setState(() {
+            //   _isCheckedIn = result;
+            // });
           },
           child: Container(
             margin: const EdgeInsets.all(20),
@@ -192,7 +222,7 @@ class _HomeContentState extends State<HomeContent> {
               children: [
                 Image.asset(AppAssets.faceCheck, height: 80),
                 Text(
-                  l10n.titleScan,
+                  _isCheckedIn ? "CHECK-OUT" : "FACE SCAN TO CLOCK IN",
                   style: TextStyle(
                     fontSize: AppFontSize.title_16,
                     fontWeight: FontWeight.bold,
@@ -201,7 +231,9 @@ class _HomeContentState extends State<HomeContent> {
                 ),
                 // AppPadding.h10,
                 Text(
-                  '${l10n.titleScanHello}, Huong Vo!',
+                  _isCheckedIn
+                      ? "Check-out để hoàn thành công việc"
+                      : '${l10n.titleScanHello}, Huong Vo!',
                   style: TextStyle(
                     fontSize: AppFontSize.content_12,
                     color: AppColors.textWhite,

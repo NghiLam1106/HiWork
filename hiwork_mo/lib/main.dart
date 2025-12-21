@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
+import 'package:hiwork_mo/presentation/bloc/attendanceScan/attendance_scan_bloc.dart';
 import 'firebase_options.dart';
 import 'package:hiwork_mo/core/injection/dependency_injection.dart' as di;
 import 'package:hiwork_mo/l10n/app_localizations.dart';
@@ -16,9 +17,10 @@ import 'package:hiwork_mo/presentation/bloc/timesheet/timesheet_bloc.dart';
 
 import 'package:hiwork_mo/presentation/bloc/leave/leave_bloc.dart';
 
-// Import Route
 import 'package:hiwork_mo/presentation/route/app_route.dart';
-import 'package:hiwork_mo/presentation/route/app_route.dart';
+import 'package:camera/camera.dart';
+
+List<CameraDescription> globalCameras = [];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +32,9 @@ void main() async {
 
   /// Khởi tạo DI
   await di.configureDependencies();
+
+  globalCameras = await availableCameras();
+
 
   runApp(const MyApp());
 }
@@ -55,6 +60,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<LeaveBloc>(
           create: (context) => di.sl<LeaveBloc>(),
+        ),
+         BlocProvider<AttendanceScanBloc>(
+          create: (context) => di.sl<AttendanceScanBloc>(),
         ),
       ],
       child: BlocBuilder<LanguageBloc, LanguageState>(

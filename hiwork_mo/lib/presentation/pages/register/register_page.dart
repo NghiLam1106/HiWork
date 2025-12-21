@@ -80,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
           if (state is Unauthenticated) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              '/home',
+              '/login',
               (Route<dynamic> route) => false,
             );
           }
