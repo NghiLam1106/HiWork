@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:hiwork_mo/domain/entities/shift_details_entity.dart';
 
 // ignore: must_be_immutable
 class ShiftAssignmentEntity extends Equatable {
@@ -6,7 +7,9 @@ class ShiftAssignmentEntity extends Equatable {
   final int idEmployee;
   final int idShift;
   final DateTime workDate;
-  final String status;
+  final int status;
+
+  final ShiftDetailsEntity? shift;
 
   const ShiftAssignmentEntity({
     required this.idShiftAssignments,
@@ -14,6 +17,7 @@ class ShiftAssignmentEntity extends Equatable {
     required this.idShift,
     required this.workDate,
     required this.status,
+    this.shift,
   });
 
   ShiftAssignmentEntity copyWith({
@@ -21,7 +25,7 @@ class ShiftAssignmentEntity extends Equatable {
     int? idEmployee,
     int? idShift,
     DateTime? workDate,
-    String? status,
+    int? status,
   }) {
     return ShiftAssignmentEntity(
       idShiftAssignments: idShiftAssignments ?? this.idShiftAssignments,
@@ -39,5 +43,6 @@ class ShiftAssignmentEntity extends Equatable {
         idShift,
         workDate,
         status,
+        shift,
       ];
 }

@@ -103,6 +103,10 @@ const loginUser = async (credentials) => {
     throw new Error("Mật khẩu không đúng");
   }
 
+  const employee = await userRepository.findEmployeeByUserId(user.id);
+  // employee có thể null nếu user chưa được gán nhân viên
+  const employeeId = employee?.id ?? null;
+
   // Trả về thông tin user + Firebase token
   return {
     firebaseToken: firebaseData.idToken,
@@ -112,6 +116,9 @@ const loginUser = async (credentials) => {
       email: user.email,
       role: user.role,
     },
+    employee: employeeId
+      ? { id: employeeId }
+      : null,
   };
 };
 

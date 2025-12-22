@@ -5,6 +5,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const employeeShiftController = require("../controllers/employeeShift/employeeShiftController");
 
 router.get("/", employeeShiftController.list);
+router.get("/list_by_employee", employeeShiftController.listByEmployee);
 router.get("/:id", employeeShiftController.detail);
 router.post("/", authMiddleware, employeeShiftController.create);
 router.put("/:id", authMiddleware, employeeShiftController.update);

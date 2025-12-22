@@ -14,7 +14,15 @@ const createUser = async (userData) => {
   return newUser;
 };
 
+const findEmployeeByUserId = async (userId) => {
+  return employee.findOne({
+    where: { user_id: userId }, // <-- đổi theo schema của bạn
+    attributes: ["id", "user_id"],
+  });
+}
+
 module.exports = {
   findUserByEmail,
-  createUser
+  createUser,
+  findEmployeeByUserId,
 };

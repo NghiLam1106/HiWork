@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hiwork_mo/domain/entities/shifts_entity.dart';
 import 'package:hiwork_mo/main.dart';
+import 'package:hiwork_mo/presentation/bloc/attendanceScan/attendance_scan_bloc.dart';
+import 'package:hiwork_mo/presentation/bloc/attendanceScan/attendance_scan_event.dart';
+import 'package:hiwork_mo/presentation/bloc/attendanceScan/attendance_scan_state.dart';
 
 class ScanFacePage extends StatefulWidget {
   final bool isCheckout;
 
-  const ScanFacePage({super.key, this.isCheckout = false});
+  // Bạn truyền idEmployee từ màn trước (từ Auth/localStorage/profile)
+  final int idEmployee;
+
+  // Khi check-in cần ảnh => bạn có thể truyền imagePath sau khi chụp
+  // Ở đây mình để sẵn nullable để bạn tích hợp chụp ảnh sau.
+  final String? imagePath;
+
+  const ScanFacePage({
+    super.key,
+    this.isCheckout = false,
+    required this.idEmployee,
+    this.imagePath,
+  });
 
   @override
   State<ScanFacePage> createState() => _ScanFacePageState();
@@ -16,19 +33,15 @@ class _ScanFacePageState extends State<ScanFacePage> {
   Future<void>? _initializeCamera;
   bool _isCameraOpened = false;
 
-  final List<String> _shifts = const [
-    "Ca sáng [7:00 - 12:00]",
-    "Ca chiều [12:00 - 17:30]",
-    "Ca tối [17:30 - 23:30]",
-  ];
-
-  String? _selectedShift;
-
   @override
   void initState() {
     super.initState();
-    _selectedShift = _shifts.first;
     _openCamera();
+
+    // ✅ load ca đã phân trong ngày (hoặc bạn truyền date vào event nếu có)
+    context.read<AttendanceScanBloc>().add(
+      AttendanceLoadShifts(idEmployee: widget.idEmployee, date: DateTime.now()),
+    );
   }
 
   void _openCamera() {
@@ -43,7 +56,6 @@ class _ScanFacePageState extends State<ScanFacePage> {
     );
 
     _initializeCamera = _controller!.initialize();
-
     setState(() => _isCameraOpened = true);
   }
 
@@ -53,14 +65,42 @@ class _ScanFacePageState extends State<ScanFacePage> {
     super.dispose();
   }
 
-  Future<void> _onConfirm() async {
-    // ✅ TODO: sau này chụp ảnh + gọi API check-in
-    // Hiện tại chỉ demo:
-    if (_selectedShift == null) return;
+  void _submit(ShiftAssignmentEntity? selected) {
+    if (selected == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Vui lòng chọn ca làm việc")),
+      );
+      return;
+    }
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text("Đã chọn: $_selectedShift")));
+    if (widget.isCheckout) {
+      // ✅ Check-out (bạn đang gọi theo idShift)
+      context.read<AttendanceScanBloc>().add(
+        AttendanceCheckOutSubmit(
+          idEmployee: widget.idEmployee,
+          // nếu event bạn chưa có idShift thì thêm vào event
+          idShift: selected.idShift,
+        ),
+      );
+    } else {
+      // ✅ Check-in cần ảnh
+      final path = widget.imagePath;
+      if (path == null || path.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Chưa có ảnh khuôn mặt để check-in")),
+        );
+        return;
+      }
+
+      context.read<AttendanceScanBloc>().add(
+        AttendanceCheckInSubmit(
+          idEmployee: widget.idEmployee,
+          imagePath: path,
+          // nếu event bạn chưa có idShift thì thêm vào event
+          idShift: selected.idShift,
+        ),
+      );
+    }
   }
 
   @override
@@ -106,8 +146,6 @@ class _ScanFacePageState extends State<ScanFacePage> {
                   )
                   : const SizedBox(),
         ),
-
-        // CLOSE BUTTON
         Positioned(
           top: 12,
           right: 16,
@@ -124,8 +162,6 @@ class _ScanFacePageState extends State<ScanFacePage> {
             ),
           ),
         ),
-
-        // FACE FRAME
         Positioned.fill(
           child: Center(
             child: Container(
@@ -141,13 +177,11 @@ class _ScanFacePageState extends State<ScanFacePage> {
             ),
           ),
         ),
-
-        // INSTRUCTION TEXT
-        Positioned(
+        const Positioned(
           bottom: 20,
           left: 0,
           right: 0,
-          child: const Text(
+          child: Text(
             "Đưa khuôn mặt của bạn vào khung hình và\nbấm “Đồng ý”",
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontSize: 14),
@@ -172,49 +206,88 @@ class _ScanFacePageState extends State<ScanFacePage> {
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.isCheckout
-                  ? "Check-out ca làm việc"
-                  : "Check-in ca làm việc",
-              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 14),
+        child: BlocConsumer<AttendanceScanBloc, AttendanceScanState>(
+          listener: (context, state) {
+            if (state.error != null && state.error!.isNotEmpty) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.error!)));
+              context.read<AttendanceScanBloc>().add(
+                const AttendanceClearError(),
+              );
+            }
 
-            _buildShiftDropdown(),
-
-            const Spacer(),
-
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_selectedShift == null) return;
-
-                  Navigator.pop(context, _selectedShift);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1662B3),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+            // nếu submit thành công (có lastLog) thì pop về
+            if (state.lastLog != null && !state.submitting) {
+              Navigator.pop(context, state.lastLog);
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.isCheckout
+                      ? "Check-out ca làm việc"
+                      : "Check-in ca làm việc",
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                child: const Text(
-                  "Đồng ý",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                const SizedBox(height: 14),
+
+                if (state.loading)
+                  const Center(child: CircularProgressIndicator())
+                else if (state.shifts.isEmpty)
+                  const Text(
+                    "Hôm nay bạn chưa được phân ca.",
+                    style: TextStyle(color: Colors.red),
+                  )
+                else
+                  _buildShiftDropdown(state),
+
+                const Spacer(),
+
+                SizedBox(
+                  width: double.infinity,
+                  height: 55,
+                  child: ElevatedButton(
+                    onPressed:
+                        (state.submitting || state.loading)
+                            ? null
+                            : () => _submit(state.selectedShift),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF1662B3),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    child:
+                        state.submitting
+                            ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                            : const Text(
+                              "Đồng ý",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                  ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _buildShiftDropdown() {
+  Widget _buildShiftDropdown(AttendanceScanState state) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14),
       height: 52,
@@ -223,23 +296,33 @@ class _ScanFacePageState extends State<ScanFacePage> {
         border: Border.all(color: Colors.blue, width: 1.2),
       ),
       child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
+        child: DropdownButton<int>(
           isExpanded: true,
-          value: _selectedShift,
+          value: state.selectedShift?.idShiftAssignments,
           items:
-              _shifts
-                  .map(
-                    (s) => DropdownMenuItem(
-                      value: s,
-                      child: Text(
-                        s,
-                        style: const TextStyle(color: Colors.blue),
-                      ),
-                    ),
-                  )
-                  .toList(),
-          onChanged: (value) {
-            setState(() => _selectedShift = value);
+              state.shifts.map((a) {
+                final s = a.shift; // ✅ shift đã parse
+                final label =
+                    (s == null)
+                        ? "Ca #${a.idShift}"
+                        : "${s.name} [${s.startTime} - ${s.endTime}]";
+
+                return DropdownMenuItem<int>(
+                  value: a.idShiftAssignments,
+                  child: Text(
+                    label,
+                    style: const TextStyle(color: Colors.blue),
+                  ),
+                );
+              }).toList(),
+          onChanged: (id) {
+            if (id == null) return;
+            final picked = state.shifts.firstWhere(
+              (x) => x.idShiftAssignments == id,
+            );
+            context.read<AttendanceScanBloc>().add(
+              AttendanceSelectShift(picked),
+            );
           },
         ),
       ),

@@ -11,6 +11,8 @@ import 'package:hiwork_mo/presentation/pages/home/task_page.dart';
 import 'package:hiwork_mo/presentation/pages/payroll/work_efficiency_page.dart';
 import 'package:hiwork_mo/presentation/pages/schedule/work_schedule_page.dart';
 import 'package:hiwork_mo/presentation/widgets/menu_card.dart';
+import 'package:hiwork_mo/data/local/employee_storage.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,6 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+
 
   final List<Widget> _pages = [
     const HomeContent(),
@@ -146,6 +149,8 @@ class HomeContent extends StatefulWidget {
 
 class _HomeContentState extends State<HomeContent> {
   bool _isCheckedIn = false;
+  final EmployeeStorage _storage = EmployeeStorage();
+
 
   @override
   Widget build(BuildContext context) {
@@ -191,9 +196,11 @@ class _HomeContentState extends State<HomeContent> {
               return;
             }
 
+            final employeeId = await EmployeeStorage().getEmployeeId();
+
             final selectedShift = await Navigator.push<String>(
               context,
-              MaterialPageRoute(builder: (_) => const ScanFacePage()),
+              MaterialPageRoute(builder: (_) => ScanFacePage(idEmployee: employeeId ?? 0)),
             );
 
             if (selectedShift == null) return;

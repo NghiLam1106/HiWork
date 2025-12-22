@@ -3,17 +3,23 @@ import 'package:hiwork_mo/core/error/exceptions.dart';
 import 'package:hiwork_mo/core/error/failures.dart';
 import 'package:hiwork_mo/data/datasources/attendance_scan_remote_datasource.dart';
 import 'package:hiwork_mo/domain/entities/attendance_scan_entity.dart';
-import 'package:hiwork_mo/domain/entities/shift_details_entity.dart';
 import 'package:hiwork_mo/domain/repositories/attendance_scan_repository.dart';
+import '../models/shift_entry_model.dart';
 
 class AttendanceScanRepositoryImpl implements AttendanceScanRepository {
   final AttendanceScanRemoteDataSource remote;
   AttendanceScanRepositoryImpl(this.remote);
 
   @override
-  Future<Either<Failure, List<ShiftDetailsEntity>>> getShifts() async {
+  Future<Either<Failure, List<ShiftAssignmentModel>>> getShifts({
+    required int idEmployee,
+    required DateTime date,
+  }) async {
     try {
-      final res = await remote.getShifts();
+      final res = await remote.getShifts(
+        idEmployee: idEmployee,
+        date: date,
+      );
       return Right(res);
     } on ServerException catch (e) {
       return Left(

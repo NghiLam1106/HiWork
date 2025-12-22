@@ -17,7 +17,7 @@ class ShiftAssignmentModel extends ShiftAssignmentEntity {
       idEmployee: json['idEmployee'] as int,
       idShift: json['idShift'] as int,
       workDate: DateTime.parse(json['workDate'] as String),
-      status: json['status'] as String,
+      status: json['status'] as int,
     );
   }
 

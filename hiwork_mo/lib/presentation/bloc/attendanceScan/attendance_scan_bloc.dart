@@ -29,7 +29,10 @@ class AttendanceScanBloc extends Bloc<AttendanceScanEvent, AttendanceScanState> 
   ) async {
     emit(state.copyWith(loading: true, error: null));
 
-    final result = await getShiftsUsecase();
+    final result = await getShiftsUsecase(
+      idEmployee: event.idEmployee,
+      date: event.date,
+    );
 
     result.fold(
       (failure) => emit(state.copyWith(loading: false, error: failure.message)),
