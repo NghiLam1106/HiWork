@@ -35,6 +35,13 @@ void main() async {
 
   globalCameras = await availableCameras();
 
+  Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.configureDependencies();
+  runApp(const MyApp());
+}
+
+
 
   runApp(const MyApp());
 }

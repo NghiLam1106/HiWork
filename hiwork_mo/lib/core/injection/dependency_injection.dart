@@ -3,21 +3,28 @@ import 'package:hiwork_mo/core/constants/api_endpoints.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hiwork_mo/data/datasources/attendance_scan_remote_datasource.dart';
 import 'package:hiwork_mo/data/datasources/auth_remote_datasource.dart';
+import 'package:hiwork_mo/data/datasources/employee_detail_remote_datasource.dart';
+import 'package:hiwork_mo/data/datasources/employee_detail_remote_datasource_impl.dart';
 import 'package:hiwork_mo/data/repositories/attendance_scan_repository_impl.dart';
 import 'package:hiwork_mo/data/repositories/auth_repository_impl.dart';
+import 'package:hiwork_mo/data/repositories/employee_detail_repository_impl.dart';
 import 'package:hiwork_mo/domain/repositories/attendance_scan_repository.dart';
 import 'package:hiwork_mo/domain/repositories/auth_repository.dart';
+import 'package:hiwork_mo/domain/repositories/employee_detail_repository.dart';
 import 'package:hiwork_mo/domain/usecases/check_in_with_face_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/check_out_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/get_shifts_detail_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/login_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/register_usecase.dart';
+import 'package:hiwork_mo/domain/usecases/update_personal_info_usecase.dart';
+import 'package:hiwork_mo/domain/usecases/upload_register_image_usecase.dart';
 import 'package:hiwork_mo/presentation/bloc/attendanceScan/attendance_scan_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/auth/auth_bloc.dart';
 import 'package:hiwork_mo/data/datasources/notification_remote_datasource.dart';
 import 'package:hiwork_mo/data/repositories/notification_repository_impl.dart';
 import 'package:hiwork_mo/domain/repositories/notification_repository.dart';
 import 'package:hiwork_mo/domain/usecases/get_notifications_usecase.dart';
+import 'package:hiwork_mo/presentation/bloc/employee_personal_edit/employee_personal_edit_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/notification/notification_bloc.dart';
 import 'package:hiwork_mo/data/datasources/timesheet_remote_datasource.dart';
 import 'package:hiwork_mo/data/repositories/timesheet_repository_impl.dart';
@@ -145,4 +152,33 @@ Future<void> configureDependencies() async {
       checkOutUsecase: sl(),
     ),
   );
+
+    // --- TÍNH NĂNG EMPLOYEE DETAIL / EDIT PERSONAL ---
+  // DataSource
+  sl.registerLazySingleton<EmployeeDetailRemoteDataSource>(
+    () => EmployeeDetailRemoteDataSourceImpl(sl<Dio>()),
+  );
+
+  // Repository
+  sl.registerLazySingleton<EmployeeDetailRepository>(
+    () => EmployeeDetailRepositoryImpl(remote: sl()),
+  );
+
+  // UseCases
+  sl.registerLazySingleton(
+    () => UpdatePersonalInfoUseCase(sl<EmployeeDetailRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => UploadRegisterImageUseCase(sl<EmployeeDetailRepository>()),
+  );
+
+  // Bloc
+  sl.registerFactory(
+    () => EmployeePersonalEditBloc(
+      updatePersonalInfoUseCase: sl(),
+      uploadUseCase: sl(),
+    ),
+  );
+
+
 }
