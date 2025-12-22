@@ -27,14 +27,13 @@ class AttendanceCheckInSubmit extends AttendanceScanEvent {
 
   const AttendanceCheckInSubmit({
     required this.idEmployee,
-    required this.imagePath, required idShift,
+    required this.imagePath, required idShiftAssignments,
   });
 }
 
 class AttendanceCheckOutSubmit extends AttendanceScanEvent {
-  final int idEmployee;
-
-  const AttendanceCheckOutSubmit({required this.idEmployee, required idShift});
+  final int attendanceId;
+  const AttendanceCheckOutSubmit({required this.attendanceId});
 }
 
 class AttendanceClearError extends AttendanceScanEvent {

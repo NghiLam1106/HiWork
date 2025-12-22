@@ -9,19 +9,20 @@ import 'package:hiwork_mo/presentation/bloc/attendanceScan/attendance_scan_state
 
 class ScanFacePage extends StatefulWidget {
   final bool isCheckout;
-
-  // Bạn truyền idEmployee từ màn trước (từ Auth/localStorage/profile)
   final int idEmployee;
 
-  // Khi check-in cần ảnh => bạn có thể truyền imagePath sau khi chụp
-  // Ở đây mình để sẵn nullable để bạn tích hợp chụp ảnh sau.
-  final String? imagePath;
+  // ✅ chỉ dùng cho CHECK-OUT (lấy từ Home truyền qua)
+  final int? currentAttendanceId;
+  final String? currentShiftText;
+  final DateTime? currentCheckInTime;
 
   const ScanFacePage({
     super.key,
     this.isCheckout = false,
     required this.idEmployee,
-    this.imagePath,
+    this.currentAttendanceId,
+    this.currentShiftText,
+    this.currentCheckInTime,
   });
 
   @override
@@ -38,10 +39,15 @@ class _ScanFacePageState extends State<ScanFacePage> {
     super.initState();
     _openCamera();
 
-    // ✅ load ca đã phân trong ngày (hoặc bạn truyền date vào event nếu có)
-    context.read<AttendanceScanBloc>().add(
-      AttendanceLoadShifts(idEmployee: widget.idEmployee, date: DateTime.now()),
-    );
+    // ✅ chỉ load shifts khi CHECK-IN
+    if (!widget.isCheckout) {
+      context.read<AttendanceScanBloc>().add(
+        AttendanceLoadShifts(
+          idEmployee: widget.idEmployee,
+          date: DateTime.now(),
+        ),
+      );
+    }
   }
 
   void _openCamera() {
@@ -65,7 +71,33 @@ class _ScanFacePageState extends State<ScanFacePage> {
     super.dispose();
   }
 
-  void _submit(ShiftAssignmentEntity? selected) {
+  Future<void> _submit(AttendanceScanState state) async {
+    // =========================
+    // ✅ CHECK-OUT (không cần dropdown)
+    // =========================
+    if (widget.isCheckout) {
+      final idAttendance = widget.currentAttendanceId;
+      if (idAttendance == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Không tìm thấy ca đang check-in để check-out"),
+          ),
+        );
+        return;
+      }
+
+      context.read<AttendanceScanBloc>().add(
+        AttendanceCheckOutSubmit(
+          attendanceId: idAttendance, // ✅ dùng id_employeeShift
+        ),
+      );
+      return;
+    }
+
+    // =========================
+    // ✅ CHECK-IN (cần chọn ca + chụp ảnh)
+    // =========================
+    final selected = state.selectedShift;
     if (selected == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Vui lòng chọn ca làm việc")),
@@ -73,33 +105,30 @@ class _ScanFacePageState extends State<ScanFacePage> {
       return;
     }
 
-    if (widget.isCheckout) {
-      // ✅ Check-out (bạn đang gọi theo idShift)
-      context.read<AttendanceScanBloc>().add(
-        AttendanceCheckOutSubmit(
-          idEmployee: widget.idEmployee,
-          // nếu event bạn chưa có idShift thì thêm vào event
-          idShift: selected.idShift,
-        ),
-      );
-    } else {
-      // ✅ Check-in cần ảnh
-      final path = widget.imagePath;
-      if (path == null || path.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Chưa có ảnh khuôn mặt để check-in")),
-        );
-        return;
-      }
+    // camera ready?
+    if (_controller == null || !_controller!.value.isInitialized) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Camera chưa sẵn sàng")));
+      return;
+    }
+
+    try {
+      await _initializeCamera;
+      final XFile file = await _controller!.takePicture();
+      final String imagePath = file.path;
 
       context.read<AttendanceScanBloc>().add(
         AttendanceCheckInSubmit(
           idEmployee: widget.idEmployee,
-          imagePath: path,
-          // nếu event bạn chưa có idShift thì thêm vào event
-          idShift: selected.idShift,
+          idShiftAssignments: selected.idShiftAssignments,
+          imagePath: imagePath,
         ),
       );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Chụp ảnh thất bại: $e")));
     }
   }
 
@@ -177,14 +206,16 @@ class _ScanFacePageState extends State<ScanFacePage> {
             ),
           ),
         ),
-        const Positioned(
+        Positioned(
           bottom: 20,
           left: 0,
           right: 0,
           child: Text(
-            "Đưa khuôn mặt của bạn vào khung hình và\nbấm “Đồng ý”",
+            widget.isCheckout
+                ? "Xác nhận khuôn mặt để check-out"
+                : "Đưa khuôn mặt của bạn vào khung hình và\nbấm “Đồng ý”",
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 14),
+            style: const TextStyle(color: Colors.white, fontSize: 14),
           ),
         ),
       ],
@@ -217,9 +248,32 @@ class _ScanFacePageState extends State<ScanFacePage> {
               );
             }
 
-            // nếu submit thành công (có lastLog) thì pop về
+            // ✅ submit OK => pop về Home
             if (state.lastLog != null && !state.submitting) {
-              Navigator.pop(context, state.lastLog);
+              final shiftText =
+                  widget.isCheckout
+                      ? (widget.currentShiftText ?? "ca")
+                      : (() {
+                        final s = state.selectedShift?.shift;
+                        return (s == null)
+                            ? "Ca #${state.selectedShift?.idShift}"
+                            : "${s.name} (${s.startTime} - ${s.endTime})";
+                      })();
+
+              // ✅ check-in: lấy attendanceId từ lastLog
+              // ✅ check-out: dùng attendanceId đang có
+              final attendanceId =
+                  widget.isCheckout
+                      ? widget.currentAttendanceId
+                      : state
+                          .lastLog!
+                          .id; // <--- nhớ: model AttendanceScanModel phải có field id
+
+              Navigator.pop(context, {
+                "log": state.lastLog,
+                "shiftText": shiftText,
+                "attendanceId": attendanceId,
+              });
             }
           },
           builder: (context, state) {
@@ -237,15 +291,38 @@ class _ScanFacePageState extends State<ScanFacePage> {
                 ),
                 const SizedBox(height: 14),
 
-                if (state.loading)
-                  const Center(child: CircularProgressIndicator())
-                else if (state.shifts.isEmpty)
-                  const Text(
-                    "Hôm nay bạn chưa được phân ca.",
-                    style: TextStyle(color: Colors.red),
-                  )
-                else
-                  _buildShiftDropdown(state),
+                // ✅ CHECK-OUT: hiển thị ca đang check-in
+                if (widget.isCheckout) ...[
+                  Text(
+                    "Ca đang check-in:",
+                    style: TextStyle(color: Colors.grey.shade700),
+                  ),
+                  const SizedBox(height: 6),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.green, width: 1),
+                      color: Colors.green.withOpacity(0.06),
+                    ),
+                    child: Text(
+                      widget.currentShiftText ?? "Không có thông tin ca",
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ] else ...[
+                  // ✅ CHECK-IN: dropdown chọn ca
+                  if (state.loading)
+                    const Center(child: CircularProgressIndicator())
+                  else if (state.shifts.isEmpty)
+                    const Text(
+                      "Hôm nay bạn chưa được phân ca.",
+                      style: TextStyle(color: Colors.red),
+                    )
+                  else
+                    _buildShiftDropdown(state),
+                ],
 
                 const Spacer(),
 
@@ -256,9 +333,12 @@ class _ScanFacePageState extends State<ScanFacePage> {
                     onPressed:
                         (state.submitting || state.loading)
                             ? null
-                            : () => _submit(state.selectedShift),
+                            : () => _submit(state),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1662B3),
+                      backgroundColor:
+                          widget.isCheckout
+                              ? Colors.green
+                              : const Color(0xFF1662B3),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
@@ -270,9 +350,9 @@ class _ScanFacePageState extends State<ScanFacePage> {
                               height: 22,
                               child: CircularProgressIndicator(strokeWidth: 2),
                             )
-                            : const Text(
+                            : Text(
                               "Đồng ý",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                                 color: Colors.white,
                               ),
@@ -301,12 +381,11 @@ class _ScanFacePageState extends State<ScanFacePage> {
           value: state.selectedShift?.idShiftAssignments,
           items:
               state.shifts.map((a) {
-                final s = a.shift; // ✅ shift đã parse
+                final s = a.shift;
                 final label =
                     (s == null)
                         ? "Ca #${a.idShift}"
                         : "${s.name} [${s.startTime} - ${s.endTime}]";
-
                 return DropdownMenuItem<int>(
                   value: a.idShiftAssignments,
                   child: Text(

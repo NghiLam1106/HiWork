@@ -7,7 +7,7 @@ import 'package:hiwork_mo/data/local/employee_storage.dart';
 import 'package:hiwork_mo/data/local/token_storage.dart';
 import 'package:hiwork_mo/data/models/user_model.dart'; // Từ file trên
 
-final Dio _dio = Dio(BaseOptions(baseUrl: "http://localhost:3000"));
+final Dio _dio = Dio();
 
 // Interface cho DataSource
 abstract class AuthRemoteDataSource {

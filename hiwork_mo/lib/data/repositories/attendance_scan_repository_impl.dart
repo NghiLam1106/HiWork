@@ -50,13 +50,11 @@ class AttendanceScanRepositoryImpl implements AttendanceScanRepository {
 
   @override
   Future<Either<Failure, AttendanceScan>> checkOut({
-    required int idEmployee,
-    required int idShift,
+    required int attendanceId,
   }) async {
     try {
       final result = await remote.checkOut(
-        idEmployee: idEmployee,
-        idShift: idShift,
+        attendanceId: attendanceId,
       );
       return Right(result);
     } catch (e) {

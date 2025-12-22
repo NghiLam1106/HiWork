@@ -53,6 +53,8 @@ app.use('/api/user/auth', authRoutes);
 
 app.use('/api/user/lich-lam-viec', employeeShiftRoutes);
 
+app.use('/api/user/cham-cong', attendanceRoutes);
+
 // Route admin
 app.use('/api/admin/employees', emmployeesRoutes);
 

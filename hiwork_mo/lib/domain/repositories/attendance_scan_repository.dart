@@ -16,8 +16,5 @@ abstract class AttendanceScanRepository {
     required String imagePath,
   });
 
-  Future<Either<Failure, AttendanceScan>> checkOut({
-    required int idEmployee,
-    required int idShift,
-  });
+  Future<Either<Failure, AttendanceScan>> checkOut({ required int attendanceId });
 }

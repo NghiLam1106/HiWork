@@ -12,4 +12,7 @@ class ApiUrl {
 
   // --------------------- EMPLOYEES --------------------- //
   static const String employees = "$baseUrl/employees";
+
+  // --------------------- ATTENDANCE --------------------- //
+  static const String attendance = "$baseUrl/cham-cong";
 }
