@@ -5,18 +5,9 @@ class DioClient {
   final Dio dio;
   final TokenStorage storage;
 
-  DioClient({
-    TokenStorage? storage,
-    BaseOptions? options,
-  })  : storage = storage ?? TokenStorage(),
-        dio = Dio(
-          options ??
-              BaseOptions(
-                connectTimeout: const Duration(seconds: 20),
-                receiveTimeout: const Duration(seconds: 20),
-                headers: const {'Content-Type': 'application/json'},
-              ),
-        ) {
+  DioClient(this.dio, {TokenStorage? storage})
+    : storage = storage ?? TokenStorage() {
+    dio.options.headers['Content-Type'] = 'application/json';
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {

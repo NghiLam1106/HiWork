@@ -1,4 +1,4 @@
-const { user, employee } = require('../../models');
+const { user, employee, position: Position } = require("../../models");
 
 const findUserByEmail = async (email) => {
   return await user.findOne({ where: { email } });
@@ -17,9 +17,29 @@ const createUser = async (userData) => {
 const findEmployeeByUserId = async (userId) => {
   return employee.findOne({
     where: { user_id: userId }, // <-- đổi theo schema của bạn
-    attributes: ["id", "user_id"],
+    attributes: [
+      "id",
+      "user_id",
+      "status",
+      "position_id",
+      "date_of_birth",
+      "avatar_url",
+      "face_embedding",
+      "image_check",
+      "name",
+      "phone",
+      "address",
+      "gender",
+    ],
+    include: [
+      {
+        model: Position,
+        as: "position",
+        attributes: ["name"],
+      },
+    ],
   });
-}
+};
 
 module.exports = {
   findUserByEmail,

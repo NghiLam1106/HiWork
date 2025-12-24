@@ -6,7 +6,7 @@ class GetEmployeeDetailUseCase {
 
   GetEmployeeDetailUseCase(this.repository);
 
-  Future<EmployeeDetailEntity> call(int id) {
-    return repository.getEmployeeById(id);
+  Future<EmployeeDetailEntity> call() {
+    return repository.getEmployeeBy();
   }
 }

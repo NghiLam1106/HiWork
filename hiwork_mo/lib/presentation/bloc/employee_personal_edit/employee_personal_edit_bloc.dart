@@ -20,10 +20,10 @@ class EmployeePersonalEditBloc
   ) async {
     emit(state.copyWith(isLoading: true, isSuccess: false, error: null));
     try {
-      String? imageUrl;
-      if (event.pickedImagePath != null && event.pickedImagePath!.isNotEmpty) {
-        imageUrl = await uploadUseCase(id: event.id, filePath: event.pickedImagePath!);
-      }
+      // String? imageUrl;
+      // if (event.pickedImagePath != null && event.pickedImagePath!.isNotEmpty) {
+      //   imageUrl = await uploadUseCase(id: event.id, filePath: event.pickedImagePath!);
+      // }
 
       await updatePersonalInfoUseCase(
         id: event.id,
@@ -31,7 +31,8 @@ class EmployeePersonalEditBloc
         address: event.address,
         gender: event.gender,
         dob: event.dob,
-        imageCheckUrl: imageUrl,
+        imageCheckUrl: event.pickedImagePath,
+        phone: event.phone,
       );
       emit(state.copyWith(isLoading: false, isSuccess: true));
     } catch (e) {

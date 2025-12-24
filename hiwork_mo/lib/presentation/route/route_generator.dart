@@ -19,18 +19,18 @@ class RouteGenerator {
         // Màn hình SplashPage sẽ là màn hình "Gác cổng"
         // Nó sẽ lắng nghe AuthBloc và điều hướng đến /login hoặc /home
         // return MaterialPageRoute(builder: (_) => const SplashPage());
-        
+
         // **Cách tiếp cận thay thế (Gác cổng ở đây):**
         // Đây là cách để kiểm tra Auth ngay tại Router,
         // nhưng nó yêu cầu bạn phải truyền BLoC state vào.
         // Cách tốt nhất là dùng SplashPage.
-        
+
         // Giả sử SplashPage là màn hình chờ mặc định
         return MaterialPageRoute(builder: (_) => const _TempSplashPage());
 
       case AppRoute.login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
-      
+
       // case AppRoute.register:
       //   return MaterialPageRoute(builder: (_) => const RegisterPage());
 
@@ -39,10 +39,10 @@ class RouteGenerator {
 
       case AppRoute.leaveRequest:
         return MaterialPageRoute(builder: (_) => const LeaveRequestPage());
-      
+
       case AppRoute.profilePage:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
-        
+
       default:
         return _errorRoute();
     }

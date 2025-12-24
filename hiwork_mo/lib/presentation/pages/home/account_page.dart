@@ -19,23 +19,23 @@ class AccountPage extends StatelessWidget {
       context: context,
       builder:
           (ctx) => AlertDialog(
-            title: Text(l10n.confirmLogoutTitle), 
+            title: Text(l10n.confirmLogoutTitle),
             content: Text(
               l10n.confirmLogoutMessage,
-            ), 
+            ),
             actions: [
               TextButton(
-                child: Text(l10n.cancel), 
+                child: Text(l10n.cancel),
                 onPressed: () => Navigator.of(ctx).pop(),
               ),
               TextButton(
                 child: Text(
-                  l10n.logout, 
+                  l10n.logout,
                   style: const TextStyle(color: Colors.red),
                 ),
                 onPressed: () {
                   context.read<AuthBloc>().add(LogOutRequested());
-                  Navigator.of(ctx).pop(); 
+                  Navigator.of(ctx).pop();
                 },
               ),
             ],
@@ -119,7 +119,7 @@ class AccountPage extends StatelessWidget {
             radius: 40,
             backgroundImage: AssetImage(
               'assets/images/avatar.jpg',
-            ), 
+            ),
           ),
           const SizedBox(width: 20),
           Expanded(

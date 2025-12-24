@@ -14,6 +14,7 @@ class EmployeePersonalEditSubmitted extends EmployeePersonalEditEvent {
   final int gender; // 0/1/2
   final DateTime? dob;
   final String? pickedImagePath;
+  final String? phone;
 
   const EmployeePersonalEditSubmitted({
     required this.id,
@@ -22,8 +23,9 @@ class EmployeePersonalEditSubmitted extends EmployeePersonalEditEvent {
     required this.gender,
     this.dob,
     this.pickedImagePath,
+    this.phone,
   });
 
   @override
-  List<Object?> get props => [id, name, address, gender, dob, pickedImagePath];
+  List<Object?> get props => [id, name, address, gender, dob, pickedImagePath, phone];
 }

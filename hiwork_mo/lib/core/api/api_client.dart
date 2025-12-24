@@ -15,4 +15,8 @@ class ApiUrl {
 
   // --------------------- ATTENDANCE --------------------- //
   static const String attendance = "$baseUrl/cham-cong";
+
+  // --------------------- PROFILE --------------------- //
+  static const String profile = "$baseUrl/profile";
+  static const String profileEdit = "$baseUrl/profile/edit";
 }

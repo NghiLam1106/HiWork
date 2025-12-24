@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:hiwork_mo/core/api/api_client.dart';
 import 'package:hiwork_mo/core/constants/api_endpoints.dart';
 import 'package:hiwork_mo/core/dio/dioClient.dart';
@@ -26,8 +27,8 @@ abstract class AttendanceScanRemoteDataSource {
 
 class AttendanceScanRemoteDataSourceImpl
     implements AttendanceScanRemoteDataSource {
-  final dio = DioClient();
-  AttendanceScanRemoteDataSourceImpl(dio);
+  final DioClient dio;
+  AttendanceScanRemoteDataSourceImpl(this.dio);
   final cloudinary = CloudinaryRemoteDataSource(Dio());
 
   @override

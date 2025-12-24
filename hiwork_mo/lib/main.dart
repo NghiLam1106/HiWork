@@ -1,24 +1,23 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
-import 'package:hiwork_mo/presentation/bloc/attendanceScan/attendance_scan_bloc.dart';
-import 'firebase_options.dart';
 import 'package:hiwork_mo/core/injection/dependency_injection.dart' as di;
 import 'package:hiwork_mo/l10n/app_localizations.dart';
-
+import 'package:hiwork_mo/presentation/bloc/attendanceScan/attendance_scan_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/auth/auth_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/auth/auth_event.dart';
+import 'package:hiwork_mo/presentation/bloc/employee_detail/employee_detail_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/language/language_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/language/language_state.dart';
+import 'package:hiwork_mo/presentation/bloc/leave/leave_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/notification/notification_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/timesheet/timesheet_bloc.dart';
-
-import 'package:hiwork_mo/presentation/bloc/leave/leave_bloc.dart';
-
 import 'package:hiwork_mo/presentation/route/app_route.dart';
-import 'package:camera/camera.dart';
+
+import 'firebase_options.dart';
 
 List<CameraDescription> globalCameras = [];
 
@@ -26,9 +25,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// 🔥 BẮT BUỘC: Khởi tạo Firebase trước khi dùng FirebaseAuth
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   /// Khởi tạo DI
   await di.configureDependencies();
@@ -36,12 +33,10 @@ void main() async {
   globalCameras = await availableCameras();
 
   Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await di.configureDependencies();
-  runApp(const MyApp());
-}
-
-
+    WidgetsFlutterBinding.ensureInitialized();
+    await di.configureDependencies();
+    runApp(const MyApp());
+  }
 
   runApp(const MyApp());
 }
@@ -53,9 +48,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => LanguageBloc(),
-        ),
+        BlocProvider(create: (_) => LanguageBloc()),
         BlocProvider<AuthBloc>(
           create: (context) => di.sl<AuthBloc>()..add(AppStarted()),
         ),
@@ -65,11 +58,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<TimesheetBloc>(
           create: (context) => di.sl<TimesheetBloc>(),
         ),
-        BlocProvider<LeaveBloc>(
-          create: (context) => di.sl<LeaveBloc>(),
-        ),
-         BlocProvider<AttendanceScanBloc>(
+        BlocProvider<LeaveBloc>(create: (context) => di.sl<LeaveBloc>()),
+        BlocProvider<AttendanceScanBloc>(
           create: (context) => di.sl<AttendanceScanBloc>(),
+        ),
+        BlocProvider<EmployeeDetailBloc>(
+          create: (context) => di.sl<EmployeeDetailBloc>(),
         ),
       ],
       child: BlocBuilder<LanguageBloc, LanguageState>(
@@ -89,10 +83,7 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('vi'),
-            ],
+            supportedLocales: const [Locale('en'), Locale('vi')],
             locale: state.locale,
           );
         },

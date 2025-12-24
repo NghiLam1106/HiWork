@@ -1,36 +1,47 @@
 import 'package:dio/dio.dart';
 import 'package:hiwork_mo/core/constants/api_endpoints.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hiwork_mo/core/dio/dioClient.dart';
+
 import 'package:hiwork_mo/data/datasources/attendance_scan_remote_datasource.dart';
 import 'package:hiwork_mo/data/datasources/auth_remote_datasource.dart';
 import 'package:hiwork_mo/data/datasources/employee_detail_remote_datasource.dart';
 import 'package:hiwork_mo/data/datasources/employee_detail_remote_datasource_impl.dart';
+import 'package:hiwork_mo/data/local/employee_detail_storage.dart';
+import 'package:hiwork_mo/data/models/employee_detail_model.dart';
+
 import 'package:hiwork_mo/data/repositories/attendance_scan_repository_impl.dart';
 import 'package:hiwork_mo/data/repositories/auth_repository_impl.dart';
 import 'package:hiwork_mo/data/repositories/employee_detail_repository_impl.dart';
+
 import 'package:hiwork_mo/domain/repositories/attendance_scan_repository.dart';
 import 'package:hiwork_mo/domain/repositories/auth_repository.dart';
 import 'package:hiwork_mo/domain/repositories/employee_detail_repository.dart';
+
 import 'package:hiwork_mo/domain/usecases/check_in_with_face_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/check_out_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/get_shifts_detail_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/login_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/register_usecase.dart';
+import 'package:hiwork_mo/domain/usecases/get_employee_detail_usecase.dart'; // ✅ thêm
 import 'package:hiwork_mo/domain/usecases/update_personal_info_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/upload_register_image_usecase.dart';
+
 import 'package:hiwork_mo/presentation/bloc/attendanceScan/attendance_scan_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/auth/auth_bloc.dart';
+
 import 'package:hiwork_mo/data/datasources/notification_remote_datasource.dart';
 import 'package:hiwork_mo/data/repositories/notification_repository_impl.dart';
 import 'package:hiwork_mo/domain/repositories/notification_repository.dart';
 import 'package:hiwork_mo/domain/usecases/get_notifications_usecase.dart';
-import 'package:hiwork_mo/presentation/bloc/employee_personal_edit/employee_personal_edit_bloc.dart';
 import 'package:hiwork_mo/presentation/bloc/notification/notification_bloc.dart';
+
 import 'package:hiwork_mo/data/datasources/timesheet_remote_datasource.dart';
 import 'package:hiwork_mo/data/repositories/timesheet_repository_impl.dart';
 import 'package:hiwork_mo/domain/repositories/timesheet_repository.dart';
 import 'package:hiwork_mo/domain/usecases/get_weekly_timesheet_usecase.dart';
 import 'package:hiwork_mo/presentation/bloc/timesheet/timesheet_bloc.dart';
+
 import 'package:hiwork_mo/data/datasources/leave_remote_datasource.dart';
 import 'package:hiwork_mo/data/repositories/leave_repository_impl.dart';
 import 'package:hiwork_mo/domain/repositories/leave_repository.dart';
@@ -39,9 +50,13 @@ import 'package:hiwork_mo/domain/usecases/get_leave_history_usecase.dart';
 import 'package:hiwork_mo/domain/usecases/submit_leave_request_usecase.dart';
 import 'package:hiwork_mo/presentation/bloc/leave/leave_bloc.dart';
 
+import 'package:hiwork_mo/presentation/bloc/employee_detail/employee_detail_bloc.dart';
+import 'package:hiwork_mo/presentation/bloc/employee_personal_edit/employee_personal_edit_bloc.dart';
+
 final sl = GetIt.instance;
 
 Future<void> configureDependencies() async {
+  // Dio
   sl.registerLazySingleton<Dio>(
     () => Dio(
       BaseOptions(
@@ -52,7 +67,10 @@ Future<void> configureDependencies() async {
     ),
   );
 
-  // --- TÍNH NĂNG AUTH (XÁC THỰC) ---
+  // ✅ DioClient (nếu bạn dùng ở nơi khác; không dùng cũng không sao)
+  sl.registerLazySingleton<DioClient>(() => DioClient(sl<Dio>()));
+
+  // --- AUTH ---
   sl.registerFactory(
     () => AuthBloc(
       logInUseCase: sl(),
@@ -69,16 +87,9 @@ Future<void> configureDependencies() async {
     () => AuthRemoteDataSourceImpl(),
   );
 
-  // --- TÍNH NĂNG NOTIFICATION ---
-  sl.registerFactory(
-    () => NotificationBloc(
-      getNotificationsUseCase:
-          sl(), // Đảm bảo đã thêm 'getNotificationsUseCase'
-    ),
-  );
-  sl.registerLazySingleton(
-    () => GetNotificationsUseCase(sl<NotificationRepository>()),
-  );
+  // --- NOTIFICATION ---
+  sl.registerFactory(() => NotificationBloc(getNotificationsUseCase: sl()));
+  sl.registerLazySingleton(() => GetNotificationsUseCase(sl<NotificationRepository>()));
   sl.registerLazySingleton<NotificationRepository>(
     () => NotificationRepositoryImpl(remoteDataSource: sl()),
   );
@@ -86,20 +97,17 @@ Future<void> configureDependencies() async {
     () => NotificationRemoteDataSourceImpl(),
   );
 
-  // --- TÍNH NĂNG TIMESHEET (BẢNG CHẤM CÔNG) ---
+  // --- TIMESHEET ---
   sl.registerFactory(() => TimesheetBloc(getWeeklyTimesheetUseCase: sl()));
-  sl.registerLazySingleton(
-    () => GetWeeklyTimesheetUseCase(sl<TimesheetRepository>()),
-  );
+  sl.registerLazySingleton(() => GetWeeklyTimesheetUseCase(sl<TimesheetRepository>()));
   sl.registerLazySingleton<TimesheetRepository>(
     () => TimesheetRepositoryImpl(remoteDataSource: sl()),
   );
   sl.registerLazySingleton<TimesheetRemoteDataSource>(
     () => TimesheetRemoteDataSourceImpl(),
   );
-  // --- (Kết thúc Timesheet) ---
 
-  // --- TÍNH NĂNG LEAVE (ĐĂNG KÝ NGHỈ) ---
+  // --- LEAVE ---
   sl.registerFactory(
     () => LeaveBloc(
       getLeaveBalanceUseCase: sl(),
@@ -107,44 +115,26 @@ Future<void> configureDependencies() async {
       submitLeaveUseCase: sl(),
     ),
   );
-  // UseCases
   sl.registerLazySingleton(() => GetLeaveBalanceUseCase(sl<LeaveRepository>()));
   sl.registerLazySingleton(() => GetLeaveHistoryUseCase(sl<LeaveRepository>()));
   sl.registerLazySingleton(() => SubmitLeaveUseCase(sl<LeaveRepository>()));
-
-  // Repository
   sl.registerLazySingleton<LeaveRepository>(
     () => LeaveRepositoryImpl(remoteDataSource: sl()),
   );
-
-  // DataSource
   sl.registerLazySingleton<LeaveRemoteDataSource>(
     () => LeaveRemoteDataSourceImpl(),
   );
-  // --- (Kết thúc Leave) ---
 
-  // --- TÍNH NĂNG ATTENDANCE SCAN (CHECK-IN/OUT) ---
-
-  // DataSource
+  // --- ATTENDANCE SCAN ---
   sl.registerLazySingleton<AttendanceScanRemoteDataSource>(
-    () => AttendanceScanRemoteDataSourceImpl(sl<Dio>()),
+    () => AttendanceScanRemoteDataSourceImpl(sl<DioClient>()),
   );
-
-  // Repository
   sl.registerLazySingleton<AttendanceScanRepository>(
     () => AttendanceScanRepositoryImpl(sl<AttendanceScanRemoteDataSource>()),
   );
-
-  // UseCases
   sl.registerLazySingleton(() => GetShiftsDetailUsecase(sl<AttendanceScanRepository>()));
-  sl.registerLazySingleton(
-    () => CheckInWithFaceUsecase(sl<AttendanceScanRepository>()),
-  );
-  sl.registerLazySingleton(
-    () => CheckOutUsecase(sl<AttendanceScanRepository>()),
-  );
-
-  // Bloc
+  sl.registerLazySingleton(() => CheckInWithFaceUsecase(sl<AttendanceScanRepository>()));
+  sl.registerLazySingleton(() => CheckOutUsecase(sl<AttendanceScanRepository>()));
   sl.registerFactory(
     () => AttendanceScanBloc(
       getShiftsUsecase: sl(),
@@ -153,26 +143,29 @@ Future<void> configureDependencies() async {
     ),
   );
 
-    // --- TÍNH NĂNG EMPLOYEE DETAIL / EDIT PERSONAL ---
-  // DataSource
+  // --- EMPLOYEE DETAIL / EDIT PERSONAL ---
+
+  // ✅ 1) Storage phải register trước
+  sl.registerLazySingleton<EmployeeDetailStorage>(() => EmployeeDetailStorage());
+
+  // ✅ 2) DataSource: constructor chỉ nhận storage
   sl.registerLazySingleton<EmployeeDetailRemoteDataSource>(
-    () => EmployeeDetailRemoteDataSourceImpl(sl<Dio>()),
+    () => EmployeeDetailRemoteDataSourceImpl(sl<EmployeeDetailStorage>(), sl<DioClient>()),
   );
 
-  // Repository
+  // ✅ 3) Repository
   sl.registerLazySingleton<EmployeeDetailRepository>(
     () => EmployeeDetailRepositoryImpl(remote: sl()),
   );
 
-  // UseCases
-  sl.registerLazySingleton(
-    () => UpdatePersonalInfoUseCase(sl<EmployeeDetailRepository>()),
-  );
-  sl.registerLazySingleton(
-    () => UploadRegisterImageUseCase(sl<EmployeeDetailRepository>()),
-  );
+  // ✅ 4) UseCase lấy detail (bạn đang thiếu nên bloc sẽ lỗi)
+  sl.registerLazySingleton(() => GetEmployeeDetailUseCase(sl<EmployeeDetailRepository>()));
 
-  // Bloc
+  // UseCases edit
+  sl.registerLazySingleton(() => UpdatePersonalInfoUseCase(sl<EmployeeDetailRepository>()));
+  sl.registerLazySingleton(() => UploadRegisterImageUseCase(sl<EmployeeDetailRepository>()));
+
+  // Blocs
   sl.registerFactory(
     () => EmployeePersonalEditBloc(
       updatePersonalInfoUseCase: sl(),
@@ -180,5 +173,7 @@ Future<void> configureDependencies() async {
     ),
   );
 
-
+  sl.registerFactory(
+    () => EmployeeDetailBloc(getEmployeeDetailUseCase: sl()),
+  );
 }

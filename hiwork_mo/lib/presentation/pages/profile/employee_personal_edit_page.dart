@@ -15,7 +15,8 @@ class EmployeePersonalEditPage extends StatefulWidget {
   // final DateTime? initialDob;
   final int initialGender; // 1=Nam, 0=Nữ, 2=Khác
   final String initialAddress;
-  final String? initialImageUrl; 
+  final String? initialImageUrl;
+  final String initialPhone;
 
   const EmployeePersonalEditPage({
     super.key,
@@ -26,10 +27,12 @@ class EmployeePersonalEditPage extends StatefulWidget {
     required this.initialGender,
     required this.initialAddress,
     required this.initialImageUrl,
+    required this.initialPhone,
   });
 
   @override
-  State<EmployeePersonalEditPage> createState() => _EmployeePersonalEditPageState();
+  State<EmployeePersonalEditPage> createState() =>
+      _EmployeePersonalEditPageState();
 }
 
 class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
@@ -38,6 +41,7 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
 
   late final TextEditingController _nameCtrl;
   late final TextEditingController _addressCtrl;
+  late final TextEditingController _phoneCtrl;
 
   DateTime? _dob;
   late int _gender;
@@ -49,6 +53,7 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
     super.initState();
     _nameCtrl = TextEditingController(text: widget.initialName);
     _addressCtrl = TextEditingController(text: widget.initialAddress);
+    _phoneCtrl = TextEditingController(text: widget.initialPhone);
     // _dob = widget.initialDob;
     _gender = widget.initialGender;
   }
@@ -57,6 +62,7 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
   void dispose() {
     _nameCtrl.dispose();
     _addressCtrl.dispose();
+    _phoneCtrl.dispose();
     super.dispose();
   }
 
@@ -81,15 +87,16 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
     if (!_formKey.currentState!.validate()) return;
 
     context.read<EmployeePersonalEditBloc>().add(
-          EmployeePersonalEditSubmitted(
-            id: widget.employeeId,
-            name: _nameCtrl.text.trim(),
-            address: _addressCtrl.text.trim(),
-            gender: _gender,
-            dob: _dob,
-            pickedImagePath: _pickedImagePath, //ảnh mới (nếu có)
-          ),
-        );
+      EmployeePersonalEditSubmitted(
+        id: widget.employeeId,
+        name: _nameCtrl.text.trim(),
+        address: _addressCtrl.text.trim(),
+        gender: _gender,
+        dob: _dob,
+        pickedImagePath: _pickedImagePath, //ảnh mới (nếu có)
+        phone: _phoneCtrl.text.trim(),
+      ),
+    );
   }
 
   String _fmt(DateTime? d) {
@@ -107,9 +114,9 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
           Navigator.pop(context, true);
         }
         if (state.error != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Lỗi: ${state.error}")),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Lỗi: ${state.error}")));
         }
       },
       child: Scaffold(
@@ -123,7 +130,10 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
           ),
           title: const Text(
             "Chỉnh sửa cá nhân",
-            style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w700),
+            style: TextStyle(
+              color: Colors.black87,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           actions: [
             TextButton(
@@ -147,7 +157,10 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
                   Form(
                     key: _formKey,
                     child: ListView(
-                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 12,
+                      ),
                       children: [
                         _label("Ảnh đăng ký"),
                         _RegisterImageBox(
@@ -162,8 +175,11 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
                         TextFormField(
                           controller: _nameCtrl,
                           decoration: _dec("Nhập họ tên"),
-                          validator: (v) =>
-                              (v ?? "").trim().isEmpty ? "Vui lòng nhập họ tên" : null,
+                          validator:
+                              (v) =>
+                                  (v ?? "").trim().isEmpty
+                                      ? "Vui lòng nhập họ tên"
+                                      : null,
                         ),
                         const SizedBox(height: 14),
 
@@ -183,7 +199,10 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
                             child: Text(
                               _fmt(_dob),
                               style: TextStyle(
-                                color: _dob == null ? Colors.black45 : Colors.black87,
+                                color:
+                                    _dob == null
+                                        ? Colors.black45
+                                        : Colors.black87,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -197,19 +216,34 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
                           decoration: _dec("Chọn giới tính"),
                           items: const [
                             DropdownMenuItem(value: 1, child: Text("Nam")),
-                            DropdownMenuItem(value: 0, child: Text("Nữ")),
-                            DropdownMenuItem(value: 2, child: Text("Khác")),
+                            DropdownMenuItem(value: 2, child: Text("Nữ")),
+                            DropdownMenuItem(value: 3, child: Text("Khác")),
                           ],
                           onChanged: (v) => setState(() => _gender = v ?? 1),
                         ),
                         const SizedBox(height: 14),
 
+                        _label("Số điện thoại"),
+                        TextFormField(
+                          controller: _phoneCtrl,
+                          decoration: _dec("Nhập số điện thoại"),
+                          validator:
+                              (v) =>
+                                  (v ?? "").trim().isEmpty
+                                      ? "Vui lòng nhập số điện thoại"
+                                      : null,
+                        ),
+                        const SizedBox(height: 22),
+
                         _label("Địa chỉ"),
                         TextFormField(
                           controller: _addressCtrl,
                           decoration: _dec("Nhập địa chỉ"),
-                          validator: (v) =>
-                              (v ?? "").trim().isEmpty ? "Vui lòng nhập địa chỉ" : null,
+                          validator:
+                              (v) =>
+                                  (v ?? "").trim().isEmpty
+                                      ? "Vui lòng nhập địa chỉ"
+                                      : null,
                         ),
                         const SizedBox(height: 22),
 
@@ -226,7 +260,10 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
                             ),
                             child: const Text(
                               "Lưu thay đổi",
-                              style: TextStyle(fontWeight: FontWeight.w700),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -249,36 +286,36 @@ class _EmployeePersonalEditPageState extends State<EmployeePersonalEditPage> {
   }
 
   Widget _label(String t) => Padding(
-        padding: const EdgeInsets.only(bottom: 6),
-        child: Text(
-          t,
-          style: const TextStyle(
-            fontSize: 13,
-            color: Colors.black54,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      );
+    padding: const EdgeInsets.only(bottom: 6),
+    child: Text(
+      t,
+      style: const TextStyle(
+        fontSize: 13,
+        color: Colors.black54,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+  );
 
   InputDecoration _dec(String hint) => InputDecoration(
-        hintText: hint,
-        hintStyle: const TextStyle(color: Colors.black45),
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFF1A73E8), width: 1.2),
-        ),
-      );
+    hintText: hint,
+    hintStyle: const TextStyle(color: Colors.black45),
+    filled: true,
+    fillColor: Colors.white,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(color: Colors.grey.shade300),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(color: Colors.grey.shade300),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: const BorderSide(color: Color(0xFF1A73E8), width: 1.2),
+    ),
+  );
 }
 
 class _RegisterImageBox extends StatelessWidget {
@@ -327,8 +364,15 @@ class _RegisterImageBox extends StatelessWidget {
               children: [
                 ElevatedButton.icon(
                   onPressed: onPickGallery,
-                  icon: const Icon(Icons.photo_library_outlined, size: 18),
-                  label: const Text("Thư viện"),
+                  icon: const Icon(
+                    Icons.photo_library_outlined,
+                    size: 18,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    "Thư viện",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1A73E8),
                     elevation: 0,
@@ -337,8 +381,15 @@ class _RegisterImageBox extends StatelessWidget {
                 const SizedBox(width: 8),
                 ElevatedButton.icon(
                   onPressed: onPickCamera,
-                  icon: const Icon(Icons.photo_camera_outlined, size: 18),
-                  label: const Text("Camera"),
+                  icon: const Icon(
+                    Icons.photo_camera_outlined,
+                    size: 18,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    "Camera",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1A73E8),
                     elevation: 0,
