@@ -60,6 +60,21 @@ const profileController = {
       return res.status(500).json({ message: "Lỗi server cập nhật avatar" });
     }
   },
+
+  async updateProfileEmployee(req, res) {
+    try {
+      const updatedUser = await profileService.updateProfileEmployee(req.body);
+      return res.json({
+        message: "Cập nhật thành công",
+        user: updatedUser,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Lỗi server khi cập nhật thông tin",
+      });
+    }
+  },
 };
 
 module.exports = profileController;

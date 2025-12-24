@@ -37,7 +37,7 @@ const registerUser = async (userData) => {
       role: "1",
     });
 
-  console.log("role value:", newUser.email);
+    console.log("role value:", newUser.email);
     await auth.createUser({
       uid: newUser.id.toString(),
       email: newUser.email,
@@ -103,6 +103,10 @@ const loginUser = async (credentials) => {
     throw new Error("Mật khẩu không đúng");
   }
 
+  const employee = await userRepository.findEmployeeByUserId(user.id);
+  // employee có thể null nếu user chưa được gán nhân viên
+  const employeeId = employee?.id ?? null;
+
   // Trả về thông tin user + Firebase token
   return {
     firebaseToken: firebaseData.idToken,
@@ -112,6 +116,22 @@ const loginUser = async (credentials) => {
       email: user.email,
       role: user.role,
     },
+    employee: employeeId
+      ? {
+          id: employeeId,
+          name: employee.name,
+          phone: employee.phone,
+          address: employee.address,
+          avatar_url: employee.avatar_url,
+          gender: employee.gender,
+          date_of_birth: employee.date_of_birth,
+          image_check: employee.image_check,
+          face_embedding: employee.face_embedding,
+          status: employee.status,
+          position_id: employee.position.name,
+          user_id: employee.user_id,
+        }
+      : null,
   };
 };
 

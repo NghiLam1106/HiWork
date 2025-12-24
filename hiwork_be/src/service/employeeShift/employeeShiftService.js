@@ -100,6 +100,10 @@ class EmployeeShiftService {
   get STATUS() {
     return STATUS;
   }
+
+  async listByEmployee(req) {
+    return await repo.findAllByEmployeeDate(req);
+  }
 }
 
 module.exports = new EmployeeShiftService();

@@ -24,7 +24,9 @@ module.exports = (sequelize, DataTypes) => {
     face_embedding: DataTypes.STRING,
     status: DataTypes.INTEGER,
     position_id: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER
+    user_id: DataTypes.INTEGER,
+    date_of_birth: DataTypes.DATE,
+    image_check: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'employee',

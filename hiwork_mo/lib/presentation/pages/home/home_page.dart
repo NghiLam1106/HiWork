@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hiwork_mo/core/constants/app_assets.dart';
 import 'package:hiwork_mo/core/constants/app_colors.dart';
 import 'package:hiwork_mo/core/constants/app_font_size.dart';
+import 'package:hiwork_mo/data/models/attendance_scan_model.dart';
 import 'package:hiwork_mo/l10n/app_localizations.dart';
 import 'package:hiwork_mo/presentation/pages/attendance/scan_face_page.dart';
 import 'package:hiwork_mo/presentation/pages/home/account_page.dart';
@@ -11,6 +12,7 @@ import 'package:hiwork_mo/presentation/pages/home/task_page.dart';
 import 'package:hiwork_mo/presentation/pages/payroll/work_efficiency_page.dart';
 import 'package:hiwork_mo/presentation/pages/schedule/work_schedule_page.dart';
 import 'package:hiwork_mo/presentation/widgets/menu_card.dart';
+import 'package:hiwork_mo/data/local/employee_storage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -146,6 +148,10 @@ class HomeContent extends StatefulWidget {
 
 class _HomeContentState extends State<HomeContent> {
   bool _isCheckedIn = false;
+  final EmployeeStorage _storage = EmployeeStorage();
+  int? _currentAttendanceId; // id_employeeShift đang làm
+  String? _currentShiftText; // tên ca để show
+  DateTime? _currentCheckInTime; // giờ checkin để show
 
   @override
   Widget build(BuildContext context) {
@@ -182,33 +188,100 @@ class _HomeContentState extends State<HomeContent> {
         ),
         GestureDetector(
           onTap: () async {
+            final employeeId = await EmployeeStorage().getEmployeeId();
+
+            // ✅ nếu đang check-in thì mở trang ScanFacePage để check-out
             if (_isCheckedIn) {
-              setState(() => _isCheckedIn = false);
+              if (_currentAttendanceId == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Không tìm thấy ca đang check-in"),
+                  ),
+                );
+                return;
+              }
+
+              final result = await Navigator.push<Map<String, dynamic>>(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (_) => ScanFacePage(
+                        idEmployee: employeeId ?? 0,
+                        isCheckout: true,
+
+                        // ✅ truyền thông tin ca đang checkin
+                        currentAttendanceId: _currentAttendanceId,
+                        currentShiftText: _currentShiftText,
+                        currentCheckInTime: _currentCheckInTime,
+                      ),
+                ),
+              );
+
+              if (result == null) return;
+
+              final log = result["log"] as AttendanceScanModel;
+              final shiftText =
+                  (result["shiftText"] ?? _currentShiftText ?? "ca") as String;
+
+              setState(() {
+                _isCheckedIn = false;
+                _currentAttendanceId = null;
+                _currentShiftText = null;
+                _currentCheckInTime = null;
+              });
 
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Bạn đã check-out thành công")),
+                SnackBar(
+                  backgroundColor: Colors.green,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  content: Text(
+                    "Bạn đã check-out ca $shiftText}",
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
               );
+
               return;
             }
 
-            final selectedShift = await Navigator.push<String>(
+            // ✅ chưa check-in thì mở ScanFacePage để check-in như bạn đang làm
+            final result = await Navigator.push<Map<String, dynamic>>(
               context,
-              MaterialPageRoute(builder: (_) => const ScanFacePage()),
+              MaterialPageRoute(
+                builder: (_) => ScanFacePage(idEmployee: employeeId ?? 0),
+              ),
             );
 
-            if (selectedShift == null) return;
+            if (result == null) return;
 
-            setState(() => _isCheckedIn = true);
+            final log = result["log"] as AttendanceScanModel;
+            final shiftText = (result["shiftText"] ?? "ca") as String;
+            final idAttendance = result["attendanceId"] as int;
+
+            setState(() {
+              _isCheckedIn = true;
+              _currentAttendanceId = idAttendance;
+              _currentShiftText = shiftText;
+              _currentCheckInTime =
+                  log.checkIn; // DateTime? hoặc String? tùy model bạn
+            });
 
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Bạn đã check in ca $selectedShift")),
+              SnackBar(
+                backgroundColor: Colors.green,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                content: Text(
+                  "Bạn đã check in ca $shiftText}",
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
             );
-
-            // if (result == null) return;
-
-            // setState(() {
-            //   _isCheckedIn = result;
-            // });
           },
           child: Container(
             margin: const EdgeInsets.all(20),

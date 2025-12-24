@@ -1,4 +1,5 @@
-import 'package:hiwork_mo/domain/entities/shifts_entity.dart'; 
+import 'package:hiwork_mo/domain/entities/shifts_entity.dart';
+import 'package:hiwork_mo/data/models/shift_model.dart';
 
 // Model này kế thừa Entity của bạn
 class ShiftAssignmentModel extends ShiftAssignmentEntity {
@@ -8,16 +9,23 @@ class ShiftAssignmentModel extends ShiftAssignmentEntity {
     required super.idShift,
     required super.workDate,
     required super.status,
+    super.shift,
   });
 
   // Hàm factory: Chuyển đổi JSON (từ API) thành Model
   factory ShiftAssignmentModel.fromJson(Map<String, dynamic> json) {
+    final shiftJson = json['shift'];
+
     return ShiftAssignmentModel(
-      idShiftAssignments: json['id_shift_assignments'] as int,
+      idShiftAssignments: json['id'] as int,
       idEmployee: json['id_employee'] as int,
       idShift: json['id_shift'] as int,
       workDate: DateTime.parse(json['work_date'] as String), // Chuyển String (ISO) sang DateTime
-      status: json['status'] as String, // Ví dụ: "on_time", "early_leave"
+      status: json['status'] as int, // Ví dụ: "on_time", "early_leave"
+
+      shift: (shiftJson is Map<String, dynamic>)
+          ? ShiftDetailModel.fromJson(shiftJson)
+          : null,
     );
   }
 

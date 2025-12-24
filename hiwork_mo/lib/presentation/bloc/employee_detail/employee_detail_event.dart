@@ -8,19 +8,9 @@ abstract class EmployeeDetailEvent extends Equatable {
 }
 
 class EmployeeDetailRequested extends EmployeeDetailEvent {
-  final int employeeId;
-
-  const EmployeeDetailRequested(this.employeeId);
-
-  @override
-  List<Object?> get props => [employeeId];
+  const EmployeeDetailRequested();
 }
 
 class EmployeeDetailRefreshed extends EmployeeDetailEvent {
-  final int employeeId;
-
-  const EmployeeDetailRefreshed(this.employeeId);
-
-  @override
-  List<Object?> get props => [employeeId];
+  const EmployeeDetailRefreshed();
 }

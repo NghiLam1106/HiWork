@@ -1,14 +1,17 @@
 import 'package:hiwork_mo/domain/entities/attendance_scan_entity.dart';
 import 'package:hiwork_mo/domain/entities/shift_details_entity.dart';
+import 'package:hiwork_mo/domain/entities/shifts_entity.dart';
+
+import '../../../data/models/shift_entry_model.dart';
 
 class AttendanceScanState {
   final bool loading;
   final String? error;
-  final List<ShiftDetailsEntity> shifts;
-  final ShiftDetailsEntity? selectedShift;
+  final List<ShiftAssignmentEntity> shifts;
+  final ShiftAssignmentEntity? selectedShift;
   final AttendanceScan? lastLog;
   final bool submitting;
-  
+
 
   const AttendanceScanState({
     required this.loading,
@@ -29,8 +32,8 @@ class AttendanceScanState {
     bool? loading,
     bool? submitting,
     String? error,
-    List<ShiftDetailsEntity>? shifts,
-    ShiftDetailsEntity? selectedShift,
+    List<ShiftAssignmentEntity>? shifts,
+    ShiftAssignmentEntity? selectedShift,
     AttendanceScan? lastLog,
   }) {
     return AttendanceScanState(

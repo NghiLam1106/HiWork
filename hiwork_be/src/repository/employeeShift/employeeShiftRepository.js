@@ -5,7 +5,6 @@ const {
 } = require("../../models");
 const { Op } = require("sequelize");
 
-
 class EmployeeScheduleRepository {
   async create(data, options = {}) {
     return EmployeeSchedule.create(data, options);
@@ -111,6 +110,48 @@ class EmployeeScheduleRepository {
   async existsShift(id_shift) {
     const sh = await Shift.findByPk(Number(id_shift), { attributes: ["id"] });
     return !!sh;
+  }
+
+  async findAllByEmployeeDate(req) {
+    const id_employee = req.query.id_employee;
+    const work_date = req.query.date; // 'YYYY-MM-DD'
+
+    const where = {};
+
+    if (
+      id_employee !== undefined &&
+      id_employee !== null &&
+      id_employee !== ""
+    ) {
+      where.id_employee = Number(id_employee);
+    }
+
+    if (work_date !== undefined && work_date !== null && work_date !== "") {
+      where.work_date = work_date; // đúng format YYYY-MM-DD
+    }
+
+    const rows = await EmployeeSchedule.findAll({
+      where,
+      include: [
+        {
+          model: Employee,
+          as: "employee",
+          attributes: ["id", "name", "avatar_url"],
+        },
+        {
+          model: Shift,
+          as: "shift",
+          attributes: ["id", "name", "startTime", "endTime"],
+        },
+      ],
+      order: [
+        ["work_date", "DESC"],
+        ["id", "DESC"],
+      ],
+    });
+
+    // ✅ không pagination, trả thẳng list
+    return { data: rows };
   }
 }
 

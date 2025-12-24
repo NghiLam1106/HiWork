@@ -9,20 +9,21 @@ class EmployeeDetailRepositoryImpl implements EmployeeDetailRepository {
   EmployeeDetailRepositoryImpl({required this.remote});
 
   @override
-  Future<EmployeeDetailEntity> getEmployeeById(int id) async {
-    final EmployeeDetailModel model = await remote.getEmployeeById(id);
+  Future<EmployeeDetailEntity> getEmployeeBy() async {
+    final EmployeeDetailModel model = await remote.getEmployeeBy();
     // model extends EmployeeDetailEntity => trả về Entity OK
     return model;
   }
 
   @override
   Future<void> updatePersonalInfo({
-    required int id,
-    required String name,
-    required String address,
-    required int gender,
+    int? id,
+    String? name,
+    String? address,
+    int? gender,
     DateTime? dob,
     String? imageCheckUrl,
+    String? phone,
   }) async {
     await remote.updatePersonalInfo(
       id: id,
@@ -31,6 +32,7 @@ class EmployeeDetailRepositoryImpl implements EmployeeDetailRepository {
       gender: gender,
       dob: dob,
       imageCheckUrl: imageCheckUrl,
+      phone: phone,
     );
   }
 

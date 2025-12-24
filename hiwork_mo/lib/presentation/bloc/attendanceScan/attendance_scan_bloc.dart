@@ -6,7 +6,8 @@ import 'package:hiwork_mo/domain/usecases/get_shifts_detail_usecase.dart';
 import 'attendance_scan_event.dart';
 import 'attendance_scan_state.dart';
 
-class AttendanceScanBloc extends Bloc<AttendanceScanEvent, AttendanceScanState> {
+class AttendanceScanBloc
+    extends Bloc<AttendanceScanEvent, AttendanceScanState> {
   final GetShiftsDetailUsecase getShiftsUsecase;
   final CheckInWithFaceUsecase checkInWithFaceUsecase;
   final CheckOutUsecase checkOutUsecase;
@@ -29,17 +30,22 @@ class AttendanceScanBloc extends Bloc<AttendanceScanEvent, AttendanceScanState> 
   ) async {
     emit(state.copyWith(loading: true, error: null));
 
-    final result = await getShiftsUsecase();
+    final result = await getShiftsUsecase(
+      idEmployee: event.idEmployee,
+      date: event.date,
+    );
 
     result.fold(
       (failure) => emit(state.copyWith(loading: false, error: failure.message)),
       (shifts) {
-        emit(state.copyWith(
-          loading: false,
-          shifts: shifts,
-          selectedShift: shifts.isNotEmpty ? shifts.first : null,
-          error: null,
-        ));
+        emit(
+          state.copyWith(
+            loading: false,
+            shifts: shifts,
+            selectedShift: shifts.isNotEmpty ? shifts.first : null,
+            error: null,
+          ),
+        );
       },
     );
   }
@@ -65,13 +71,15 @@ class AttendanceScanBloc extends Bloc<AttendanceScanEvent, AttendanceScanState> 
 
     final result = await checkInWithFaceUsecase(
       idEmployee: event.idEmployee,
-      idShift: shift.idShift,
+      idShift: shift.idShiftAssignments,
       imagePath: event.imagePath,
     );
 
     result.fold(
-      (failure) => emit(state.copyWith(submitting: false, error: failure.message)),
-      (data) => emit(state.copyWith(submitting: false, lastLog: data, error: null)),
+      (failure) =>
+          emit(state.copyWith(submitting: false, error: failure.message)),
+      (data) =>
+          emit(state.copyWith(submitting: false, lastLog: data, error: null)),
     );
   }
 
@@ -79,22 +87,15 @@ class AttendanceScanBloc extends Bloc<AttendanceScanEvent, AttendanceScanState> 
     AttendanceCheckOutSubmit event,
     Emitter<AttendanceScanState> emit,
   ) async {
-    final shift = state.selectedShift;
-    if (shift == null) {
-      emit(state.copyWith(error: "Vui lòng chọn ca"));
-      return;
-    }
-
     emit(state.copyWith(submitting: true, error: null, lastLog: null));
 
-    final result = await checkOutUsecase(
-      idEmployee: event.idEmployee,
-      idShift: shift.idShift,
-    );
+    final result = await checkOutUsecase(attendanceId: event.attendanceId);
 
     result.fold(
-      (failure) => emit(state.copyWith(submitting: false, error: failure.message)),
-      (data) => emit(state.copyWith(submitting: false, lastLog: data, error: null)),
+      (failure) =>
+          emit(state.copyWith(submitting: false, error: failure.message)),
+      (data) =>
+          emit(state.copyWith(submitting: false, lastLog: data, error: null)),
     );
   }
 

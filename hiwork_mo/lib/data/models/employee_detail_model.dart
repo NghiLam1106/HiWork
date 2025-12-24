@@ -1,37 +1,44 @@
+import 'package:flutter/widgets.dart';
+
 import '../../domain/entities/employee_detail_entity.dart';
 
 class EmployeeDetailModel extends EmployeeDetailEntity {
   const EmployeeDetailModel({
     required super.id,
-    required super.name,
-    required super.phone,
-    required super.gender,
-    required super.address,
+    super.name,
+    super.phone,
+    super.gender,
+    super.address,
     super.avatarUrl,
     super.faceEmbedding,
     super.imageCheck,
-    required super.status,
-    required super.positionId,
-    required super.userId,
-    required super.createdAt,
-    required super.updatedAt,
+    super.status,
+    super.positionId,
+    super.userId,
+    super.dayOfBirth,
   });
 
+  static int? _toInt(dynamic v) =>
+      v == null ? null : int.tryParse(v.toString());
+
   factory EmployeeDetailModel.fromJson(Map<String, dynamic> json) {
+    final data = json['employee'] ?? json;
     return EmployeeDetailModel(
-      id: json['id'],
-      name: json['name'],
-      phone: json['phone'],
-      gender: json['gender'],
-      address: json['address'],
-      avatarUrl: json['avatar_url'],
-      faceEmbedding: json['face_embedding'],
-      imageCheck: json['image_check'],
-      status: json['status'],
-      positionId: json['position_id'],
-      userId: json['user_id'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
+      id: _toInt(data['id']) ?? 0,
+      name: data['name'],
+      phone: data['phone'],
+      gender: _toInt(data['gender']),
+      address: data['address'],
+      avatarUrl: data['avatar_url'],
+      faceEmbedding: data['face_embedding'],
+      imageCheck: data['image_check'],
+      status: _toInt(data['status']),
+      positionId: data['position_id'],
+      userId: _toInt(data['user_id']),
+      dayOfBirth:
+          data['date_of_birth'] != null
+              ? DateTime.tryParse(data['date_of_birth'].toString())
+              : null,
     );
   }
 
@@ -48,8 +55,7 @@ class EmployeeDetailModel extends EmployeeDetailEntity {
       'status': status,
       'position_id': positionId,
       'user_id': userId,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
+      'date_of_birth': dayOfBirth?.toIso8601String(),
     };
   }
 }

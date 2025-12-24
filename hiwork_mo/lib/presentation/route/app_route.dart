@@ -46,7 +46,7 @@ class AppRoute {
       case task:
         return MaterialPageRoute(builder: (_) => const TaskPage());
       case scanFace:
-        return MaterialPageRoute(builder: (_) => const ScanFacePage());
+        // return MaterialPageRoute(builder: (_) => ScanFacePage());
       case leaveRequest:
         return MaterialPageRoute(builder: (_) => const LeaveRequestPage());
       case commonWorkSchedule:

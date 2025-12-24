@@ -10,7 +10,9 @@ class EmployeeShiftController {
   async create(req, res) {
     try {
       const created = await service.create(req.body);
-      return res.status(201).json({ message: "Tạo lịch làm thành công.", data: created });
+      return res
+        .status(201)
+        .json({ message: "Tạo lịch làm thành công.", data: created });
     } catch (err) {
       return handleError(res, err);
     }
@@ -47,6 +49,15 @@ class EmployeeShiftController {
     try {
       const data = await service.remove(req.params.id);
       return res.status(200).json({ message: "Xóa thành công.", data });
+    } catch (err) {
+      return handleError(res, err);
+    }
+  }
+
+  async listByEmployee(req, res) {
+    try {
+      const result = await service.listByEmployee(req);
+      return res.status(200).json(result);
     } catch (err) {
       return handleError(res, err);
     }

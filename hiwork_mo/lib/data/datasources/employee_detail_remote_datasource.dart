@@ -1,17 +1,18 @@
 import '../models/employee_detail_model.dart';
 
 abstract class EmployeeDetailRemoteDataSource {
-  Future<EmployeeDetailModel> getEmployeeById(int id);
+  Future<EmployeeDetailModel> getEmployeeBy();
 
   Future<void> updatePersonalInfo({
-    required int id,
-    required String name,
-    required String address,
-    required int gender,
+    int? id,
+    String? name,
+    String? address,
+    int? gender,
     DateTime? dob,
     String? imageCheckUrl,
+    String? phone,
   });
-  
+
   Future<String> uploadRegisterImage({
     required int id,
     required String filePath,
